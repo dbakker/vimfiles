@@ -65,10 +65,11 @@ nnoremap <leader>apy :Ack --python
 
 " Delete a buffer without closing its window
 nnoremap <leader>qq :BD<cr>
-nnoremap <leader>qf :set nomod<cr>:BD<cr>
+nnoremap <leader>qf :BD!<cr>
 nnoremap <leader>qw :w<cr>:BD<cr>
 nnoremap <leader>qaq :bufdo BD<cr>
 nnoremap <leader>qaw :wa<cr>:bufdo BD<cr>
+nnoremap <leader>qaf :bufdo BD!<cr>
 
 " Java autocomplete {{{2
 if has("autocmd")
