@@ -34,30 +34,33 @@ set modelines=5
 " nnoremap ; :
 
 " Make the up and down arrows also move the screen
-nnoremap <down> gj<C-e>
-nnoremap <up> gk<C-y>
+nnoremap <unique> <down> gj<C-e>
+nnoremap <unique> <up> gk<C-y>
 
 " Remap j and k to act as expected when used on long, wrapped, lines
-nnoremap j gj
-nnoremap k gk
+nnoremap <unique> j gj
+nnoremap <unique> k gk
 
 " Use space for (un)folding
-nnoremap <Space> za
-vnoremap <Space> za
+nnoremap <unique> <Space> za
+vnoremap <unique> <Space> za
 
 " Use ,/ to clear search highlighting
 nmap <silent> ,/ :nohlsearch<CR>
 
+" Use ,w as a replacement to CTRL-W (useful in many window commands)
+nmap <unique> ,w <C-w>
+
 " Use ,y/p/P to yank/paste to the OS clipboard
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>P "+P
+nnoremap <unique> <leader>y "+y
+vnoremap <unique> <leader>y "+y
+nnoremap <unique> <leader>p "+p
+vnoremap <unique> <leader>p "+p
+nnoremap <unique> <leader>P "+P
+vnoremap <unique> <leader>P "+P
 
 " Give Y a more logical purpose than aliasing yy
-nnoremap Y y$
+nnoremap <unique> Y y$
 
 " Editor options {{{1
 
@@ -147,8 +150,8 @@ endif
 set stl=%f%m%r\ Line:%l/%L[%p%%]\ Col:%v
 
 " Speed up scrolling of the viewport slightly
-nnoremap <C-e> 2<C-e>
-nnoremap <C-y> 2<C-y>
+nnoremap <unique> <C-e> 2<C-e>
+nnoremap <unique> <C-y> 2<C-y>
 
 set termencoding=utf-8
 set encoding=utf-8
