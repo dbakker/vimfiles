@@ -24,7 +24,7 @@ nnoremap dib %dib
 nnoremap yib %yib
 
 " My own invention: search for the last deleted thing {{{1
-nnoremap <silent><leader>s :<C-U>exe '/'.escape(substitute(@1,'$.*','','g'),'?\.*$^~[')<CR>bn
+nnoremap <unique> <silent><leader>s :<C-U>exe '/'.escape(substitute(@1,'$.*','','g'),'?\.*$^~[')<CR>bn
 
 " Select theme {{{1
 if has("gui_running")
@@ -34,4 +34,5 @@ else
     let g:solarized_termcolors=256
     colorscheme solarized
 endif
+
 " vim: fdm=marker

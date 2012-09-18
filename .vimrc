@@ -2,8 +2,7 @@
 " This one is designed to always work standalone, and be extendible
 " on desktops with more advanced settings, themes and plugins.
 
-" Most parts were blatantly stolen from others such as Tim Pope and
-" Derek Wyatt.
+" Many parts were blatantly stolen from others.
 
 " Init {{{1
 set nocompatible                " forget being compatible with good ol' vi
@@ -26,7 +25,8 @@ endif
 set modeline
 set modelines=5
 
-" Standard mappings {{{1
+" Editor options {{{1
+" Standard mappings {{{2
 
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, as I don't have to press the Shift key to form chords to
@@ -49,7 +49,7 @@ vnoremap <unique> <Space> za
 nmap <silent> ,/ :nohlsearch<CR>
 
 " Use ,w as a replacement to CTRL-W (useful in many window commands)
-nmap <unique> ,w <C-w>
+nnoremap <unique> ,w <C-w>
 
 " Use ,y/p/P to yank/paste to the OS clipboard
 nnoremap <unique> <leader>y "+y
@@ -62,8 +62,7 @@ vnoremap <unique> <leader>P "+P
 " Give Y a more logical purpose than aliasing yy
 nnoremap <unique> Y y$
 
-" Editor options {{{1
-
+" Standard settings {{{2
 " Dont complain about hiding unsaved buffers
 set hidden
 
@@ -97,7 +96,7 @@ set formatoptions+=1            " when wrapping paragraphs, don't end lines
 set nrformats=                  " make <C-a> and <C-x> play well with
                                 "    zero-padded numbers (i.e. don't consider
                                 "    them octal or hex)
-set fillchars = ""              " get rid of the silly chars in separators
+set fillchars=""                " get rid of the silly chars in separators
 set undolevels=1000             " use many muchos levels of undo
 set history=1000                " remember more commands and search history
 set nobackup                    " do not keep backup files, it's 70's style cluttering
@@ -108,7 +107,7 @@ set viminfo='20,\"80            " read/write a .viminfo file, don't store more
 set wildmenu                    " make tab completion for files/buffers act like bash
 set wildmode=list:full          " show a list when pressing tab and complete
                                 "    first full match
-set visualbell                  " don't beep
+set visualbell                  " flash the screen on error
 set noerrorbells                " don't beep
 set ttyfast                     " always use a fast terminal
 set timeoutlen=20000            " vastly increase the duration before an
@@ -118,12 +117,37 @@ set shortmess+=I                " don't show the welcome message
 
 set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 
-" Restore cursor position upon reopening files {{{
+" Restore cursor position upon reopening files {{{2
 autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
-" }}}
+
+" Allow insert mode <tab> and <S-tab> to autocomplete {{{2
+function! CleverTab(dir)
+    if(pumvisible())                                 " if popup menu is visible
+        return a:dir                                 " go to next entry
+    endif
+
+    let substr = strpart(getline('.'), -1, col('.')) " get line until cursor
+    let substr = matchstr(substr, '\.\?\a*$')     " get word until cursor
+
+    " If there is nothing to complete before the cursor, return a tab
+    if (strlen(substr)==0)
+        return "\<tab>"
+    endif
+
+    " If there is a dot before the cursor, use plugin matching
+    if (strlen(&omnifunc) && match(substr, '\.') != -1)
+        return "\<C-X>\<C-O>"
+    endif
+
+    " use normal text matching
+    return "\<C-X>" . a:dir
+endfunction
+
+silent! inoremap <expr> <unique> <silent> <tab> CleverTab("\<C-N>")
+silent! inoremap <expr> <unique> <silent> <S-tab> CleverTab("\<C-P>")
 
 " Visual options {{{1
 if &t_Co > 2 || has("gui_running")
@@ -143,7 +167,7 @@ set diffopt+=iwhite             " Add ignorance of whitespace to diff
 set synmaxcol=2048
 
 if has("balloon_eval") && has("unix")
-  set ballooneval
+    set ballooneval
 endif
 
 " Status is [filename] [mode] [line/column number]
@@ -170,6 +194,7 @@ else
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 endif
 set list
+
 
 " Font and GUI options {{{2
 if has("gui_running")
