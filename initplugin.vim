@@ -32,11 +32,6 @@ Bundle 'git://github.com/tpope/vim-unimpaired.git'
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
 
-" Search for tags in the current directory, the file directory,
-" and upper directories
-set tags+=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
-set tags+=tags,../tags,../../tags,../../../tags,../../../../tags
-
 " Fuzzy finder: ignore stuff that can't be opened, and generated files {{{2
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
 

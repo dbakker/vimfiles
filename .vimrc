@@ -76,7 +76,7 @@ set showmode
 " with +wildmenu.  See :help 'wildmenu'
 set wildmenu
 " don't list a bunch of known binary files (not archives)
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe,tags
 
 set tabstop=4                   " a tab is four spaces
 set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
@@ -114,6 +114,11 @@ set timeoutlen=20000            " vastly increase the duration before an
                                 " incomplete command is cancelled
                                 " (this prevents time based mappings)
 set shortmess+=I                " don't show the welcome message
+
+" Search for tags in the current directory, the file directory,
+" and upper directories
+set tags=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
+set tags+=tags,../tags,../../tags,../../../tags,../../../../tags
 
 set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 
@@ -231,4 +236,4 @@ elseif filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-" vim: fdm=marker
+" vim: fen fdm=marker

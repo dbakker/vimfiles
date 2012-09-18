@@ -26,6 +26,17 @@ nnoremap yib %yib
 " My own invention: search for the last deleted thing {{{1
 nnoremap <unique> <silent><leader>s :<C-U>exe '/'.escape(substitute(@1,'$.*','','g'),'?\.*$^~[')<CR>bn
 
+" Search for filetype specific tags in /.vim/local/tags/[filetype] {{{1
+
+" To generate these, unzip the library source to something like /opt/java, and:
+" $ ctags --excmd=number --file-scope=no -f ~/.vim/local/tags/java -R --language-force=java /opt/java/ --java-kinds=-p
+
+augroup TagFileType
+    autocmd!
+    autocmd FileType * setl tags<
+    autocmd FileType * exe 'setl tags+=~/.vim/local/tags/' . &filetype
+augroup END
+
 " Select theme {{{1
 if has("gui_running")
     set background=dark
