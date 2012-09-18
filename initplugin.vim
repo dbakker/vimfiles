@@ -19,7 +19,7 @@ Bundle 'git://github.com/dbakker/dirmap.git'
 Bundle 'git://github.com/kien/ctrlp.vim.git'
 Bundle 'git://github.com/xolox/vim-session.git'
 Bundle 'git://github.com/vim-scripts/searchfold.vim.git'
-Bundle 'git://github.com/scrooloose/syntastic.git'
+" Bundle 'git://github.com/scrooloose/syntastic.git'
 Bundle 'git://github.com/vim-scripts/wombat256.vim'
 Bundle 'git://github.com/altercation/vim-colors-solarized.git'
 Bundle 'git://github.com/mileszs/ack.vim/'
@@ -27,16 +27,15 @@ Bundle 'git://github.com/vim-scripts/bufkill.vim.git'
 Bundle 'git://github.com/tpope/vim-markdown'
 Bundle 'git://github.com/vim-scripts/javacomplete.git'
 Bundle 'git://github.com/tpope/vim-unimpaired.git'
+" Bundle 'git://github.com/ervandew/supertab.git'
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
 
-" Search for tags in the current directory, or work up the tree
-set tags=./tags;/
-
-" Ctags plugin options {{{2
-let Tlist_Ctags_Cmd = "/usr/bin/ctags"
-let Tlist_WinWidth = 50
+" Search for tags in the current directory, the file directory,
+" and upper directories
+set tags+=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
+set tags+=tags,../tags,../../tags,../../../tags,../../../../tags
 
 " Fuzzy finder: ignore stuff that can't be opened, and generated files {{{2
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
