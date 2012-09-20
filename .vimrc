@@ -192,6 +192,17 @@ set cmdheight=2                 " use a status bar that is 2 rows high
 set showcmd                     " show (partial) command in the last line of the screen
                                 "    this also shows visual selection info
 
+" Set a nice default foldtext {{{2
+function! MyFoldText()
+    " Trim unwanted symbols from the text
+    let sub = substitute(getline(v:foldstart), '\v[^a-zA-Z)}>\]]+$', '', '')
+    let sub = ' '.substitute(sub, '\v^[^a-zA-Z({<\[]+', '', '')
+    let diff = v:foldend - v:foldstart + 1
+    let linetext = strpart('    ', 1, 3 - strlen(''.diff)) . diff
+    return  '+' . v:folddashes . '[' . linetext . ']' . sub
+endfunction
+
+set foldtext=MyFoldText()
 " Visualize suspicious characters {{{2
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
   let &listchars = "tab:\u21e5\u00b7,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
