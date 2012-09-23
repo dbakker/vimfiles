@@ -126,10 +126,10 @@ set tags+=tags,../tags,../../tags,../../../tags,../../../../tags
 set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 
 " Restore cursor position upon reopening files {{{2
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+augroup resCur
+    autocmd!
+    autocmd BufReadPost * call setpos(".", getpos("'\""))
+augroup END
 
 " Allow insert mode <tab> and <S-tab> to autocomplete {{{2
 function! CleverTab(dir)
