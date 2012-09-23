@@ -62,6 +62,9 @@ vnoremap <unique> <leader>P "+P
 " Give Y a more logical purpose than aliasing yy
 nnoremap <unique> Y y$
 
+" Use ':R foo' to run foo and capture its output in a scratch buffer
+command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+
 " Standard settings {{{2
 " Dont complain about hiding unsaved buffers
 set hidden
@@ -196,10 +199,8 @@ set showcmd                     " show (partial) command in the last line of the
 function! MyFoldText()
     " Trim unwanted symbols from the text
     let sub = substitute(getline(v:foldstart), '\v[^a-zA-Z)}>\]]+$', '', '')
-    let sub = ' '.substitute(sub, '\v^[^a-zA-Z({<\[]+', '', '')
-    let diff = v:foldend - v:foldstart + 1
-    let linetext = strpart('    ', 1, 3 - strlen(''.diff)) . diff
-    return  '+' . v:folddashes . '[' . linetext . ']' . sub
+    let sub = substitute(sub, '\v^[^a-zA-Z({<\[]+', '', '')
+    return printf('+%s[%3d] %s' , v:folddashes, v:foldend-v:foldstart+1, sub)
 endfunction
 
 set foldtext=MyFoldText()
@@ -223,7 +224,7 @@ if has("gui_running")
             set guifont=Monaco:h12
         elseif has("unix")
             if &guifont == ""
-                set guifont=bitstream\ vera\ sans\ mono\ 11
+                set guifont=Inconsolata\ 14,bitstream\ vera\ sans\ mono\ 11
             endif
         elseif has("win32")
             set guifont=Consolas:h11,Courier\ New:h10
