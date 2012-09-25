@@ -138,11 +138,16 @@ function! CleverTab(dir)
     endif
 
     let substr = strpart(getline('.'), -1, col('.')) " get line until cursor
-    let substr = matchstr(substr, '\.\?\a*$')     " get word until cursor
+    let substr = matchstr(substr, '/\?\.\?\a*$')     " get word until cursor
 
     " If there is nothing to complete before the cursor, return a tab
     if (strlen(substr)==0)
         return "\<tab>"
+    endif
+
+    " If there is a slash before the cursor, treat it as a filename
+    if (match(substr, '/') != -1)
+        return "\<C-X>\<C-F>"
     endif
 
     " If there is a dot before the cursor, use plugin matching
@@ -154,6 +159,8 @@ function! CleverTab(dir)
     return "\<C-X>" . a:dir
 endfunction
 
+" Don't select first match but just complete as far as possible
+set completeopt=longest,menuone
 silent! inoremap <expr> <unique> <silent> <tab> CleverTab("\<C-N>")
 silent! inoremap <expr> <unique> <silent> <S-tab> CleverTab("\<C-P>")
 
