@@ -25,6 +25,36 @@ endif
 set modeline
 set modelines=5
 
+" Global methods {{{1
+" These are methods that are useful for custom scripts
+
+" GuessProjectRoot; returns the project root or the current dir of the file {{{2
+let projectrootmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
+fun! GuessProjectRoot(file)
+    let fullfile=fnamemodify(expand(a:file), ':p')
+    for marker in g:projectrootmarkers
+        let result=''
+        let pivot=fullfile
+        while pivot!=fnamemodify(pivot, ':h')
+            let pivot=fnamemodify(pivot, ':h')
+            if len(glob(pivot.'/'.marker))
+                let result=pivot
+            endif
+        endwhile
+        if len(result)
+            return result
+        endif
+    endfor
+    if filereadable(fullfile)
+        return fnamemodify(fullfile, ':h')
+    else
+        return fullfile
+    endif
+endfunction
+" let g:RunProject=function("")
+
+" let g:TabCompleteChain=[]
+
 " Editor options {{{1
 " Standard mappings {{{2
 
@@ -64,6 +94,8 @@ nnoremap <unique> Y y$
 
 " Use ':R foo' to run foo and capture its output in a scratch buffer
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+
+nnoremap <unique> <F5> :w<cr>:call b:CompileAndRun()<cr>
 
 " Standard settings {{{2
 " Dont complain about hiding unsaved buffers
@@ -117,6 +149,7 @@ set timeoutlen=20000            " vastly increase the duration before an
                                 " incomplete command is cancelled
                                 " (this prevents time based mappings)
 set shortmess+=I                " don't show the welcome message
+set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
 
 " Search for tags in the current directory, the file directory,
 " and upper directories
