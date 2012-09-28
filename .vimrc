@@ -8,6 +8,11 @@
 set nocompatible                " forget being compatible with good ol' vi
 let mapleader=","               " Change the mapleader from \ to ,
 
+" initialize global methods and variables
+if filereadable(glob("~/.vim/gfunctions.vim"))
+    source ~/.vim/gfunctions.vim
+endif
+
 " plugin stuff (Vundle/Pathogen) needs to be initialized here
 if filereadable(glob("~/.vim/initplugin.vim"))
     source ~/.vim/initplugin.vim
@@ -25,32 +30,6 @@ endif
 set modeline
 set modelines=5
 
-" Global methods {{{1
-" These are methods that are useful for custom scripts
-
-" GuessProjectRoot; returns the project root or the current dir of the file {{{2
-let projectrootmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
-fun! GuessProjectRoot(file)
-    let fullfile=fnamemodify(expand(a:file), ':p')
-    for marker in g:projectrootmarkers
-        let result=''
-        let pivot=fullfile
-        while pivot!=fnamemodify(pivot, ':h')
-            let pivot=fnamemodify(pivot, ':h')
-            if len(glob(pivot.'/'.marker))
-                let result=pivot
-            endif
-        endwhile
-        if len(result)
-            return result
-        endif
-    endfor
-    if filereadable(fullfile)
-        return fnamemodify(fullfile, ':h')
-    else
-        return fullfile
-    endif
-endfunction
 " let g:RunProject=function("")
 
 " let g:TabCompleteChain=[]
