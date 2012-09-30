@@ -1,1 +1,1 @@
-setlocal foldmethod=indent foldlevel=1 foldnestmax=1
+setlocal foldmethod=indent foldlevel=1 foldnestmax=1 nolist
