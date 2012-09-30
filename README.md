@@ -40,3 +40,7 @@ Start vim, and install the plugins:
     :BundleInstall
 
 then restart vim.
+
+It might be a good idea to create a .vim/local.vim file:
+
+    set ffs=dos " Force CR, LF line endings
