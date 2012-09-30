@@ -15,13 +15,10 @@ First install gvim, git and optionally exuberant tags:
 Then download the settings:
 
     cd
-    git clone https://github.com/dbakker/vimfiles.git .vim
+    git clone git://github.com/dbakker/vimfiles.git .vim
     ln -s .vim/.vimrc .vimrc
-    git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
-
-start up vim and do:
-
-    :BundleInstall
+    git clone git://github.com/gmarik/vundle.git .vim/bundle/vundle
+    gvim -c "BundleInstall"
 
 then restart vim.
 
@@ -34,11 +31,11 @@ Then install msysgit, and follow the installation instructions for
 Then download the settings:
 
     cd %UserProfile%
-    git clone https://github.com/dbakker/vimfiles.git .vim
+    git clone git://github.com/dbakker/vimfiles.git .vim
     mklink .vimrc .vim/.vimrc
-    git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
+    git clone git://github.com/gmarik/vundle.git .vim/bundle/vundle
 
-start up vim and do:
+Start vim, and install the plugins:
 
     :BundleInstall
 
