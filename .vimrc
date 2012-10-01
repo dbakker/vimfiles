@@ -8,6 +8,11 @@
 set nocompatible                " forget being compatible with good ol' vi
 let mapleader=","               " Change the mapleader from \ to ,
 
+" on Windows ~/vimfiles/ normally replaces ~/.vim/
+if has("win32")
+    set runtimepath+=~/.vim/
+endif
+
 " initialize global methods and variables
 if filereadable(glob("~/.vim/gfunctions.vim"))
     source ~/.vim/gfunctions.vim
