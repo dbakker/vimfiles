@@ -23,6 +23,7 @@ Bundle 'git://github.com/vim-scripts/bufkill.vim.git'
 Bundle 'git://github.com/tpope/vim-markdown'
 Bundle 'git://github.com/vim-scripts/javacomplete.git'
 Bundle 'git://github.com/tpope/vim-unimpaired.git'
+Bundle 'git://github.com/vim-scripts/eclipse.vim.git'
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
