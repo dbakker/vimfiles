@@ -49,7 +49,11 @@ let g:session_autosave = 'no'
 let g:searchfold_foldlevel = 2
 
 " Settings for Ack plugin {{{2
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+if executable('ack-grep')
+  let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+elseif executable('ack')
+  let g:ackprg="ack -H --nocolor --nogroup --column"
+endif
 
 " Plugin mappings {{{2
 " Search in files and buffers
