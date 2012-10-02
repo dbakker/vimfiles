@@ -155,7 +155,7 @@ function! CleverTab(dir)
     endif
 
     let substr = strpart(getline('.'), -1, col('.')) " get line until cursor
-    let substr = matchstr(substr, '/\?\.\?\a*$')     " get word until cursor
+    let substr = matchstr(substr, '[^\a\s]*\a*$')     " get word until cursor
 
     " If there is nothing to complete before the cursor, return a tab
     if (strlen(substr)==0)
@@ -168,7 +168,7 @@ function! CleverTab(dir)
     endif
 
     " If there is a dot before the cursor, use plugin matching
-    if (strlen(&omnifunc) && match(substr, '\.') != -1)
+    if (strlen(&omnifunc) && (match(substr, '\.') != -1 || match(substr, '->') != -1))
         return "\<C-X>\<C-O>"
     endif
 
