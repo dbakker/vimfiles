@@ -40,10 +40,10 @@ augroup END
 " Select theme {{{1
 if has("gui_running")
     set background=dark
-    colorscheme solarized
+    colorscheme eclipse
 else
     let g:solarized_termcolors=256
-    colorscheme solarized
+    colorscheme eclipse
 endif
 
 " vim: fdm=marker

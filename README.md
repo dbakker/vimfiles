@@ -23,10 +23,12 @@ Then download the settings:
 then restart vim.
 
 ## Doing a full install on Windows
-First manually install GVim.
 
-Then install msysgit, and follow the installation instructions for
-[Vundle for Windows](https://github.com/gmarik/vundle/wiki/Vundle-for-Windows).
+Manually install:
+  * GVim
+  * Msysgit (git for windows)
+  * Ctags (for tag navigation)
+  * Mingw (if you add it to your PATH it enables unix commands)
 
 Then download the settings:
 
@@ -41,6 +43,19 @@ Start vim, and install the plugins:
 
 then restart vim.
 
-It might be a good idea to create a .vim/local.vim file:
+It might be a good idea to create a .vim/local.vim file with a subset of these:
 
+    set mouse=a " Enable mouse (annoying on laptops with touchpads)
+    set foldcolumn=3 " Allows mouse to click open folds
     set ffs=dos " Force CR, LF line endings
+    set shellslash " Use / instead of \ in paths; don't combine with cmd.exe
+
+## Setting up CTags for standard libraries
+This configuration automatically looks in `~/.vim/local/tags/[language]` when
+working on a code of that language. This is useful for having a quick look
+at the description or implementation of something out of a standard library.
+
+    cd ~/.vim/local/tags
+    ctags -o python --python-kinds=-i -R path\to\python\lib
+    ctags -o java --java-kinds=-p -R path\to\java\source
+

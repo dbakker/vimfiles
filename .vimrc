@@ -76,10 +76,13 @@ vnoremap <unique> <leader>P "+P
 " Give Y a more logical purpose than aliasing yy
 nnoremap <unique> Y y$
 
+" Use Q as alias for @j (execute 'j' recording)
+nnoremap <unique> Q @j
+
 " Use ':R foo' to run foo and capture its output in a scratch buffer
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
-nnoremap <unique> <F5> :w<cr>:call b:CompileAndRun()<cr>
+nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 
 " Standard settings {{{2
 " Dont complain about hiding unsaved buffers
@@ -134,11 +137,12 @@ set timeoutlen=20000            " vastly increase the duration before an
                                 " (this prevents time based mappings)
 set shortmess+=I                " don't show the welcome message
 set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
+set smartcase                   " lowercase search matches any case
 
 " Search for tags in the current directory, the file directory,
 " and upper directories
 set tags=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
-set tags+=tags,../tags,../../tags,../../../tags,../../../../tags
+set tags+=./../../../../../tags,./../../../../../../tags,./../../../../../../../tags
 
 set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 
@@ -155,7 +159,7 @@ function! CleverTab(dir)
     endif
 
     let substr = strpart(getline('.'), -1, col('.')) " get line until cursor
-    let substr = matchstr(substr, '[^\a\s]*\a*$')     " get word until cursor
+    let substr = matchstr(substr, '[!@#$%^&*()\-+{}\[\]~\.\\/]*\a*$') " get word until cursor
 
     " If there is nothing to complete before the cursor, return a tab
     if (strlen(substr)==0)
