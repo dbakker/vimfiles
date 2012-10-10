@@ -264,6 +264,12 @@ else
     set bg=dark
 endif
 
+" Load local filetype specific code, if present {{{1
+augroup LocalFileType
+    autocmd!
+    autocmd FileType * exe 'sil! source ~/.vim/local/ftplugin/' . &filetype . '.vim'
+augroup END
+
 " Load extra themes, etc. if present {{{1
 if filereadable(glob("~/.vim/extended.vim"))
     source ~/.vim/extended.vim
