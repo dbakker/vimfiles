@@ -55,7 +55,10 @@ This configuration automatically looks in `~/.vim/local/tags/[language]` when
 working on a code of that language. This is useful for having a quick look
 at the description or implementation of something out of a standard library.
 
+These options are optimized on the fact that the sources won't change and that
+we are not interested in their private variables/methods.
+
     cd ~/.vim/local/tags
-    ctags -o python --python-kinds=-i -R path\to\python\lib
-    ctags -o java --java-kinds=-p -R path\to\java\source
+    ctags -o python --excmd=number --python-kinds=-i -R path\to\python\lib
+    ctags -o java --excmd=number --file-scope=no --java-kinds=-p -R path\to\java\source
 
