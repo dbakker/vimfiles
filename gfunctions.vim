@@ -113,29 +113,6 @@ fun! OpenURL(url)
   endif
 endf
 
-" FindProgram(name): returns the path to a program {{{2
-let programpathdict = {}
-
-" TODO: instead make bat files like
-" @"C:\Program Files (x86)\Mozilla Firefox\firefox.exe" %*
-fun! FindProgram(p)
-  if(exists('*b:FindProgram'))
-    let result=b:FindProgram(a:p)
-    if(executable(result))
-      return result
-    endif
-  endif
-
-  if exists('$PROGRAMFILES')
-    let f=findfile(a:p.'exe', $PROGRAMFILES)
-    if executable(f)
-      return f
-    endif
-  endif
-
-  return FindInDict(a:p, 'programpathdict', a:p)
-endf
-
 " RunFile(file): Run a file with its default handler {{{2
 fun! RunFile(file)
   if !filereadable(a:file)
