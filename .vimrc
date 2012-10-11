@@ -135,8 +135,9 @@ set ttyfast                     " always use a fast terminal
 set timeoutlen=20000            " vastly increase the duration before an
                                 " incomplete command is cancelled
                                 " (this prevents time based mappings)
-set shortmess+=I                " don't show the welcome message
+set shortmess+=IfilmnrxoOtT     " Show short messages and don't show welcome
 set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
+set ignorecase                  " case insensitive search
 set smartcase                   " lowercase search matches any case
 
 " Search for tags in the current directory, the file directory,
@@ -193,7 +194,7 @@ endif
 set title                       " change the terminal's title
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
-set scrolloff=2                 " keep some lines off the edges of the screen when scrolling
+set scrolloff=1                 " keep 1 line distance from the edges of the screen
 set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
