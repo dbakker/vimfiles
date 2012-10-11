@@ -140,6 +140,11 @@ set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
 set ignorecase                  " case insensitive search
 set smartcase                   " lowercase search matches any case
 
+" Set options for views and sessions
+set sessionoptions=blank,buffers,folds,help,resize,slash,unix,winsize
+set viewoptions=cursor,folds,slash,unix
+set viewdir=~/.vim/local/views
+
 " Search for tags in the current directory, the file directory,
 " and upper directories
 set tags=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
