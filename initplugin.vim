@@ -11,20 +11,21 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
-Bundle 'git://github.com/tomtom/tcomment_vim.git'
+Bundle 'git://github.com/altercation/vim-colors-solarized.git'
 Bundle 'git://github.com/dbakker/dirmap.git'
 Bundle 'git://github.com/kien/ctrlp.vim.git'
-Bundle 'git://github.com/xolox/vim-session.git'
+Bundle 'git://github.com/mileszs/ack.vim/'
+Bundle 'git://github.com/tomtom/tcomment_vim.git'
+Bundle 'git://github.com/tpope/vim-fugitive.git'
+Bundle 'git://github.com/tpope/vim-markdown'
+Bundle 'git://github.com/tpope/vim-unimpaired.git'
+Bundle 'git://github.com/vim-scripts/bufkill.vim.git'
+Bundle 'git://github.com/vim-scripts/eclipse.vim.git'
+Bundle 'git://github.com/vim-scripts/javacomplete.git'
+Bundle 'git://github.com/vim-scripts/restore_view.vim.git'
 Bundle 'git://github.com/vim-scripts/searchfold.vim.git'
 Bundle 'git://github.com/vim-scripts/wombat256.vim'
-Bundle 'git://github.com/altercation/vim-colors-solarized.git'
-Bundle 'git://github.com/mileszs/ack.vim/'
-Bundle 'git://github.com/vim-scripts/bufkill.vim.git'
-Bundle 'git://github.com/tpope/vim-markdown'
-Bundle 'git://github.com/vim-scripts/javacomplete.git'
-Bundle 'git://github.com/tpope/vim-unimpaired.git'
-Bundle 'git://github.com/vim-scripts/eclipse.vim.git'
-Bundle 'git://github.com/vim-scripts/restore_view.vim.git'
+Bundle 'git://github.com/xolox/vim-session.git'
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
