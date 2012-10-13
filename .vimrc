@@ -82,6 +82,8 @@ nnoremap <unique> Q @j
 " Use ':R foo' to run foo and capture its output in a scratch buffer
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
+" Various other mappings
+nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 
 " Standard settings {{{2
