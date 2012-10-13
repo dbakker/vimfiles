@@ -85,6 +85,8 @@ command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=h
 " Various other mappings
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
+command! -nargs=* Wrap setl wrap nolist
+command! -nargs=* NoWrap setl nowrap list&
 
 " Standard settings {{{2
 " Dont complain about hiding unsaved buffers
@@ -201,7 +203,9 @@ endif
 
 set title                       " change the terminal's title
 set showmode                    " always show what mode we're currently editing in
-set nowrap                      " don't wrap lines
+set nowrap                      " don't wrap lines by default
+set linebreak                   " if we do wrap, wrap whole words, and mark it with '> '
+set showbreak=>\ 
 set scrolloff=1                 " keep 1 line distance from the edges of the screen
 set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
