@@ -1,14 +1,14 @@
 
-if exists("loaded_globalfunctions")
+if exists("loaded_gfunctions")
   finish
 endif
-let loaded_globalfunctions = 1
+let loaded_gfunctions = 1
 
 " Global functions
 " These are functions that are useful for custom scripts
 " Note: remember that functions can be placed *inside* if statements
 
-" FindVar(varname[, default]) {{{2
+" FindVar(varname[, default]) {{{1
 fun! FindVar(varname, ...)
   if exists('b:'.a:varname)
     return b:{a:varname}
@@ -20,7 +20,7 @@ fun! FindVar(varname, ...)
   throw 'variable '.a:varname.' not found'
 endf
 
-" ExtendDictVar(varname[, default]) {{{2
+" ExtendDictVar(varname[, default]) {{{1
 fun! ExtendDictVar(dictname, ...)
   let result = {}
   if a:0 == 1
@@ -35,7 +35,7 @@ fun! ExtendDictVar(dictname, ...)
   return result
 endf
 
-" FindInDict(key, dictname[, default]) {{{2
+" FindInDict(key, dictname[, default]) {{{1
 fun! FindInDict(key, dictname, ...)
   if exists('b:'.a:dictname) && has_key(b:{a:dictname}, a:key)
     return b:{a:dictname}[a:key]
@@ -47,7 +47,7 @@ fun! FindInDict(key, dictname, ...)
   throw 'cant find '.a:key
 endf
 
-" GuessProjectRoot(file): returns the project root or the current dir of the file {{{2
+" GuessProjectRoot(file): returns the project root or the current dir of the file {{{1
 let projectrootmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(file)
   let fullfile=fnamemodify(expand(a:file), ':p')
@@ -71,72 +71,87 @@ fun! GuessProjectRoot(file)
   endif
 endf
 
-" SpawnWith(out)Shell(command, params) {{{2
-" Starts a command asynchronously
-if has('unix')
-  if executable('urxvt')
-    fun! SpawnWithShell(command, params)
-      silent! exe 'silent !urxvt -e '.a:command.' '.a:params.' &'
-    endf
-  elseif executable('xterm')
-    fun! SpawnWithShell(command, params)
-      silent! exe 'silent !xterm -e '.a:command.' '.a:params.' &'
-    endf
+" OpenURL(url) {{{1
+function! OpenURL(url) " (tpope)
+  if has("win32")
+    exe '!start cmd /cstart /b '.a:url
+  elseif $DISPLAY !~ '^\w'
+    exe 'silent !sensible-browser "'.a:url.'"'
+  else
+    exe 'silent !sensible-browser -T "'.a:url.'"'
   endif
+  redraw!
+endfunction
+command! -nargs=1 OpenURL :call OpenURL(<q-args>)
 
-  fun! SpawnWithoutShell(command, params)
-    silent exe '! ('.a:command.' '.a:params.' &> /dev/null ) &'
-  endf
-elseif has('win32')
-  fun! SpawnWithShell(command, params)
-    silent exe '!start cmd /c ""'.a:command.'" "'.a:params.'""'
-  endf
-  fun! SpawnWithoutShell(command, params)
-    silent exec '!start /min cmd /c ""'.a:command.'" "'.a:params.'"">NUL'
-  endf
+" CompileAndRun() {{{1
+let cnr_scriptlangs={}
+let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
+
+for lang in ['python', 'php', 'perl', 'sh']
+  if executable(lang)
+    let cnr_scriptlangs[lang] = lang
+  endif
+endfor
+if executable('ipython')
+  cnr_scriptlangs['python'] = 'ipython'
 endif
 
-" OpenURL(url) {{{2
-fun! OpenURL(url)
-  if exists('browser') && executable(browser)
-    call SpawnWithoutShell(browser, a:url)
-  elseif executable('chromium')
-    call SpawnWithoutShell('chromium', a:url)
-  elseif executable('firefox')
-    call SpawnWithoutShell('firefox', a:url)
-  elseif executable('chrome')
-    call SpawnWithoutShell('chrome', a:url)
-  elseif executable('explorer')
-    call SpawnWithoutShell('explorer', a:url)
-  else
-    throw 'No browser could be found'
-  endif
-endf
-
-" RunFile(file): Run a file with its default handler {{{2
-fun! RunFile(file)
-  if !filereadable(a:file)
-    throw 'file '.a:file.' does not exist'
-  endif
-  if has('unix')
-    if executable('xdg-open')
-      call SpawnWithoutShell('xdg-open', a:file)
-    else
-      throw 'couldnt find any way to run an arbitrary file'
-    endif
-  elseif has('win32')
-    call SpawnWithoutShell(a:file, '')
-  endif
-endf
-
-" CompileAndRun() {{{2
 fun! CompileAndRun()
-  if &modified
-    wa
-  endif
-  if exists('*b:CompileAndRun')
-    call b:CompileAndRun()
-  else
-    call RunFile(expand('%:p'))
-  endif
+  try
+    " Try to do project wide compilations/runs
+    let s:projectRoot = GuessProjectRoot("%")
+    if &ft=='java' || expand('%:t')=='build.xml'
+      if(filereadable(s:projectRoot.'/build.xml'))
+        wa
+        exe 'setl makeprg=ant\ -f\ '.s:projectRoot.'/build.xml run'
+        setl efm=\ %#[javac]\ %#%f:%l:%c:%*\\d:%*\\d:\ %t%[%^:]%#:%m,\%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
+        make
+        return
+      endif
+    endif
+
+    " Fall back to single file compilations/runs
+    if &modified
+      write
+    endif
+    let shebang = matchstr(getline(1),'^#!\zs[^ ]*')
+    if shebang == '/usr/bin/env'
+      exe '!'.strpart(getline(1), 15).' %'
+    elseif executable(shebang)
+      exe '!'.matchstr(getline(1),'^#!\zs.*').' %'
+    elseif has_key(g:cnr_scriptlangs, &ft)
+      exe '!'.g:cnr_scriptlangs[&ft].' %'
+    elseif index(g:cnr_browserlangs, &ft)>=0
+      if exists('b:url')
+        call OpenURL(b:url)
+      else
+        call OpenURL(expand('%:p'))
+      endif
+    elseif &ft=='vim'
+      unlet! g:loaded_{expand('%:t:r')}
+      so %
+    elseif &ft=='markdown' && executable('markdown')
+      exe '!markdown %'
+      call OpenUrl(expand('%:p'))
+    elseif &ft=='java' && executable('java') && executable('javac')
+      let package = search('\s*package\s', 'nw')
+      let qualified = expand('%:t:r')
+      if package!=0
+        let package = matchstr(getline(package), '\v^\s*package\s+\zs[^;]+')
+        let classdir = expand('%:p:h:h'.substitute(substitute(package, '[^.]', '', 'g'), '\.', ':h', 'g'))
+        let qualified = package.'.'.qualified
+      else
+        let classdir = expand('%:p:h')
+      endif
+      let &cmdheight += 1
+      let cmd = '!javac -d "'.classdir.'" "'.expand('%').'" &&'
+      exe cmd.' java -cp "'.classdir.'" '.qualified
+      let &cmdheight -= 1
+    else " If all else fails, use default handler
+      exe '!%'
+    endif
+  finally
+    redraw!
+  endtry
 endf
