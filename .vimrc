@@ -116,7 +116,6 @@ set copyindent                  " copy the previous indentation on autoindenting
 set smarttab                    " insert tabs on the start of a line according to
                                 "    shiftwidth, not tabstop
 set gdefault                    " search/replace "globally" (on a line) by default
-set mouse=                      " disable mouse
 set fileformats="unix,dos,mac"
 set formatoptions+=1            " when wrapping paragraphs, don't end lines
                                 "    with 1-letter words (looks stupid)
@@ -197,6 +196,7 @@ silent! inoremap <expr> <unique> <silent> <tab> CleverTab("\<C-N>")
 silent! inoremap <expr> <unique> <silent> <S-tab> CleverTab("\<C-P>")
 
 " Visual options {{{1
+" Standard settings {{{2
 if &t_Co > 2 || has("gui_running")
    syntax on                    " switch syntax highlighting on, when the terminal has colors
 endif
