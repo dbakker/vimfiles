@@ -1,2 +1,3 @@
 " Set a vertical ruler for the preferred 80 chars limit
-setlocal cc=80
+setlocal textwidth=80
+setlocal cc=+1
