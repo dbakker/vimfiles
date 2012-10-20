@@ -4,11 +4,13 @@ if exists("loaded_gfunctions")
 endif
 let loaded_gfunctions = 1
 
-" Global functions
+" Global variables/autocmds {{{1
+
+" Global functions {{{1
 " These are functions that are useful for custom scripts
 " Note: remember that functions can be placed *inside* if statements
 
-" FindVar(varname[, default]) {{{1
+" FindVar(varname[, default]) {{{2
 fun! FindVar(varname, ...)
   if exists('b:'.a:varname)
     return b:{a:varname}
@@ -20,7 +22,7 @@ fun! FindVar(varname, ...)
   throw 'variable '.a:varname.' not found'
 endf
 
-" ExtendDictVar(varname[, default]) {{{1
+" ExtendDictVar(varname[, default]) {{{2
 fun! ExtendDictVar(dictname, ...)
   let result = {}
   if a:0 == 1
@@ -35,7 +37,7 @@ fun! ExtendDictVar(dictname, ...)
   return result
 endf
 
-" FindInDict(key, dictname[, default]) {{{1
+" FindInDict(key, dictname[, default]) {{{2
 fun! FindInDict(key, dictname, ...)
   if exists('b:'.a:dictname) && has_key(b:{a:dictname}, a:key)
     return b:{a:dictname}[a:key]
@@ -47,7 +49,7 @@ fun! FindInDict(key, dictname, ...)
   throw 'cant find '.a:key
 endf
 
-" GuessProjectRoot(file): returns the project root or the current dir of the file {{{1
+" GuessProjectRoot(file): returns the project root or the current dir of the file {{{2
 let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(file)
   let fullfile=fnamemodify(expand(a:file), ':p')
@@ -76,7 +78,7 @@ fun! GuessProjectRoot(file)
   endif
 endf
 
-" OpenURL(url) {{{1
+" OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
   if has("win32")
     exe '!start cmd /cstart /b '.a:url
@@ -89,7 +91,7 @@ function! OpenURL(url) " (tpope)
 endfunction
 command! -nargs=1 OpenURL :call OpenURL(<q-args>)
 
-" CompileAndRun() {{{1
+" CompileAndRun() {{{2
 let cnr_scriptlangs={}
 let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
 
