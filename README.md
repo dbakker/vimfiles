@@ -62,3 +62,15 @@ we are not interested in their private variables/methods.
     ctags -o python --excmd=number --python-kinds=-i -R path\to\python\lib
     ctags -o java --excmd=number --file-scope=no --java-kinds=-p -R path\to\java\source
 
+## Setting file/folder specific scripts
+Vim searches for file/folder specific scripts to execute. To edit or create one, use
+`:EditScript` or `:EditScript file/folder`. Scripts created for a specific folder will
+be executed whenever one of its files is opened.
+
+This feature is interesting for overriding global settings such as `makeprg`, `tags`,
+`expandtab`, `shiftwidth`, `textwidth` and so on. Some other interesting settings:
+
+    let b:projectroot='/path/' " Override the path detected by GuessProjectRoot
+    setl bufhidden=delete " Useful for documentation that you don't need to keep open
+    Wrap
+
