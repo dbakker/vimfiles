@@ -133,7 +133,7 @@ set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 augroup TagFileType
     autocmd!
     autocmd FileType * setl tags<
-    autocmd FileType * exe 'setl tags+=~/.vim/local/tags/' . &filetype
+    autocmd FileType * exe 'setl tags^=~/.vim/local/tags/'.&filetype
 augroup END
 
 " Restore cursor position upon reopening files {{{2
