@@ -10,6 +10,7 @@ let mapleader=","               " Change the mapleader from \ to ,
 
 " on Windows ~/vimfiles/ normally replaces ~/.vim/
 if has("win32")
+    let &runtimepath = substitute(&runtimepath,'\(Documents and Settings\|Users\)[\\/][^\\/,]*[\\/]\zsvimfiles\>','.vim','g')
     set runtimepath+=~/.vim/
 endif
 
@@ -63,7 +64,7 @@ vnoremap <unique> <Space> za
 nmap <silent> ,/ :nohlsearch<CR>
 
 " Use ,w as a replacement to CTRL-W (useful in many window commands)
-nnoremap <unique> ,w <C-w>
+nmap <unique> ,w <C-w>
 
 " Use ,y/p/P to yank/paste to the OS clipboard
 nnoremap <unique> <leader>y "+y
