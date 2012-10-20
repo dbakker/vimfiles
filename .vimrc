@@ -10,7 +10,7 @@ if has("win32")
 endif
 
 " Loads the given script file if it exists.
-fun TrySource(script)
+fun! TrySource(script)
   if filereadable(expand(a:script))
     exe 'source '.a:script
   endif
@@ -35,7 +35,7 @@ endif
 " GetFileScript([filename]) {{{1
 " Returns the name of the script file directly associated
 " to the given file or directory. It may not exist yet.
-fun GetFileScript(...)
+fun! GetFileScript(...)
   if a:0==1 && len(a:1)>0
     let scriptname=fnamemodify(expand(a:1), ':p')
   else
@@ -52,7 +52,7 @@ command -nargs=? -complete=file EditScript exe ':e '.GetFileScript('<args>')
 " Finds all scripts associated to the given file or directory and sources
 " them.
 
-fun SourceFileScripts(file)
+fun! SourceFileScripts(file)
   let subdir=fnamemodify(a:file, ':h')
   if subdir!=a:file
     call SourceFileScripts(subdir)
@@ -66,7 +66,7 @@ endf
 " most specific scripts last. This means that specific scripts can override
 " settings made by more general scripts.
 
-fun LoadBufScripts()
+fun! LoadBufScripts()
   if !exists('b:loaded_buf_scripts')
     let b:loaded_buf_scripts=1
     call TrySource('~/.vim/onbuffer/general.vim')
@@ -77,5 +77,7 @@ fun LoadBufScripts()
   endif
 endf
 
-autocmd BufEnter * call LoadBufScripts()
-
+augroup LoadBufScripts
+  au!
+  au BufEnter * call LoadBufScripts()
+augroup END
