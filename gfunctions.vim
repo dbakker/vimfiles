@@ -48,9 +48,14 @@ fun! FindInDict(key, dictname, ...)
 endf
 
 " GuessProjectRoot(file): returns the project root or the current dir of the file {{{1
-let projectrootmarkers = ['.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
+let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(file)
   let fullfile=fnamemodify(expand(a:file), ':p')
+  if exists('b:projectroot')
+    if stridx(fullfile, fnamemodify(b:projectroot, ':p'))==0
+      return b:projectroot
+    endif
+  endif
   for marker in g:projectrootmarkers
     let result=''
     let pivot=fullfile
