@@ -35,6 +35,7 @@ filetype plugin indent on     " required!
 
 " MRU {{{2
 let MRU_File = expand('~/.vim/local/mru_data.txt')
+let MRU_Exclude_Files = '\.git'
 let MRU_Add_Menu = 0
 
 " Tcomment {{{2
