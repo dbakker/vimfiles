@@ -118,23 +118,10 @@ set sessionoptions=blank,buffers,folds,help,resize,slash,unix,winsize
 set viewoptions=cursor,folds,slash,unix
 set viewdir=~/.vim/local/views
 
-" Search for tags in the current directory, the file directory,
-" and upper directories
-set tags=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
-set tags+=./../../../../../tags,./../../../../../../tags,./../../../../../../../tags
+" Search for tags in the file directory and upper directories
+set tags=./tags;
 
 set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
-
-" Search for filetype specific tags in /.vim/local/tags/[filetype] {{{2
-
-" To generate these, unzip the library source to something like /opt/java, and:
-" $ ctags --excmd=number --file-scope=no -f ~/.vim/local/tags/java -R --language-force=java /opt/java/ --java-kinds=-p
-
-augroup TagFileType
-    autocmd!
-    autocmd FileType * setl tags<
-    autocmd FileType * exe 'setl tags^=~/.vim/local/tags/'.&filetype
-augroup END
 
 " Restore cursor position upon reopening files {{{2
 augroup resCur
