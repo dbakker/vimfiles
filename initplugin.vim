@@ -13,6 +13,7 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 Bundle 'git://github.com/altercation/vim-colors-solarized.git'
 Bundle 'git://github.com/dbakker/dirmap.git'
+Bundle 'git://github.com/godlygeek/tabular.git'
 Bundle 'git://github.com/kien/ctrlp.vim.git'
 Bundle 'git://github.com/mileszs/ack.vim/'
 Bundle 'git://github.com/tomtom/tcomment_vim.git'
@@ -58,8 +59,17 @@ elseif executable('ack')
 endif
 
 " Plugin mappings {{{2
-" Search in files and buffers
-nnoremap <leader>t :CtrlPMixed<cr>
+nnoremap <unique> <Leader>t= :Tabularize /=<CR>
+vnoremap <unique> <Leader>t= :Tabularize /=<CR>
+nnoremap <unique> <Leader>t: :Tabularize /:<CR>
+vnoremap <unique> <Leader>t: :Tabularize /:<CR>
+nnoremap <unique> <Leader>t:: :Tabularize /:\zs<CR>
+vnoremap <unique> <Leader>t:: :Tabularize /:\zs<CR>
+nnoremap <unique> <Leader>t, :Tabularize /,<CR>
+vnoremap <unique> <Leader>t, :Tabularize /,<CR>
+nnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
+vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
+
 nnoremap <leader>aa :Ack 
 nnoremap <leader>apy :Ack --python 
 
