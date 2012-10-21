@@ -185,6 +185,32 @@ set completeopt=longest,menuone
 silent! inoremap <expr> <unique> <silent> <tab> CleverTab("\<C-N>")
 silent! inoremap <expr> <unique> <silent> <S-tab> CleverTab("\<C-P>")
 
+" ToggleModeless(): Turn Vim into a modeless editor {{{2
+let s:tm_toggle = 0
+fun! ToggleModeless()
+  if s:tm_toggle == 0
+    let s:tm_toggle = 1
+    let s:tm_insertmode=&insertmode
+    let s:tm_fdc=&fdc
+    if has("gui_running")
+      let s:tm_guioptions=&guioptions
+      set guioptions=gmrLtT
+    endif
+    set insertmode
+    if &fdc<2
+      set fdc=3
+    endif
+  else
+    let s:tm_toggle = 0
+    let &insertmode=s:tm_insertmode
+    let &guioptions=s:tm_guioptions
+    let &fdc=s:tm_fdc
+  endif
+endf
+command! -nargs=0 ToggleModeless call ToggleModeless()
+sil! nnoremap <unique> <silent> <F12> :call ToggleModeless()<cr>
+sil! inoremap <unique> <silent> <F12> <C-O>:call ToggleModeless()<cr>
+
 " Visual options {{{1
 " Standard settings {{{2
 if &t_Co > 2 || has("gui_running")
