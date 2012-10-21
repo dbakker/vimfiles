@@ -172,7 +172,7 @@ function! CleverTab(dir)
     endif
 
     let substr = strpart(getline('.'), -1, col('.')) " get line until cursor
-    let substr = matchstr(substr, '[!@#$%^&*()\-+{}\[\]~\.\\/]*\a*$') " get word until cursor
+    let substr = matchstr(substr, '\v[^({[\]})"`'',;=|& ]*\a*$') " get word until cursor
 
     " If there is nothing to complete before the cursor, return a tab
     if (strlen(substr)==0)
@@ -180,12 +180,12 @@ function! CleverTab(dir)
     endif
 
     " If there is a slash before the cursor, treat it as a filename
-    if (match(substr, '/') != -1)
+    if ((match(substr, '/') != -1) || (has("win32") && match(substr, '\') != -1))
         return "\<C-X>\<C-F>"
     endif
 
-    " If there is a dot before the cursor, use plugin matching
-    if (strlen(&omnifunc) && (match(substr, '\.') != -1 || match(substr, '->') != -1))
+    " If there is a symbol before the cursor, try plugin matching
+    if (strlen(&omnifunc) && (match(substr, '\v[^a-zA-Z0-9_$]') != -1))
         return "\<C-X>\<C-O>"
     endif
 
