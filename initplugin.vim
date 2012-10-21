@@ -25,12 +25,17 @@ Bundle 'git://github.com/tpope/vim-unimpaired.git'
 Bundle 'git://github.com/vim-scripts/bufkill.vim.git'
 Bundle 'git://github.com/vim-scripts/eclipse.vim.git'
 Bundle 'git://github.com/vim-scripts/javacomplete.git'
+Bundle 'git://github.com/vim-scripts/mru.vim.git'
 Bundle 'git://github.com/vim-scripts/searchfold.vim.git'
 Bundle 'git://github.com/vim-scripts/wombat256.vim'
 Bundle 'git://github.com/xolox/vim-session.git'
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
+
+" MRU {{{2
+let MRU_File = expand('~/.vim/local/mru_data.txt')
+let MRU_Add_Menu = 0
 
 " Tcomment {{{2
 let g:tcomment_types={'java': '// %s'}
