@@ -18,19 +18,18 @@ endf
 
 " initialize global methods and variables for use in scripts/plugins
 call TrySource('~/.vim/gfunctions.vim')
+call TrySource('~/.vim/local/gfunctions.vim')
 " initialize plugin stuff (Vundle/Pathogen)
 call TrySource('~/.vim/initplugin.vim')
+call TrySource('~/.vim/local/initplugin.vim')
 
 " Get that filetype stuff happening (assume version>600)
 filetype plugin indent on
 
-" Load general vim scripts {{{1
-if !exists('g:loaded_general_scripts')
-  let g:loaded_general_scripts=1
-  call TrySource('~/.vim/general.vim')
-  call TrySource('~/.vim/local/general.vim')
-  call TrySource('~/.vimrc.local')
-endif
+" Load general vim scripts
+call TrySource('~/.vim/general.vim')
+call TrySource('~/.vim/local/general.vim')
+call TrySource('~/.vimrc.local')
 
 " GetFileScript([filename]) {{{1
 " Returns the name of the script file directly associated
@@ -46,7 +45,7 @@ fun! GetFileScript(...)
   return expand('~/.vim/local/filescripts/').scriptname.'.vim'
 endf
 
-command -nargs=? -complete=file EditScript exe ':e '.GetFileScript('<args>')
+command! -nargs=? -complete=file EditScript exe ':e '.GetFileScript('<args>')
 
 " SourceFileScripts(absolutefilename) {{{1
 " Finds all scripts associated to the given file or directory and sources
