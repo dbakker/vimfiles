@@ -49,6 +49,61 @@ fun! FindInDict(key, dictname, ...)
   throw 'cant find '.a:key
 endf
 
+" BufDelete([bang]) {{{2
+" Simplified/personalized version of the BufKill plugin...
+fun! BufDelete(...)
+  let bang=''
+  if a:0==1
+    let bang=a:1
+  endif
+  let bufferToKill = bufnr('%')
+  let curwindow = bufwinnr(bufferToKill)
+
+  if &modified && strlen(bang) == 0
+    throw 'Error: buffer is modified'
+  endif
+
+  if &bt == 'quickfix' || &bt=='help'
+    exe 'q'.bang
+  endif
+
+  if bufname('%') == '' && ! &modified && &modifiable
+    bprev
+    if winbufnr(curwindow) == bufferToKill
+      " If this is the last buffer, and its a '[No File]' buffer, it can't be
+      " deleted
+      return
+    endif
+  endif
+
+  " Create a list of all windows containing this buffer
+  let windows = []
+  let i = 1
+  let buf = winbufnr(i)
+  while buf != -1
+    if buf == bufferToKill
+      let windows += [i]
+    endif
+    let i = i + 1
+    let buf = winbufnr(i)
+  endwhile
+
+  " Make all those windows point to a new buffer
+  for window in windows
+    exec 'normal! ' . window . 'w'
+    bprev
+    if winbufnr(window) == bufferToKill
+      enew
+      if winbufnr(window) == bufferToKill
+        throw 'Error: could not create a new buffer'
+      endif
+    endif
+  endfor
+
+  exec 'normal! ' . curwindow . 'w'
+  exe 'bd'.bang.' '.bufferToKill
+endf
+
 " GuessProjectRoot(file): returns the project root or the current dir of the file {{{2
 let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(file)
