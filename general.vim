@@ -58,6 +58,12 @@ nnoremap <silent> <unique> <leader>qaq :bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qaw :wa<cr>:bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qaf :bufdo BD!<cr>
 
+" Increase/decrease font-size
+command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)+1','g')
+command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)-1','g')
+noremap <C-kPlus> :Bigger<CR>
+noremap <C-kMinus> :Smaller<CR>
+
 " Various other mappings
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
