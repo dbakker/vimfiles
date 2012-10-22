@@ -50,6 +50,14 @@ nnoremap <unique> Q @j
 " Use ':R foo' to run foo and capture its output in a scratch buffer
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
+" Add special 'bufferdelete' mappings
+nnoremap <silent> <unique> <leader>qq :BD<cr>
+nnoremap <silent> <unique> <leader>qf :BD!<cr>
+nnoremap <silent> <unique> <leader>qw :w<cr>:BD<cr>
+nnoremap <silent> <unique> <leader>qaq :bufdo BD<cr>
+nnoremap <silent> <unique> <leader>qaw :wa<cr>:bufdo BD<cr>
+nnoremap <silent> <unique> <leader>qaf :bufdo BD!<cr>
+
 " Various other mappings
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>

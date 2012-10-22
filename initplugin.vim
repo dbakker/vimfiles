@@ -22,7 +22,6 @@ Bundle 'git://github.com/tomtom/tcomment_vim.git'
 Bundle 'git://github.com/tpope/vim-fugitive.git'
 Bundle 'git://github.com/tpope/vim-markdown'
 Bundle 'git://github.com/tpope/vim-unimpaired.git'
-Bundle 'git://github.com/vim-scripts/bufkill.vim.git'
 Bundle 'git://github.com/vim-scripts/eclipse.vim.git'
 Bundle 'git://github.com/vim-scripts/javacomplete.git'
 Bundle 'git://github.com/vim-scripts/mru.vim.git'
@@ -79,14 +78,6 @@ vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 
 nnoremap <leader>aa :Ack 
 nnoremap <leader>apy :Ack --python 
-
-" Delete a buffer without closing its window
-nnoremap <silent> <unique> <leader>qq :BD<cr>
-nnoremap <silent> <unique> <leader>qf :BD!<cr>
-nnoremap <silent> <unique> <leader>qw :w<cr>:BD<cr>
-nnoremap <silent> <unique> <leader>qaq :bufdo BD<cr>
-nnoremap <silent> <unique> <leader>qaw :wa<cr>:bufdo BD<cr>
-nnoremap <silent> <unique> <leader>qaf :bufdo BD!<cr>
 
 " Java autocomplete {{{2
 if has("autocmd")

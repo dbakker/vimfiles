@@ -91,6 +91,7 @@ fun! BufDelete(...)
   exec 'normal! ' . curwindow . 'w'
   exe 'bd'.bang.' '.bufferToKill
 endf
+command! -nargs=0 -bang BD call BufDelete('<bang>')
 
 " GuessProjectRoot(file): returns the project root or the current dir of the file {{{2
 let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
