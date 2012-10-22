@@ -56,8 +56,8 @@ fun! BufDelete(...)
   if a:0==1
     let bang=a:1
   endif
-  let bufferToKill = bufnr('%')
-  let curwindow = bufwinnr(bufferToKill)
+  let curwindow = winnr()
+  let bufferToKill = winbufnr(curwindow)
 
   if &modified && strlen(bang) == 0
     throw 'Error: buffer is modified'
@@ -65,40 +65,28 @@ fun! BufDelete(...)
 
   if &bt == 'quickfix' || &bt=='help'
     exe 'q'.bang
+    return
   endif
 
-  if bufname('%') == '' && ! &modified && &modifiable
-    bprev
+  bprev
+  if winbufnr(curwindow) == bufferToKill
+    enew
     if winbufnr(curwindow) == bufferToKill
-      " If this is the last buffer, and its a '[No File]' buffer, it can't be
-      " deleted
       return
     endif
   endif
 
-  " Create a list of all windows containing this buffer
-  let windows = []
+  " Point windows containing this buffer to other buffers
   let i = 1
   let buf = winbufnr(i)
   while buf != -1
     if buf == bufferToKill
-      let windows += [i]
+      exec 'normal! ' . i . 'w'
+      bprev
     endif
     let i = i + 1
     let buf = winbufnr(i)
   endwhile
-
-  " Make all those windows point to a new buffer
-  for window in windows
-    exec 'normal! ' . window . 'w'
-    bprev
-    if winbufnr(window) == bufferToKill
-      enew
-      if winbufnr(window) == bufferToKill
-        throw 'Error: could not create a new buffer'
-      endif
-    endif
-  endfor
 
   exec 'normal! ' . curwindow . 'w'
   exe 'bd'.bang.' '.bufferToKill
