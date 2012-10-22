@@ -36,6 +36,7 @@ filetype plugin indent on     " required!
 let MRU_File = expand('~/.vim/local/mru_data.txt')
 let MRU_Exclude_Files = '\.git'
 let MRU_Add_Menu = 0
+nnoremap <unique> <leader>dr :MRU 
 
 " Tcomment {{{2
 let g:tcomment_types={'java': '// %s'}
