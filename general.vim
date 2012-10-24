@@ -51,10 +51,10 @@ nnoremap <unique> Q @j
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 " Add special 'bufferdelete' mappings
-nnoremap <silent> <unique> <leader>qq :BD<cr>
+nnoremap <silent> <unique> <leader>qj :BD<cr>
 nnoremap <silent> <unique> <leader>qf :BD!<cr>
 nnoremap <silent> <unique> <leader>qw :w<cr>:BD<cr>
-nnoremap <silent> <unique> <leader>qaq :bufdo BD<cr>
+nnoremap <silent> <unique> <leader>qaj :bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qaw :wa<cr>:bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qaf :bufdo BD!<cr>
 
@@ -63,6 +63,21 @@ command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+','\=sub
 command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)-1','g')
 noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
+
+" Navigate/create tabpages with g<num>
+fun! NavTabPage(num)
+  while tabpagenr('$')<a:num
+    tabnew
+  endwhile
+  exe 'tabnext '.a:num
+endf
+nnoremap <unique> <silent> g1 :call NavTabPage(1)<CR>
+nnoremap <unique> <silent> g2 :call NavTabPage(2)<CR>
+nnoremap <unique> <silent> g3 :call NavTabPage(3)<CR>
+nnoremap <unique> <silent> g4 :call NavTabPage(4)<CR>
+nnoremap <unique> <silent> g5 :call NavTabPage(5)<CR>
+nnoremap <unique> <silent> g6 :call NavTabPage(6)<CR>
+nnoremap <unique> <silent> g7 :call NavTabPage(7)<CR>
 
 " Various other mappings
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
