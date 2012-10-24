@@ -84,6 +84,8 @@ nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 command! -nargs=* Wrap setl wrap nolist
 command! -nargs=* NoWrap setl nowrap list&
+nnoremap <unique> <silent> [p :exe 'b '.GetNextProjectBuffer(-1)<CR>
+nnoremap <unique> <silent> ]p :exe 'b '.GetNextProjectBuffer(1)<CR>
 
 " Standard settings {{{2
 " Dont complain about hiding unsaved buffers

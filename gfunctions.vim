@@ -122,6 +122,43 @@ fun! GuessProjectRoot(file)
   endif
 endf
 
+" GetAllBuffers() {{{2
+fun! GetAllBuffers()
+  let all = range(0, bufnr('$'))
+  let res = []
+  for b in all
+    if buflisted(b)
+      call add(res, bufname(b))
+    endif
+  endfor
+  return res
+endfunction
+
+" GetNextProjectBuffer(count) {{{2
+" Creates a list of all open buffers sharing a projectroot with
+" this buffer, and goes to the next buffer on that list.
+
+fun! GetNextProjectBuffer(count)
+  let thisfile = expand('%:p')
+  let root = GuessProjectRoot(thisfile)
+  let bufs = []
+  let mybuf = -1
+  for b in GetAllBuffers()
+    let file = fnamemodify(bufname(b), ':p')
+    if stridx(file, root)==0
+      if file==thisfile
+        let mybuf = len(bufs)
+      endif
+      call add(bufs, file)
+    endif
+  endfor
+  if mybuf==-1
+    throw 'error, could not find '.thisfile.' amongst buffers'
+  endif
+  let target = (mybuf+a:count+len(bufs)) % len(bufs)
+  return bufs[target]
+endf
+
 " OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
   if has("win32")
