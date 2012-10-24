@@ -124,7 +124,7 @@ endf
 
 " GetAllBuffers() {{{2
 fun! GetAllBuffers()
-  let all = range(0, bufnr('$'))
+  let all = range(1, bufnr('$'))
   let res = []
   for b in all
     if buflisted(b)
@@ -144,7 +144,8 @@ fun! GetNextProjectBuffer(count)
   let bufs = []
   let mybuf = -1
   for b in GetAllBuffers()
-    let file = fnamemodify(bufname(b), ':p')
+    let file = bufname(b)
+    let file = fnamemodify(b, ':p')
     if stridx(file, root)==0
       if file==thisfile
         let mybuf = len(bufs)
