@@ -256,6 +256,7 @@ set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
 set diffopt+=iwhite             " Add ignorance of whitespace to diff
+set showtabline=0               " Never show the list of open tabs
 
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=2048
