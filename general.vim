@@ -302,7 +302,7 @@ set list
 " Font and GUI options {{{2
 if has("gui_running")
     " Remove all menus, scollbars, etc.
-    set guioptions=egit
+    set guioptions=git
 
     " Set font depending on system (tpope)
     if exists("&guifont")
