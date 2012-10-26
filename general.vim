@@ -51,18 +51,22 @@ nnoremap <unique> Q @j
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 " Add commandline/emacs style mappings for insert/command mode {{{3
-inoremap <C-X><C-@> <C-A>
-inoremap <C-A> <C-O>^
-inoremap <C-B> <Left>
-inoremap <C-D> <Del>
-inoremap <C-E> <End>
-inoremap <C-F> <Right>
-cnoremap <C-A> <Home>
-cnoremap <C-B> <Left>
-cnoremap <C-D> <Del>
-cnoremap <C-E> <End>
-cnoremap <C-F> <Right>
-cnoremap <C-P> <Up>
+inoremap <unique> <C-X><C-@> <C-A>
+inoremap <unique> <C-A> <C-O>^
+inoremap <unique> <C-B> <Left>
+inoremap <unique> <C-D> <Del>
+inoremap <unique> <C-E> <End>
+inoremap <unique> <C-F> <Right>
+inoremap <unique> <S-CR> <C-O>o
+inoremap <unique> <C-CR> <C-O>O
+
+cnoremap <unique> <C-X><C-A> <C-A>
+cnoremap <unique> <C-A> <Home>
+cnoremap <unique> <C-B> <Left>
+cnoremap <unique> <C-D> <Del>
+cnoremap <unique> <C-E> <End>
+cnoremap <unique> <C-F> <Right>
+cnoremap <unique> <C-P> <Up>
 
 " Add special 'bufferdelete' mappings {{{3
 nnoremap <silent> <unique> <leader>qj :BD<cr>
