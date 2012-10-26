@@ -15,25 +15,25 @@ set modelines=5
 " enter ex mode.
 " nnoremap ; :
 
-" Make the up and down arrows also move the screen
+" Make the up and down arrows also move the screen {{{3
 nnoremap <unique> <down> gj<C-e>
 nnoremap <unique> <up> gk<C-y>
 
-" Remap j and k to act as expected when used on long, wrapped, lines
+" Remap j and k to act as expected when used on long, wrapped, lines {{{3
 nnoremap <unique> j gj
 nnoremap <unique> k gk
 
-" Use space for (un)folding
+" Use space for (un)folding {{{3
 nnoremap <unique> <Space> za
 vnoremap <unique> <Space> za
 
-" Use ,/ to clear search highlighting
+" Use ,/ to clear search highlighting {{{3
 nmap <silent> ,/ :nohlsearch<CR>
 
-" Use ,w as a replacement to CTRL-W (useful in many window commands)
+" Use ,w as a replacement to CTRL-W (useful in many window commands) {{{3
 nmap <unique> ,w <C-w>
 
-" Use ,y/p/P to yank/paste to the OS clipboard
+" Use ,y/p/P to yank/paste to the OS clipboard {{{3
 nnoremap <unique> <leader>y "+y
 vnoremap <unique> <leader>y "+y
 nnoremap <unique> <leader>p "+p
@@ -41,16 +41,16 @@ vnoremap <unique> <leader>p "+p
 nnoremap <unique> <leader>P "+P
 vnoremap <unique> <leader>P "+P
 
-" Give Y a more logical purpose than aliasing yy
+" Give Y a more logical purpose than aliasing yy {{{3
 nnoremap <unique> Y y$
 
-" Use Q as alias for @j (execute 'j' recording)
+" Use Q as alias for @j (execute 'j' recording) {{{3
 nnoremap <unique> Q @j
 
-" Use ':R foo' to run foo and capture its output in a scratch buffer
+" Use ':R foo' to run foo and capture its output in a scratch buffer {{{3
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
-" Add commandline/emacs style mappings for insert/command mode
+" Add commandline/emacs style mappings for insert/command mode {{{3
 inoremap <C-X><C-@> <C-A>
 inoremap <C-A> <C-O>^
 inoremap <C-B> <Left>
@@ -64,7 +64,7 @@ cnoremap <C-E> <End>
 cnoremap <C-F> <Right>
 cnoremap <C-P> <Up>
 
-" Add special 'bufferdelete' mappings
+" Add special 'bufferdelete' mappings {{{3
 nnoremap <silent> <unique> <leader>qj :BD<cr>
 nnoremap <silent> <unique> <leader>qf :BD!<cr>
 nnoremap <silent> <unique> <leader>qw :w<cr>:BD<cr>
@@ -78,7 +78,7 @@ command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=sub
 noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
-" Navigate/create tabpages with g<num>
+" Navigate/create tabpages with g<num> {{{3
 fun! NavTabPage(num)
   while tabpagenr('$')<a:num
     tabnew
@@ -93,8 +93,9 @@ nnoremap <unique> <silent> g5 :call NavTabPage(5)<CR>
 nnoremap <unique> <silent> g6 :call NavTabPage(6)<CR>
 nnoremap <unique> <silent> g7 :call NavTabPage(7)<CR>
 
-" Various other mappings
+" Various other mappings {{{3
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
+nnoremap gK K
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 command! -nargs=* Wrap setl wrap nolist
 command! -nargs=* NoWrap setl nowrap list&
