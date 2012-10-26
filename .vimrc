@@ -68,10 +68,14 @@ endf
 fun! LoadBufScripts()
   if !exists('b:loaded_buf_scripts')
     let b:loaded_buf_scripts=1
+    let ftname=&filetype
+    if len(ftname)==0
+      let ftname='none'
+    endif
     call TrySource('~/.vim/onbuffer/general.vim')
-    call TrySource('~/.vim/onbuffer/'.&filetype.'.vim')
+    call TrySource('~/.vim/onbuffer/'.ftname.'.vim')
     call TrySource('~/.vim/local/onbuffer/general.vim')
-    call TrySource('~/.vim/local/onbuffer/'.&filetype.'.vim')
+    call TrySource('~/.vim/local/onbuffer/'.ftname.'.vim')
     call SourceFileScripts(expand('%:p'))
   endif
 endf
