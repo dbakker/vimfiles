@@ -50,6 +50,20 @@ nnoremap <unique> Q @j
 " Use ':R foo' to run foo and capture its output in a scratch buffer
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
+" Add commandline/emacs style mappings for insert/command mode
+inoremap <C-X><C-@> <C-A>
+inoremap <C-A> <C-O>^
+inoremap <C-B> <Left>
+inoremap <C-D> <Del>
+inoremap <C-E> <End>
+inoremap <C-F> <Right>
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+cnoremap <C-P> <Up>
+
 " Add special 'bufferdelete' mappings
 nnoremap <silent> <unique> <leader>qj :BD<cr>
 nnoremap <silent> <unique> <leader>qf :BD!<cr>
@@ -86,6 +100,9 @@ command! -nargs=* Wrap setl wrap nolist
 command! -nargs=* NoWrap setl nowrap list&
 nnoremap <unique> <silent> [p :exe 'b '.GetNextProjectBuffer(-1)<CR>
 nnoremap <unique> <silent> ]p :exe 'b '.GetNextProjectBuffer(1)<CR>
+if has("gui_mac")
+  noremap <C-6> <C-^>
+endif
 
 " Standard settings {{{2
 " Dont complain about hiding unsaved buffers
