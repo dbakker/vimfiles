@@ -97,7 +97,7 @@ command! -nargs=0 -bang BD call BufDelete('<bang>')
 let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(...)
   if a:0==1
-    let fullfile=fnamemodify(expand(a:0), ':p')
+    let fullfile=fnamemodify(expand(a:1), ':p')
   else
     let fullfile=expand('%')
   endif
