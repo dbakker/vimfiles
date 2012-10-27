@@ -1,8 +1,8 @@
 " General and global vim configuration
 
-" Some of this stuff comes from the Vim wiki, tpope, derek wyatt and others.
+" My thanks to the Vim wiki, tpope, derek wyatt and others.
 
-" allow files to define some custom settings like foldmethod
+" Allow files to define some custom settings like foldmethod
 " Warning: this might be insecure on some old versions of vim
 set modeline
 set modelines=5
@@ -13,7 +13,7 @@ set modelines=5
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, as I don't have to press the Shift key to form chords to
 " enter ex mode.
-" nnoremap ; :
+noremap ; :
 
 " Make the up and down arrows also move the screen {{{3
 nnoremap <unique> <down> gj<C-e>
@@ -30,9 +30,22 @@ vnoremap <unique> <Space> za
 " Use ,/ to clear search highlighting {{{3
 nmap <silent> ,/ :nohlsearch<CR>
 
-" Use ,w* to write files {{{3
-nnoremap <unique> ,wj :write<cr>
-nnoremap <unique> ,wa :wall<cr>
+" Add buffer write/delete mappings {{{3
+nnoremap <unique> ,wf :w!<cr>
+nnoremap <unique> ,wj :w<cr>
+nnoremap <unique> ,wa :wa<cr>
+nnoremap <silent> <unique> <leader>wq :w<cr>:BD<cr>
+nnoremap <silent> <unique> <leader>wx :wa<cr>:bufdo BD<cr>
+nnoremap <silent> <unique> <leader>qj :BD<cr>
+nnoremap <silent> <unique> <leader>qf :BD!<cr>
+nnoremap <silent> <unique> <leader>qa :bufdo BD<cr>
+
+" Increase/decrease font-size {{{3
+command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)+1','g')
+command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)-1','g')
+noremap <C-kPlus> :Bigger<CR>
+noremap <C-kMinus> :Smaller<CR>
+
 
 " Use ,y/p/P to yank/paste to the OS clipboard {{{3
 nnoremap <unique> <leader>y "+y
@@ -68,20 +81,6 @@ cnoremap <unique> <C-D> <Del>
 cnoremap <unique> <C-E> <End>
 cnoremap <unique> <C-F> <Right>
 cnoremap <unique> <C-P> <Up>
-
-" Add special 'bufferdelete' mappings {{{3
-nnoremap <silent> <unique> <leader>qj :BD<cr>
-nnoremap <silent> <unique> <leader>qf :BD!<cr>
-nnoremap <silent> <unique> <leader>qw :w<cr>:BD<cr>
-nnoremap <silent> <unique> <leader>qaj :bufdo BD<cr>
-nnoremap <silent> <unique> <leader>qaw :wa<cr>:bufdo BD<cr>
-nnoremap <silent> <unique> <leader>qaf :bufdo BD!<cr>
-
-" Increase/decrease font-size
-command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)+1','g')
-command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)-1','g')
-noremap <C-kPlus> :Bigger<CR>
-noremap <C-kMinus> :Smaller<CR>
 
 " Navigate/create tabpages with g<num> {{{3
 fun! NavTabPage(num)
