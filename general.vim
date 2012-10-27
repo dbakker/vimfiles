@@ -30,8 +30,9 @@ vnoremap <unique> <Space> za
 " Use ,/ to clear search highlighting {{{3
 nmap <silent> ,/ :nohlsearch<CR>
 
-" Use ,w as a replacement to CTRL-W (useful in many window commands) {{{3
-nmap <unique> ,w <C-w>
+" Use ,w* to write files {{{3
+nnoremap <unique> ,wj :write<cr>
+nnoremap <unique> ,wa :wall<cr>
 
 " Use ,y/p/P to yank/paste to the OS clipboard {{{3
 nnoremap <unique> <leader>y "+y
@@ -201,9 +202,6 @@ vnoremap ^ 0
 nnoremap cib %cib
 nnoremap dib %dib
 nnoremap yib %yib
-
-" My own invention: search for the last deleted thing {{{2
-nnoremap <unique> <silent><leader>s :<C-U>exe '/'.escape(substitute(@1,'$.*','','g'),'?\.*$^~[')<CR>bn
 
 " Allow insert mode <tab> and <S-tab> to autocomplete {{{2
 function! CleverTab(dir)
