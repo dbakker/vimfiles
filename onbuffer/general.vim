@@ -20,6 +20,8 @@ if filereadable(expand('%')) && exists('*GuessProjectRoot')
   elseif isdirectory(prjroot)
     exe 'setl path+='.prjroote
   endif
+  setl path-=
+  setl path+=
 endif
 
 if ((&kp=~'help') || (&kp=~':man')) && &ft!='vim' && &ft!='man'
