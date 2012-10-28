@@ -89,7 +89,7 @@ fun! BufDelete(...)
   endwhile
 
   exec 'normal! ' . curwindow . 'w'
-  sil! exe 'bd'.bang.' '.bufferToKill
+  sil! exe 'sil! bd'.bang.' '.bufferToKill
 endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
 
