@@ -14,14 +14,13 @@ if filereadable(expand('%')) && exists('*GuessProjectRoot')
   let prjroot=GuessProjectRoot()
   let prjroote=escape(prjroot, ' \')
   if isdirectory(prjroot.'/source')
-    exe 'setl path+='.prjroote.'/source'
+    let prjroote.='/source'
   elseif isdirectory(prjroot.'/src')
-    exe 'setl path+='.prjroote.'/src'
-  elseif isdirectory(prjroot)
-    exe 'setl path+='.prjroote
+    let prjroote.=.'/src'
   endif
-  setl path-=
-  setl path+=
+  if isdirectory(prjroote)
+    exe 'setl path=.,'.prjroote.','
+  endif
 endif
 
 if ((&kp=~'help') || (&kp=~':man')) && &ft!='vim' && &ft!='man'
