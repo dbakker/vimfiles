@@ -52,10 +52,7 @@ endf
 " BufDelete([bang]) {{{2
 " Simplified/personalized version of the BufKill plugin...
 fun! BufDelete(...)
-  let bang=''
-  if a:0==1
-    let bang=a:1
-  endif
+  let bang = a:0 ? a:1 : ''
   let curwindow = winnr()
   let bufferToKill = winbufnr(curwindow)
 
@@ -96,11 +93,7 @@ command! -nargs=0 -bang BD call BufDelete('<bang>')
 " GuessProjectRoot([file]): returns the project root or the current dir of the file {{{2
 let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(...)
-  if a:0==1
-    let fullfile=fnamemodify(expand(a:1), ':p')
-  else
-    let fullfile=expand('%')
-  endif
+  let fullfile = a:0 ? fnamemodify(expand(a:1), ':p') : expand('%')
   if exists('b:projectroot')
     if stridx(fullfile, fnamemodify(b:projectroot, ':p'))==0
       return b:projectroot
@@ -119,11 +112,7 @@ fun! GuessProjectRoot(...)
       return result
     endif
   endfor
-  if filereadable(fullfile)
-    return fnamemodify(fullfile, ':h')
-  else
-    return fullfile
-  endif
+  return filereadable(fullfile) ? fnamemodify(fullfile, ':h') : fullfile
 endf
 
 " GetAllBuffers() {{{2
