@@ -173,6 +173,20 @@ fun! s:getbuffer(l, count)
   return get(a:l, target, thisfile)
 endf
 
+" GetNextFileInDir(count) {{{2
+fun! GetNextFileInDir(count)
+  let files = []
+  for file in split(glob(expand('%:p:h').'/*'), "\n")
+    if !isdirectory(file)
+      call add(files, file)
+    endif
+  endfor
+  call sort(files)
+  let i = index(files, expand('%:p'))
+  let s = len(files)
+  return files[(((i+a:count) % s)+s) % s]
+endf
+
 " OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
   if has("win32")

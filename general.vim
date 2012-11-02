@@ -107,6 +107,8 @@ nnoremap <unique> <silent> [p :exe 'b '.GetNextProjectBuffer(-1)<CR>
 nnoremap <unique> <silent> ]p :exe 'b '.GetNextProjectBuffer(1)<CR>
 nnoremap <unique> <silent> [b :exe 'b '.GetNextBuffer(-1)<CR>
 nnoremap <unique> <silent> ]b :exe 'b '.GetNextBuffer(1)<CR>
+nnoremap <unique> <silent> [o :exe 'e '.GetNextFileInDir(-1)<CR>
+nnoremap <unique> <silent> ]o :exe 'e '.GetNextFileInDir(1)<CR>
 nnoremap <unique> <silent> [q :cprev<CR>
 nnoremap <unique> <silent> ]q :cnext<CR>
 if has("gui_mac")
