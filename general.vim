@@ -105,6 +105,10 @@ command! -nargs=* Wrap setl wrap nolist
 command! -nargs=* NoWrap setl nowrap list&
 nnoremap <unique> <silent> [p :exe 'b '.GetNextProjectBuffer(-1)<CR>
 nnoremap <unique> <silent> ]p :exe 'b '.GetNextProjectBuffer(1)<CR>
+nnoremap <unique> <silent> [b :exe 'b '.GetNextBuffer(-1)<CR>
+nnoremap <unique> <silent> ]b :exe 'b '.GetNextBuffer(1)<CR>
+nnoremap <unique> <silent> [q :cprev<CR>
+nnoremap <unique> <silent> ]q :cnext<CR>
 if has("gui_mac")
   noremap <C-6> <C-^>
 endif

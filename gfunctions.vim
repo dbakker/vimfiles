@@ -153,6 +153,26 @@ fun! GetNextProjectBuffer(count)
   return bufs[target]
 endf
 
+" GetNextBuffer(count) {{{2
+fun! GetNextBuffer(count)
+  let nowinbufs = []
+  let thisfile = expand('%:p')
+  for b in GetAllBuffers()
+    if bufwinnr(b) == -1 || b==thisfile
+      call add(nowinbufs, b)
+    endif
+  endfor
+  return s:getbuffer(nowinbufs, a:count)
+endf
+
+fun! s:getbuffer(l, count)
+  let thisfile = expand('%:p')
+  let i = index(a:l, thisfile)
+  let s = len(a:l)
+  let target = (((i+a:count) % s)+s) % s
+  return get(a:l, target, thisfile)
+endf
+
 " OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
   if has("win32")
