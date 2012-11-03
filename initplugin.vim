@@ -69,15 +69,22 @@ endif
 " NERDTree {{{2
 let NERDTreeHijackNetrw=0
 let NERDTreeBookmarksFile=expand('~/.vim/local/NERDTreeBookmarks.txt')
-let NERDTreeMouseMode=3
+let NERDTreeMouseMode=2
+fun! NERDTreeSmartToggle()
+  for buf in tabpagebuflist()
+    if bufname(buf) =~ 'NERD_tree'
+      NERDTreeClose
+      return
+    endif
+  endfor
+  exe 'NERDTree '.GuessProjectRoot()
+endf
 
 " Plugin mappings {{{2
-nnoremap <unique> <Leader>t= :Tabularize /=<CR>
-vnoremap <unique> <Leader>t= :Tabularize /=<CR>
+nnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
+vnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
 nnoremap <unique> <Leader>t: :Tabularize /:<CR>
 vnoremap <unique> <Leader>t: :Tabularize /:<CR>
-nnoremap <unique> <Leader>t:: :Tabularize /:\zs<CR>
-vnoremap <unique> <Leader>t:: :Tabularize /:\zs<CR>
 nnoremap <unique> <Leader>t, :Tabularize /,<CR>
 vnoremap <unique> <Leader>t, :Tabularize /,<CR>
 nnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
@@ -86,7 +93,8 @@ vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 nnoremap <leader>aa :Ack 
 nnoremap <leader>apy :Ack --python 
 
-nnoremap <unique> <silent> <Leader>dt :exe 'NERDTreeToggle '.GuessProjectRoot()<CR>
+nnoremap <unique> <silent> <Leader>dt :call NERDTreeSmartToggle()<CR>
+nnoremap <unique> <Leader>db :NERDTreeFromBookmark 
 
 " Java autocomplete {{{2
 if has("autocmd")
