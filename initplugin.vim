@@ -68,7 +68,7 @@ endif
 
 " NERDTree {{{2
 let NERDTreeHijackNetrw=0
-let NERDTreeBookmarksFile='~/.vim/local/NERDTreeBookmarks.txt'
+let NERDTreeBookmarksFile=expand('~/.vim/local/NERDTreeBookmarks.txt')
 let NERDTreeMouseMode=3
 
 " Plugin mappings {{{2
