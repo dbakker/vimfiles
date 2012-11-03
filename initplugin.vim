@@ -16,6 +16,7 @@ Bundle 'git://github.com/dbakker/dirmap.git'
 Bundle 'git://github.com/godlygeek/tabular.git'
 Bundle 'git://github.com/kien/ctrlp.vim.git'
 Bundle 'git://github.com/mileszs/ack.vim/'
+Bundle 'git://github.com/scrooloose/nerdtree.git'
 Bundle 'git://github.com/tomtom/tcomment_vim.git'
 Bundle 'git://github.com/tpope/vim-fugitive.git'
 Bundle 'git://github.com/tpope/vim-markdown.git'
@@ -65,6 +66,11 @@ elseif executable('ack')
   let g:ackprg="ack -H --nocolor --nogroup --column"
 endif
 
+" NERDTree {{{2
+let NERDTreeHijackNetrw=0
+let NERDTreeBookmarksFile='~/.vim/local/NERDTreeBookmarks.txt'
+let NERDTreeMouseMode=3
+
 " Plugin mappings {{{2
 nnoremap <unique> <Leader>t= :Tabularize /=<CR>
 vnoremap <unique> <Leader>t= :Tabularize /=<CR>
@@ -79,6 +85,8 @@ vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 
 nnoremap <leader>aa :Ack 
 nnoremap <leader>apy :Ack --python 
+
+nnoremap <unique> <silent> <Leader>dt :exe 'NERDTreeToggle '.GuessProjectRoot()<CR>
 
 " Java autocomplete {{{2
 if has("autocmd")
