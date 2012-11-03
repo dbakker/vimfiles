@@ -93,7 +93,7 @@ command! -nargs=0 -bang BD call BufDelete('<bang>')
 " GuessProjectRoot([file]): returns the project root or the current dir of the file {{{2
 let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
 fun! GuessProjectRoot(...)
-  let fullfile = a:0 ? fnamemodify(expand(a:1), ':p') : expand('%')
+  let fullfile = a:0 ? fnamemodify(expand(a:1), ':p') : expand('%:p')
   if exists('b:projectroot')
     if stridx(fullfile, fnamemodify(b:projectroot, ':p'))==0
       return b:projectroot
