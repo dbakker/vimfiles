@@ -271,6 +271,8 @@ set nowrap                      " don't wrap lines by default
 set linebreak                   " if we do wrap, wrap whole words, and mark it with '> '
 set showbreak=>\ 
 set scrolloff=1                 " keep 1 line distance from the edges of the screen
+set sidescrolloff=7             " columns to keep visible before and after cursor
+set sidescroll=1                " continuous horizontal scroll rather than jumpy
 set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
