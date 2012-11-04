@@ -77,7 +77,10 @@ fun! NERDTreeSmartToggle()
       return
     endif
   endfor
-  exe 'NERDTree '.GuessProjectRoot()
+  let r = getcwd()
+  exe 'cd '.GuessProjectRoot()
+  NERDTreeFind
+  exe 'cd '.r
 endf
 
 " Plugin mappings {{{2
