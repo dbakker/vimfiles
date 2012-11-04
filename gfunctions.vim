@@ -49,6 +49,13 @@ fun! FindInDict(key, dictname, ...)
   throw 'cant find '.a:key
 endf
 
+" GetVisualLine() {{{2
+function! GetVisualLine()
+  let col1 = getpos("'<")[2]
+  let col2 = getpos("'>")[2]
+  return getline('.')[col1-1:col2-1]
+endfunction
+
 " BufDelete([bang]) {{{2
 " Simplified/personalized version of the BufKill plugin...
 fun! BufDelete(...)

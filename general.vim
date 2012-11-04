@@ -95,6 +95,7 @@ nnoremap <unique> <silent> g7 :call NavTabPage(7)<CR>
 
 " Various other mappings {{{3
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
+vnoremap gG :call OpenURL('http://www.google.com/search?q='.substitute(GetVisualLine(),'\s','+','g'))<CR>
 nnoremap gK K
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 command! -nargs=* Wrap setl wrap nolist
