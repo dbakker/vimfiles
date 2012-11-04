@@ -203,11 +203,6 @@ nnoremap ^ 0
 xnoremap ^ 0
 vnoremap ^ 0
 
-" Make "inner block" commands work from outside the block {{{2
-nnoremap cib %cib
-nnoremap dib %dib
-nnoremap yib %yib
-
 " Allow insert mode <tab> and <S-tab> to autocomplete {{{2
 function! CleverTab(dir)
     if(pumvisible())                                 " if popup menu is visible
