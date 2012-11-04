@@ -40,7 +40,7 @@ filetype plugin indent on     " required!
 let MRU_File = expand('~/.vim/local/mru_data.txt')
 let MRU_Exclude_Files = '\.git'
 let MRU_Add_Menu = 0
-nnoremap <unique> <leader>dr :MRU 
+nnoremap <unique> <leader>dr :MRU<space>
 
 " Tcomment {{{2
 let g:tcomment_types={'java': '// %s'}
@@ -80,10 +80,7 @@ fun! NERDTreeSmartToggle()
       return
     endif
   endfor
-  let r = getcwd()
-  exe 'cd '.ProjectRootGuess()
-  NERDTreeFind
-  exe 'cd '.r
+  ProjectRootExe NERDTreeFind
 endf
 
 " Plugin mappings {{{2
@@ -96,11 +93,11 @@ vnoremap <unique> <Leader>t, :Tabularize /,<CR>
 nnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 
-nnoremap <leader>aa :Ack 
-nnoremap <leader>apy :Ack --python 
+nnoremap <leader>aa :Ack<space>
+nnoremap <leader>apy :Ack --python<space>
 
 nnoremap <unique> <silent> <Leader>dt :call NERDTreeSmartToggle()<CR>
-nnoremap <unique> <Leader>db :NERDTreeFromBookmark 
+nnoremap <unique> <Leader>db :NERDTreeFromBookmark<space>
 
 " Java autocomplete {{{2
 if has("autocmd")
