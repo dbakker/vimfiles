@@ -97,13 +97,13 @@ fun! BufDelete(...)
 endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
 
-" GetAllBuffers() {{{2
-fun! GetAllBuffers()
+" GetListedBuffers() {{{2
+fun! GetListedBuffers()
   let all = range(1, bufnr('$'))
   let res = []
   for b in all
     if buflisted(b)
-      call add(res, bufname(b))
+      call add(res, b)
     endif
   endfor
   return res
@@ -118,9 +118,8 @@ fun! GetNextProjectBuffer(count)
   let root = ProjectRootGuess(thisfile)
   let bufs = []
   let mybuf = -1
-  for b in GetAllBuffers()
+  for b in GetListedBuffers()
     let file = bufname(b)
-    let file = fnamemodify(b, ':p')
     if stridx(file, root)==0
       if file==thisfile
         let mybuf = len(bufs)
@@ -138,9 +137,9 @@ endf
 " GetNextBuffer(count) {{{2
 fun! GetNextBuffer(count)
   let nowinbufs = []
-  let thisfile = expand('%:p')
-  for b in GetAllBuffers()
-    if bufwinnr(b) == -1 || b==thisfile
+  let thisbuf = bufnr('')
+  for b in GetListedBuffers()
+    if bufwinnr(b) == -1 || b==thisbuf
       call add(nowinbufs, b)
     endif
   endfor
@@ -148,11 +147,14 @@ fun! GetNextBuffer(count)
 endf
 
 fun! s:getbuffer(l, count)
-  let thisfile = expand('%:p')
-  let i = index(a:l, thisfile)
+  let thisbuf = bufnr('')
+  let i = index(a:l, thisbuf)
+  if i==-1
+    throw 'Could not find current buffer'
+  endif
   let s = len(a:l)
   let target = (((i+a:count) % s)+s) % s
-  return get(a:l, target, thisfile)
+  return get(a:l, target, thisbuf)
 endf
 
 " GetNextFileInDir(count) {{{2
