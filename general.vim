@@ -97,6 +97,8 @@ nnoremap <unique> <silent> g7 :call NavTabPage(7)<CR>
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 vnoremap gG :call OpenURL('http://www.google.com/search?q='.substitute(GetVisualLine(),'\s','+','g'))<CR>
 nnoremap gK K
+" Reselect last pasted/edited text
+nnoremap gV `[v`]
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 command! -nargs=* Wrap setl wrap nolist
 command! -nargs=* NoWrap setl nowrap list&
