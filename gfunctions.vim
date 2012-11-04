@@ -230,8 +230,9 @@ fun! CompileAndRun()
       unlet! g:loaded_{expand('%:t:r')}
       so %
     elseif &ft=='markdown' && executable('markdown')
-      exe '!markdown %'
-      call OpenUrl(expand('%:p'))
+      let tmp=expand('~/.vim/local/mdpreview.html')
+      exe 'silent !markdown %>'.tmp
+      call OpenURL(tmp)
     elseif &ft=='java' && executable('java') && executable('javac')
       let package = search('\s*package\s', 'nw')
       let qualified = expand('%:t:r')
