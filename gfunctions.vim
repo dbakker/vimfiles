@@ -90,31 +90,6 @@ fun! BufDelete(...)
 endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
 
-" GuessProjectRoot([file]): returns the project root or the current dir of the file {{{2
-let projectrootmarkers = ['.projectroot', '.git', '.hg', '.svn', '.bzr', '_darcs', 'build.xml']
-fun! GuessProjectRoot(...)
-  let fullfile = a:0 ? fnamemodify(expand(a:1), ':p') : expand('%:p')
-  if exists('b:projectroot')
-    if stridx(fullfile, fnamemodify(b:projectroot, ':p'))==0
-      return b:projectroot
-    endif
-  endif
-  for marker in g:projectrootmarkers
-    let result=''
-    let pivot=fullfile
-    while pivot!=fnamemodify(pivot, ':h')
-      let pivot=fnamemodify(pivot, ':h')
-      if len(glob(pivot.'/'.marker))
-        let result=pivot
-      endif
-    endwhile
-    if len(result)
-      return result
-    endif
-  endfor
-  return filereadable(fullfile) ? fnamemodify(fullfile, ':h') : fullfile
-endf
-
 " GetAllBuffers() {{{2
 fun! GetAllBuffers()
   let all = range(1, bufnr('$'))
@@ -133,7 +108,7 @@ endfunction
 
 fun! GetNextProjectBuffer(count)
   let thisfile = expand('%:p')
-  let root = GuessProjectRoot(thisfile)
+  let root = ProjectRootGuess(thisfile)
   let bufs = []
   let mybuf = -1
   for b in GetAllBuffers()
@@ -149,7 +124,7 @@ fun! GetNextProjectBuffer(count)
   if mybuf==-1
     throw 'error, could not find '.thisfile.' amongst buffers'
   endif
-  let target = (mybuf+a:count+len(bufs)) % len(bufs)
+  let target = ((mybuf+a:count) % len(bufs) + len(bufs)) % len(bufs)
   return bufs[target]
 endf
 
@@ -216,7 +191,7 @@ endif
 fun! CompileAndRun()
   try
     " Try to do project wide compilations/runs
-    let s:projectRoot = GuessProjectRoot("%")
+    let s:projectRoot = ProjectRootGuess("%")
     if &ft=='java' || expand('%:t')=='build.xml'
       if(filereadable(s:projectRoot.'/build.xml'))
         wa

@@ -15,6 +15,7 @@ Bundle 'git://github.com/Lokaltog/vim-powerline.git'
 Bundle 'git://github.com/altercation/vim-colors-solarized.git'
 Bundle 'git://github.com/bronson/vim-visual-star-search.git'
 Bundle 'git://github.com/dbakker/dirmap.git'
+Bundle 'git://github.com/dbakker/vim-projectroot.git'
 Bundle 'git://github.com/godlygeek/tabular.git'
 Bundle 'git://github.com/kien/ctrlp.vim.git'
 Bundle 'git://github.com/mileszs/ack.vim/'
@@ -80,7 +81,7 @@ fun! NERDTreeSmartToggle()
     endif
   endfor
   let r = getcwd()
-  exe 'cd '.GuessProjectRoot()
+  exe 'cd '.ProjectRootGuess()
   NERDTreeFind
   exe 'cd '.r
 endf
