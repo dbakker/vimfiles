@@ -203,39 +203,6 @@ nnoremap ^ 0
 xnoremap ^ 0
 vnoremap ^ 0
 
-" Allow insert mode <tab> and <S-tab> to autocomplete {{{2
-function! CleverTab(dir)
-    if(pumvisible())                                 " if popup menu is visible
-        return a:dir                                 " go to next entry
-    endif
-
-    let substr = strpart(getline('.'), -1, col('.')) " get line until cursor
-    let substr = matchstr(substr, '\v[^({[\]})"`'',;=|& ]*\a*$') " get word until cursor
-
-    " If there is nothing to complete before the cursor, return a tab
-    if (strlen(substr)==0)
-        return "\<tab>"
-    endif
-
-    " If there is a slash before the cursor, treat it as a filename
-    if ((match(substr, '/') != -1) || (has("win32") && match(substr, '\') != -1))
-        return "\<C-X>\<C-F>"
-    endif
-
-    " If there is a symbol before the cursor, try plugin matching
-    if (strlen(&omnifunc) && (match(substr, '\v[^a-zA-Z0-9_$]') != -1))
-        return "\<C-X>\<C-O>"
-    endif
-
-    " use normal text matching
-    return "\<C-X>" . a:dir
-endfunction
-
-" Don't select first match but just complete as far as possible
-set completeopt=longest,menuone
-silent! inoremap <expr> <unique> <silent> <tab> CleverTab("\<C-N>")
-silent! inoremap <expr> <unique> <silent> <S-tab> CleverTab("\<C-P>")
-
 " ToggleModeless(): Turn Vim into a modeless editor {{{2
 let s:tm_toggle = 0
 fun! ToggleModeless()
