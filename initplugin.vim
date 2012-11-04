@@ -11,6 +11,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
+Bundle 'git://github.com/Lokaltog/vim-powerline.git'
 Bundle 'git://github.com/altercation/vim-colors-solarized.git'
 Bundle 'git://github.com/dbakker/dirmap.git'
 Bundle 'git://github.com/godlygeek/tabular.git'
