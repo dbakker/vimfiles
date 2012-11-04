@@ -143,7 +143,8 @@ set copyindent                  " copy the previous indentation on autoindenting
 set smarttab                    " insert tabs on the start of a line according to
                                 "    shiftwidth, not tabstop
 set gdefault                    " search/replace "globally" (on a line) by default
-set fileformats="unix,dos,mac"
+set fileformat=unix
+set fileformats=unix,dos,mac
 set formatoptions+=1            " when wrapping paragraphs, don't end lines
                                 "    with 1-letter words (looks stupid)
 set nrformats=                  " make <C-a> and <C-x> play well with
