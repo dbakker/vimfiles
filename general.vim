@@ -23,10 +23,6 @@ nnoremap <unique> <up> gk<C-y>
 nnoremap <unique> j gj
 nnoremap <unique> k gk
 
-" Use space for (un)folding {{{3
-nnoremap <unique> <Space> za
-vnoremap <unique> <Space> za
-
 " Use ,/ to clear search highlighting {{{3
 nmap <silent> ,/ :nohlsearch<CR>
 
