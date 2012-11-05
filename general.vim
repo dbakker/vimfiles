@@ -177,10 +177,10 @@ endif
 " Select theme {{{2
 if has("gui_running")
     set background=dark
-    colorscheme eclipse
+    colorscheme wombat256mod
 else
     let g:solarized_termcolors=256
-    colorscheme eclipse
+    colorscheme wombat256mod
 endif
 
 " vim: fen fdm=marker
