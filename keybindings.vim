@@ -128,15 +128,55 @@ vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 nnoremap <leader>aa :Ack<space>
 nnoremap <leader>apy :Ack --python<space>
 
+" <F1-12> mappings {{{1
+nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
+sil! nnoremap <unique> <silent> <F12> :call ToggleModeless()<cr>
+sil! inoremap <unique> <silent> <F12> <C-O>:call ToggleModeless()<cr>
+
 " Various other mappings {{{1
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 vnoremap gG :call OpenURL('http://www.google.com/search?q='.substitute(GetVisualLine(),'\s','+','g'))<CR>
 nnoremap gK K
+" gI: move to last change without going into insert mode like gi
+nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
-nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 command! -nargs=* Wrap setl wrap nolist
 command! -nargs=* NoWrap setl nowrap list&
 
-sil! nnoremap <unique> <silent> <F12> :call ToggleModeless()<cr>
-sil! inoremap <unique> <silent> <F12> <C-O>:call ToggleModeless()<cr>
+
+" Ack motions {{{1
+" https://github.com/sjl/dotfiles/blob/master/vim/vimrc
+"
+" Motions to Ack for things.  Works with pretty much everything, including:
+"
+"   w, W, e, E, b, B, t*, f*, i*, a*, and custom text objects
+"
+" Awesome.
+"
+" Note: If the text covered by a motion contains a newline it won't work.  Ack
+" searches line-by-line.
+
+nnoremap <silent> <leader>am :set opfunc=<SID>AckMotion<CR>g@
+xnoremap <silent> <leader>am :<C-U>call <SID>AckMotion(visualmode())<CR>
+
+nnoremap <silent> <leader>aw :Ack! '\b<c-r><c-w>\b'<cr>
+xnoremap <silent> <leader>aw :<C-U>call <SID>AckMotion(visualmode())<CR>
+
+function! s:CopyMotionForType(type)
+    if a:type ==# 'v'
+        silent execute "normal! `<" . a:type . "`>y"
+    elseif a:type ==# 'char'
+        silent execute "normal! `[v`]y"
+    endif
+endfunction
+
+function! s:AckMotion(type) abort
+    let reg_save = @@
+
+    call s:CopyMotionForType(a:type)
+
+    execute "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
+
+    let @@ = reg_save
+endfunction
