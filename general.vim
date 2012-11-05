@@ -143,13 +143,8 @@ endfunction
 
 set foldtext=MyFoldText()
 " Visualize suspicious characters {{{2
-if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
-  let &listchars = "tab:\u21e5\u00b7,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
-else
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<
-endif
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 set list
-
 
 " Font and GUI options {{{2
 if has("gui_running")
