@@ -32,9 +32,20 @@ nnoremap <silent> <unique> <leader>qf :BD!<cr>
 nnoremap <silent> <unique> <leader>qj :BD<cr>
 
 " File management mappings {{{1
+fun! EditFromDir(dir)
+  if isdirectory(a:dir)
+    return ':e '.a:dir.'/'
+  endif
+  return ':e '
+endf
 nnoremap <unique> <Leader>db :NERDTreeFromBookmark<space>
+nnoremap <unique> <Leader>dc :cd<space>
+nnoremap <unique> <expr> <Leader>di EditFromDir(expand('%:h'))
+nnoremap <unique> <expr> <Leader>dj EditFromDir(ProjectRootGuess())
 nnoremap <unique> <silent> <Leader>dt :call NERDTreeSmartToggle()<CR>
 nnoremap <unique> <leader>dr :MRU<space>
+nnoremap <unique> <silent> <leader>dp :exe 'cd '.ProjectRootGuess()<CR>
+nnoremap <unique> <silent> <leader>du :cd ..<CR>
 nnoremap <unique> <silent> [b :exe 'b '.GetNextBuffer(-1)<CR>
 nnoremap <unique> <silent> ]b :exe 'b '.GetNextBuffer(1)<CR>
 nnoremap <unique> <silent> [o :exe 'e '.GetNextFileInDir(-1)<CR>
