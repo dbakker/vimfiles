@@ -17,8 +17,8 @@ fun! TrySource(script)
 endf
 
 " initialize global methods and variables for use in scripts/plugins
-call TrySource('~/.vim/gfunctions.vim')
-call TrySource('~/.vim/local/gfunctions.vim')
+call TrySource('~/.vim/functions.vim')
+call TrySource('~/.vim/local/functions.vim')
 " initialize plugin stuff (Vundle/Pathogen)
 call TrySource('~/.vim/initplugin.vim')
 call TrySource('~/.vim/local/initplugin.vim')
@@ -29,6 +29,7 @@ filetype plugin indent on
 " Load general vim scripts
 call TrySource('~/.vim/general.vim')
 call TrySource('~/.vim/local/general.vim')
+call TrySource('~/.vim/keybindings.vim')
 call TrySource('~/.vimrc.local')
 
 " GetFileScript([filename]) {{{1

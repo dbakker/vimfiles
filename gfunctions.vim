@@ -1,8 +1,8 @@
 
-if exists("loaded_gfunctions")
+if exists("loaded_functions")
   finish
 endif
-let loaded_gfunctions = 1
+let loaded_functions = 1
 
 " Global variables/autocmds {{{1
 
@@ -256,3 +256,27 @@ fun! CompileAndRun()
     redraw!
   endtry
 endf
+
+" ToggleModeless(): Turn Vim into a modeless editor {{{2
+let s:tm_toggle = 0
+fun! ToggleModeless()
+  if s:tm_toggle == 0
+    let s:tm_toggle = 1
+    let s:tm_insertmode=&insertmode
+    let s:tm_fdc=&fdc
+    if has("gui_running")
+      let s:tm_guioptions=&guioptions
+      set guioptions=gmrLtT
+    endif
+    set insertmode
+    if &fdc<2
+      set fdc=3
+    endif
+  else
+    let s:tm_toggle = 0
+    let &insertmode=s:tm_insertmode
+    let &guioptions=s:tm_guioptions
+    let &fdc=s:tm_fdc
+  endif
+endf
+command! -nargs=0 ToggleModeless call ToggleModeless()
