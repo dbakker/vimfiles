@@ -93,8 +93,8 @@ inoremap <unique> <C-B> <Left>
 inoremap <unique> <C-D> <Del>
 inoremap <unique> <C-E> <End>
 inoremap <unique> <C-F> <Right>
-inoremap <unique> <S-CR> <C-O>o
-inoremap <unique> <C-CR> <C-O>O
+inoremap <unique> <S-CR> <C-O>O
+inoremap <unique> <C-CR> <C-O>o
 
 cnoremap <unique> <C-X><C-A> <C-A>
 cnoremap <unique> <C-A> <Home>
@@ -146,9 +146,8 @@ nnoremap gK K
 nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
-command! -nargs=* Wrap setl wrap nolist
-command! -nargs=* NoWrap setl nowrap list&
-
+command! -nargs=0 Wrap setl wrap nolist
+command! -nargs=0 NoWrap setl nowrap list&
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
@@ -169,19 +168,16 @@ nnoremap <silent> <leader>aw :Ack! '\b<c-r><c-w>\b'<cr>
 xnoremap <silent> <leader>aw :<C-U>call <SID>AckMotion(visualmode())<CR>
 
 function! s:CopyMotionForType(type)
-    if a:type ==# 'v'
-        silent execute "normal! `<" . a:type . "`>y"
-    elseif a:type ==# 'char'
-        silent execute "normal! `[v`]y"
-    endif
+  if a:type ==# 'v'
+    sil exe "normal! `<" . a:type . "`>y"
+  elseif a:type ==# 'char'
+    sil exe "normal! `[v`]y"
+  endif
 endfunction
 
 function! s:AckMotion(type) abort
-    let reg_save = @@
-
-    call s:CopyMotionForType(a:type)
-
-    execute "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
-
-    let @@ = reg_save
+  let reg_save = @@
+  call s:CopyMotionForType(a:type)
+  exe "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
+  let @@ = reg_save
 endfunction
