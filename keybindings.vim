@@ -55,6 +55,8 @@ nnoremap <unique> <silent> [p :exe 'b '.GetNextProjectBuffer(-1)<CR>
 nnoremap <unique> <silent> ]p :exe 'b '.GetNextProjectBuffer(1)<CR>
 nnoremap <unique> <silent> [q :cprev<CR>
 nnoremap <unique> <silent> ]q :cnext<CR>
+nnoremap <unique> <silent> [t :tprev<CR>
+nnoremap <unique> <silent> ]t :tnext<CR>
 if has("gui_mac")
   noremap <C-6> <C-^>
 endif
