@@ -70,6 +70,8 @@ noremap <C-kMinus> :Smaller<CR>
 " Use ,y/p/P to yank/paste to the OS clipboard {{{1
 nnoremap <unique> <leader>y "+y
 vnoremap <unique> <leader>y "+y
+nnoremap <unique> <leader>Y "+Y
+vnoremap <unique> <leader>Y "+Y
 nnoremap <unique> <leader>p "+p
 vnoremap <unique> <leader>p "+p
 nnoremap <unique> <leader>P "+P
