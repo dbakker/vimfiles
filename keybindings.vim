@@ -40,6 +40,7 @@ fun! EditFromDir(dir)
 endf
 nnoremap <unique> <Leader>db :NERDTreeFromBookmark<space>
 nnoremap <unique> <Leader>dc :cd<space>
+nnoremap <unique> <silent> <leader>df :cd %:p:h<CR>
 nnoremap <unique> <expr> <Leader>di EditFromDir(expand('%:h'))
 nnoremap <unique> <expr> <Leader>dj EditFromDir(ProjectRootGuess())
 nnoremap <unique> <silent> <Leader>dt :call NERDTreeSmartToggle()<CR>
