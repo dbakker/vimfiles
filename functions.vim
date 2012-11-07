@@ -119,7 +119,7 @@ fun! GetNextProjectBuffer(count)
   for b in GetListedBuffers()
     let bname = bufname(b)
     let bfile = fnamemodify(bname, ':p')
-    if len(bname) && stridx(bfile, root)==0
+    if len(bname) && stridx(bfile, root)==0 && bufwinnr(b)==-1
       call add(bufs, b)
     endif
   endfor
