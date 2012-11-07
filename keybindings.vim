@@ -134,9 +134,28 @@ nnoremap <leader>aa :Ack<space>
 nnoremap <leader>apy :Ack --python<space>
 
 " <F1-12> mappings {{{1
+nnoremap <F2> :set invlist list?<CR>
+imap <F2> <C-O><F2>
+xmap <F2> <Esc><F2>gv
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 sil! nnoremap <unique> <silent> <F12> :call ToggleModeless()<cr>
 sil! inoremap <unique> <silent> <F12> <C-O>:call ToggleModeless()<cr>
+noremap <unique> <silent> <C-F9>  :vertical resize -10<cr>
+noremap <unique> <silent> <C-F10> :resize +10<cr>
+noremap <unique> <silent> <C-F11> :resize -10<cr>
+noremap <unique> <silent> <C-F12> :vertical resize +10<cr>
+
+" Window management {{{1
+nnoremap <unique> <M-+> <C-W>+
+nnoremap <unique> <M--> <C-W>-
+nnoremap <unique> <M-<> <C-W><
+nnoremap <unique> <M->> <C-W>>
+nnoremap <unique> <M-h> <C-W>h
+nnoremap <unique> <M-j> <C-W>j
+nnoremap <unique> <M-k> <C-W>k
+nnoremap <unique> <M-l> <C-W>l
+nnoremap <unique> <M-q> <C-W>q
+nnoremap <unique> <M-w> <C-W>w
 
 " Various other mappings {{{1
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
