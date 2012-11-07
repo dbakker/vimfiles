@@ -156,6 +156,8 @@ nnoremap <unique> <M-j> <C-W>j
 nnoremap <unique> <M-k> <C-W>k
 nnoremap <unique> <M-l> <C-W>l
 nnoremap <unique> <M-q> <C-W>q
+nnoremap <unique> <M-s> <C-W>s
+nnoremap <unique> <M-v> <C-W>v
 nnoremap <unique> <M-w> <C-W>w
 
 " Various other mappings {{{1
