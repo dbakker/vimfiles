@@ -114,24 +114,16 @@ endfunction
 " this buffer, and goes to the next buffer on that list.
 
 fun! GetNextProjectBuffer(count)
-  let thisfile = expand('%:p')
-  let root = ProjectRootGuess(thisfile)
+  let root = ProjectRootGuess()
   let bufs = []
-  let mybuf = -1
   for b in GetListedBuffers()
-    let file = bufname(b)
-    if stridx(file, root)==0
-      if file==thisfile
-        let mybuf = len(bufs)
-      endif
-      call add(bufs, file)
+    let bname = bufname(b)
+    let bfile = fnamemodify(bname, ':p')
+    if len(bname) && stridx(bfile, root)==0
+      call add(bufs, b)
     endif
   endfor
-  if mybuf==-1
-    throw 'error, could not find '.thisfile.' amongst buffers'
-  endif
-  let target = ((mybuf+a:count) % len(bufs) + len(bufs)) % len(bufs)
-  return bufs[target]
+  return s:GetRelativeBuffer(bufs, a:count)
 endf
 
 " GetNextBuffer(count) {{{2
@@ -139,22 +131,25 @@ fun! GetNextBuffer(count)
   let nowinbufs = []
   let thisbuf = bufnr('')
   for b in GetListedBuffers()
-    if bufwinnr(b) == -1 || b==thisbuf
+    if bufwinnr(b) == -1
       call add(nowinbufs, b)
     endif
   endfor
-  return s:getbuffer(nowinbufs, a:count)
+  return s:GetRelativeBuffer(nowinbufs, a:count)
 endf
 
-fun! s:getbuffer(l, count)
+fun! s:GetRelativeBuffer(buflist, count)
+  let l=copy(a:buflist)
   let thisbuf = bufnr('')
-  let i = index(a:l, thisbuf)
-  if i==-1
-    throw 'Could not find current buffer'
+  if index(l, thisbuf)==-1
+    call add(l, thisbuf)
   endif
-  let s = len(a:l)
+  call sort(l)
+
+  let i = index(l, thisbuf)
+  let s = len(l)
   let target = (((i+a:count) % s)+s) % s
-  return get(a:l, target, thisbuf)
+  return get(l, target, thisbuf)
 endf
 
 " GetNextFileInDir(count) {{{2
