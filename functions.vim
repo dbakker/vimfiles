@@ -56,6 +56,16 @@ function! GetVisualLine()
   return getline('.')[col1-1:col2-1]
 endfunction
 
+" IsExtraBuffer(buffer) {{{2
+fun! IsExtraBuffer(...)
+  if a:0==1
+    let bt=getbufvar(a:1, '&bt')
+  else
+    let bt=&bt
+  endif
+  return bt=='help' || bt=='quickfix' || bt=='nofile'
+endf
+
 " BufDelete([bang]) {{{2
 " Simplified/personalized version of the BufKill plugin...
 fun! BufDelete(...)
@@ -67,7 +77,7 @@ fun! BufDelete(...)
     throw 'Error: buffer is modified'
   endif
 
-  if &bt == 'quickfix' || &bt=='help'
+  if IsExtraBuffer()
     exe 'q'.bang
     return
   endif
