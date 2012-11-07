@@ -178,5 +178,3 @@ else
     let g:solarized_termcolors=256
     colorscheme wombat256mod
 endif
-
-" vim: fen fdm=marker
