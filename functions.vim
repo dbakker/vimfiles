@@ -77,7 +77,7 @@ fun! BufDelete(...)
     throw 'Error: buffer is modified'
   endif
 
-  if IsExtraBuffer()
+  if IsExtraBuffer() && winnr('$')>1
     exe 'q'.bang
     return
   endif
