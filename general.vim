@@ -80,6 +80,7 @@ set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 augroup resCur
     autocmd!
     autocmd BufReadPost * call setpos(".", getpos("'\""))
+    autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif
 augroup END
 
 " Undo {{{2
