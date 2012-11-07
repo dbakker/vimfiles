@@ -252,6 +252,17 @@ fun! CompileAndRun()
   endtry
 endf
 
+" ToggleQuickFix() {{{2
+fun! ToggleQuickFix()
+  for b in tabpagebuflist()
+    if getbufvar(b, '&buftype') == 'quickfix'
+      cclose
+      return
+    endif
+  endfor
+  copen
+endf
+
 " ToggleModeless(): Turn Vim into a modeless editor {{{2
 let s:tm_toggle = 0
 fun! ToggleModeless()

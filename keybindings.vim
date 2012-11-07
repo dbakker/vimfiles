@@ -134,9 +134,10 @@ nnoremap <leader>aa :Ack<space>
 nnoremap <leader>apy :Ack --python<space>
 
 " <F1-12> mappings {{{1
-nnoremap <F2> :set invlist list?<CR>
+nnoremap <F2> :set invlist list?<cr>
 imap <F2> <C-O><F2>
 xmap <F2> <Esc><F2>gv
+nnoremap <unique> <silent> <F3> :call ToggleQuickFix()<cr>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 sil! nnoremap <unique> <silent> <F12> :call ToggleModeless()<cr>
 sil! inoremap <unique> <silent> <F12> <C-O>:call ToggleModeless()<cr>
@@ -158,6 +159,7 @@ nnoremap <unique> <M-q> <C-W>q
 nnoremap <unique> <M-w> <C-W>w
 
 " Various other mappings {{{1
+imap <unique> <C-Space> <C-X><C-O>
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
 vnoremap gG :call OpenURL('http://www.google.com/search?q='.substitute(GetVisualLine(),'\s','+','g'))<CR>
 nnoremap gK K
