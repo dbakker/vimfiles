@@ -18,6 +18,7 @@ Bundle 'git://github.com/dbakker/vim-projectroot.git'
 Bundle 'git://github.com/ervandew/supertab.git'
 Bundle 'git://github.com/godlygeek/tabular.git'
 Bundle 'git://github.com/kien/ctrlp.vim.git'
+Bundle 'git://github.com/majutsushi/tagbar.git'
 Bundle 'git://github.com/mileszs/ack.vim/'
 Bundle 'git://github.com/nelstrom/vim-markdown-folding.git'
 Bundle 'git://github.com/scrooloose/nerdtree.git'
@@ -80,7 +81,11 @@ fun! NERDTreeSmartToggle()
       return
     endif
   endfor
-  ProjectRootExe NERDTreeFind
+  try
+    ProjectRootExe NERDTreeFind
+  catch
+    ProjectRootExe NERDTree
+  endtry
 endf
 
 " Java autocomplete {{{2
@@ -89,4 +94,3 @@ if has("autocmd")
 endif
 
 endif
-" vim: fdm=marker

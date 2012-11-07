@@ -137,10 +137,13 @@ nnoremap <leader>apy :Ack --python<space>
 nnoremap <F2> :set invlist list?<cr>
 imap <F2> <C-O><F2>
 xmap <F2> <Esc><F2>gv
-nnoremap <unique> <silent> <F3> :call ToggleQuickFix()<cr>
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
-sil! nnoremap <unique> <silent> <F12> :call ToggleModeless()<cr>
-sil! inoremap <unique> <silent> <F12> <C-O>:call ToggleModeless()<cr>
+nnoremap <unique> <silent> <F9> :call NERDTreeSmartToggle()<cr>
+nnoremap <unique> <silent> <F10> :call ToggleQuickFix()<cr>
+nnoremap <unique> <silent> <F12> :TagbarToggle<cr>
+sil! nnoremap <unique> <silent> <F3> :call ToggleModeless()<cr>
+sil! inoremap <unique> <silent> <F3> <C-O>:call ToggleModeless()<cr>
+
 noremap <unique> <silent> <C-F9>  :vertical resize -10<cr>
 noremap <unique> <silent> <C-F10> :resize +10<cr>
 noremap <unique> <silent> <C-F11> :resize -10<cr>
