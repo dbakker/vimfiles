@@ -83,6 +83,20 @@ augroup resCur
     autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif
 augroup END
 
+" Set working directory to root of first opened file {{{2
+if has("gui_running")
+  fun! s:WorkDirRead()
+    if &bt=='' && filereadable(expand('%'))
+      exe 'sil cd '.ProjectRootGuess()
+      au! workDir
+    endif
+  endf
+  aug workDir
+    au!
+    au BufWinEnter * call <SID>WorkDirRead()
+  aug END
+endif
+
 " Undo {{{2
 set undolevels=1000             " use many muchos levels of undo
 if exists('+undofile')
