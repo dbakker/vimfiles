@@ -65,6 +65,7 @@ set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
 set ignorecase                  " case insensitive search
 set smartcase                   " lowercase search matches any case
 set nofoldenable                " do not fold by default (use zM/zR)
+set nojoinspaces                " only insert 1 space after . ? and !
 
 " Set options for views and sessions
 set sessionoptions=blank,buffers,folds,help,resize,slash,unix,winsize
