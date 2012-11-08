@@ -286,7 +286,7 @@ fun! ToggleQuickFix()
       return
     endif
   endfor
-  copen
+  botright copen
 endf
 
 " ToggleModeless(): Turn Vim into a modeless editor {{{2
