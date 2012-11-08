@@ -176,6 +176,22 @@ fun! GetNextFileInDir(count)
   return files[(((i+a:count) % s)+s) % s]
 endf
 
+" OpenPrompt() {{{2
+fun! OpenPrompt()
+  if has('win32')
+    exe 'sil !start cmd'
+    return
+  else
+    for p in ['rxvt', 'gnome-terminal', 'xterm', &shell]
+      if executable(p)
+        exe 'sil !'.p.' &'
+      endif
+      return
+    endfor
+  endif
+  throw 'Could not find a way to open a prompt'
+endf
+
 " OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
   if has("win32")
