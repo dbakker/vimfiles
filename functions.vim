@@ -82,7 +82,7 @@ fun! BufDelete(...)
     return
   endif
 
-  bprev
+  exe 'b ' . (bufloaded(bufnr('#')) ? '#' : GetNextBuffer(-1))
   if winbufnr(curwindow) == bufferToKill
     enew
     if winbufnr(curwindow) == bufferToKill
@@ -95,14 +95,14 @@ fun! BufDelete(...)
   let buf = winbufnr(i)
   while buf != -1
     if buf == bufferToKill
-      exec 'normal! ' . i . 'w'
-      bprev
+      exe 'normal! ' . i . 'w'
+      exe 'b '.GetNextBuffer(-1)
     endif
     let i = i + 1
     let buf = winbufnr(i)
   endwhile
 
-  exec 'normal! ' . curwindow . 'w'
+  exe 'normal! ' . curwindow . 'w'
   sil! exe 'sil! bd'.bang.' '.bufferToKill
 endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
