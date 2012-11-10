@@ -163,6 +163,10 @@ nnoremap <unique> <M-q> <C-W>q
 nnoremap <unique> <M-s> <C-W>s
 nnoremap <unique> <M-v> <C-W>v
 nnoremap <unique> <M-w> <C-W>w
+nnoremap <unique> <M-Left> <C-W>h
+nnoremap <unique> <M-Down> <C-W>j
+nnoremap <unique> <M-Up> <C-W>k
+nnoremap <unique> <M-Right> <C-W>l
 
 " Various other mappings {{{1
 imap <unique> <C-Space> <C-X><C-O>
