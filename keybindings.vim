@@ -168,6 +168,17 @@ nnoremap <unique> <M-Down> <C-W>j
 nnoremap <unique> <M-Up> <C-W>k
 nnoremap <unique> <M-Right> <C-W>l
 
+" Visual paste without overwriting registers {{{1
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+function! s:Repl()
+    let s:restore_reg = @"
+    return "p@=RestoreRegister()\<cr>"
+endfunction
+xnoremap <unique> <silent> <expr> P <sid>Repl()
+
 " Various other mappings {{{1
 imap <unique> <C-Space> <C-X><C-O>
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
