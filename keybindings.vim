@@ -168,16 +168,6 @@ nnoremap <unique> <M-Down> <C-W>j
 nnoremap <unique> <M-Up> <C-W>k
 nnoremap <unique> <M-Right> <C-W>l
 
-" Visual paste without overwriting registers {{{1
-function! RestoreRegister()
-  let @" = s:restore_reg
-  return ''
-endfunction
-function! s:Repl()
-    let s:restore_reg = @"
-    return "p@=RestoreRegister()\<cr>"
-endfunction
-xnoremap <unique> <silent> <expr> P <sid>Repl()
 
 " Various other mappings {{{1
 imap <unique> <C-Space> <C-X><C-O>
@@ -188,6 +178,8 @@ nnoremap gK K
 nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
+" Paste without overwriting any register, repeatable with dot
+xnoremap <unique> <silent> P "_c<C-R>0<esc>
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
