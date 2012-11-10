@@ -205,6 +205,38 @@ function! OpenURL(url) " (tpope)
 endfunction
 command! -nargs=1 OpenURL :call OpenURL(<q-args>)
 
+" GuessMainBuffer() {{{2
+fun! GuessMainBuffer()
+  let buf=bufnr('')
+  let size=-1
+  for b in tabpagebuflist()
+    if !IsExtraBuffer(b)
+      let s=winheight(bufwinnr(b)) * winwidth(bufwinnr(b))
+      if s>size
+        let size=s
+        let buf=b
+      endif
+    endif
+  endfor
+  return buf
+endf
+
+" GuessMainWindow() {{{2
+fun! GuessMainWindow()
+  return bufwinnr(GuessMainBuffer())
+endf
+
+" GuessMainFile() {{{2
+fun! GuessMainFile()
+  return bufname(GuessMainBuffer())
+endf
+
+" SwitchMain() {{{2
+fun! SwitchMain()
+  exe 'normal! ' . GuessMainWindow() . 'w'
+endf
+com! -nargs=0 SwitchMain call SwitchMain()
+
 " CompileAndRun() {{{2
 let cnr_scriptlangs={}
 let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
@@ -312,3 +344,4 @@ fun! ToggleModeless()
   endif
 endf
 command! -nargs=0 ToggleModeless call ToggleModeless()
+

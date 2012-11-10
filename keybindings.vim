@@ -33,30 +33,30 @@ nnoremap <silent> <unique> <leader>qj :BD<cr>
 
 " File management mappings {{{1
 fun! EditFromDir(dir)
-  if isdirectory(a:dir)
+  if isdirectory(a:dir) && a:dir!='.'
     return ':e '.a:dir.'/'
   endif
   return ':e '
 endf
-nnoremap <unique> <Leader>db :NERDTreeFromBookmark<space>
-nnoremap <unique> <Leader>dc :cd<space>
-nnoremap <unique> <silent> <leader>df :cd %:p:h<CR>
-nnoremap <unique> <expr> <Leader>di EditFromDir(expand('%:h'))
-nnoremap <unique> <expr> <Leader>dj EditFromDir(ProjectRootGuess())
-nnoremap <unique> <silent> <Leader>dt :call NERDTreeSmartToggle()<CR>
-nnoremap <unique> <leader>dr :MRU<space>
-nnoremap <unique> <silent> <leader>dp :exe 'cd '.ProjectRootGuess()<CR>
-nnoremap <unique> <silent> <leader>du :cd ..<CR>
-nnoremap <unique> <silent> [b :exe 'b '.GetNextBuffer(-1)<CR>
-nnoremap <unique> <silent> ]b :exe 'b '.GetNextBuffer(1)<CR>
-nnoremap <unique> <silent> [o :exe 'e '.GetNextFileInDir(-1)<CR>
-nnoremap <unique> <silent> ]o :exe 'e '.GetNextFileInDir(1)<CR>
-nnoremap <unique> <silent> [p :exe 'b '.GetNextProjectBuffer(-1)<CR>
-nnoremap <unique> <silent> ]p :exe 'b '.GetNextProjectBuffer(1)<CR>
-nnoremap <unique> <silent> [q :cprev<CR>
-nnoremap <unique> <silent> ]q :cnext<CR>
-nnoremap <unique> <silent> [t :tprev<CR>
-nnoremap <unique> <silent> ]t :tnext<CR>
+nnoremap <unique> <leader>db :NERDTreeFromBookmark<space>
+nnoremap <unique> <leader>dc :cd<space>
+nnoremap <unique> <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
+nnoremap <unique> <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
+nnoremap <unique> <expr> <leader>dj EditFromDir(ProjectRootGuess(GuessMainFile()))
+nnoremap <unique> <silent> <leader>dt :call NERDTreeSmartToggle()<cr>
+nnoremap <unique> <leader>dr :SwitchMain<cr>:MRU<space>
+nnoremap <unique> <silent> <leader>dp :exe 'cd '.ProjectRootGuess(GuessMainFile())<cr>
+nnoremap <unique> <silent> <leader>du :cd ..<cr>
+nnoremap <unique> <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
+nnoremap <unique> <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
+nnoremap <unique> <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
+nnoremap <unique> <silent> ]o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(1)<cr>
+nnoremap <unique> <silent> [p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1)<cr>
+nnoremap <unique> <silent> ]p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1)<cr>
+nnoremap <unique> <silent> [q :cprev<cr>
+nnoremap <unique> <silent> ]q :cnext<cr>
+nnoremap <unique> <silent> [t :tprev<cr>
+nnoremap <unique> <silent> ]t :tnext<cr>
 if has("gui_mac")
   noremap <C-6> <C-^>
 endif
