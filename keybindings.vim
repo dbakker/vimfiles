@@ -178,8 +178,8 @@ nnoremap gK K
 nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
-" Paste without overwriting any register, repeatable with dot
-xnoremap <unique> <silent> P "_c<C-R>0<esc>
+" Paste without overwriting any register
+xnoremap <unique> <silent> P "_dP
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
