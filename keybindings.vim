@@ -38,6 +38,8 @@ fun! EditFromDir(dir)
   endif
   return ':e '
 endf
+sil! nnoremap <unique> <silent> go :exe 'ptag '.expand('<cword>')<cr>
+sil! xnoremap <unique> <silent> go :exe 'ptag '.GetVisualLine()<cr>
 nnoremap <unique> <leader>db :NERDTreeFromBookmark<space>
 nnoremap <unique> <leader>dc :cd<space>
 nnoremap <unique> <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
