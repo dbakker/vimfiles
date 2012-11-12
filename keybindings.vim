@@ -131,6 +131,18 @@ vnoremap <unique> <Leader>t, :Tabularize /,<CR>
 nnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 
+" Fugitive plugin {{{1
+nnoremap <leader>g<space> :Git<space>
+nnoremap <leader>ga :Git<space>
+nnoremap <leader>gb :Gblame<space>
+nnoremap <leader>gc :Gcommit<space>
+nnoremap <leader>gd :Gdiff<space>
+nnoremap <leader>gl :Glog<space>
+nnoremap <leader>gm :Gmove<space>
+nnoremap <leader>gp :Git push<space>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gw :Gwrite<cr>
+
 " File/text search {{{1
 nnoremap <leader>aa :Ack<space>
 nnoremap <leader>apy :Ack --python<space>
