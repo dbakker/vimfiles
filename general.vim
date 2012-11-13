@@ -191,5 +191,6 @@ if has("gui_running")
     colorscheme wombat256mod
 else
     let g:solarized_termcolors=256
+    set t_Co=256
     colorscheme wombat256mod
 endif
