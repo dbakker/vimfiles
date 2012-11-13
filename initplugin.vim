@@ -32,6 +32,7 @@ Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
 Bundle 'git://github.com/vim-scripts/eclipse.vim.git'
 Bundle 'git://github.com/vim-scripts/javacomplete.git'
 Bundle 'git://github.com/vim-scripts/mru.vim.git'
+Bundle 'git://github.com/vim-scripts/nginx.vim.git'
 Bundle 'git://github.com/vim-scripts/searchfold.vim.git'
 Bundle 'git://github.com/vim-scripts/wombat256.vim'
 Bundle 'git://github.com/xolox/vim-session.git'
@@ -88,6 +89,9 @@ fun! NERDTreeSmartToggle()
     ProjectRootExe NERDTree
   endtry
 endf
+
+" Nginx {{{2
+au BufNewFile,BufRead nginx.conf set filetype=nginx.conf
 
 " Java autocomplete {{{2
 if has("autocmd")
