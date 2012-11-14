@@ -207,6 +207,9 @@ command! -nargs=1 OpenURL :call OpenURL(<q-args>)
 
 " GuessMainBuffer() {{{2
 fun! GuessMainBuffer()
+  if !IsExtraBuffer()
+    return bufnr('')
+  endif
   let buf=bufnr('')
   let size=-1
   for b in tabpagebuflist()
