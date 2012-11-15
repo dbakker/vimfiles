@@ -40,6 +40,7 @@ fun! EditFromDir(dir)
 endf
 sil! nnoremap <unique> <silent> go :exe 'ptag '.expand('<cword>')<cr>
 sil! xnoremap <unique> <silent> go :exe 'ptag '.GetVisualLine()<cr>
+nnoremap <unique> <leader>d<space> :e<space>
 nnoremap <unique> <leader>db :NERDTreeFromBookmark<space>
 nnoremap <unique> <leader>dc :cd<space>
 nnoremap <unique> <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
@@ -165,23 +166,14 @@ noremap <unique> <silent> <C-F11> :resize -10<cr>
 noremap <unique> <silent> <C-F12> :vertical resize +10<cr>
 
 " Window management {{{1
-nnoremap <unique> <M-+> <C-W>+
-nnoremap <unique> <M--> <C-W>-
-nnoremap <unique> <M-<> <C-W><
-nnoremap <unique> <M->> <C-W>>
-nnoremap <unique> <M-h> <C-W>h
-nnoremap <unique> <M-j> <C-W>j
-nnoremap <unique> <M-k> <C-W>k
-nnoremap <unique> <M-l> <C-W>l
-nnoremap <unique> <M-q> <C-W>q
-nnoremap <unique> <M-s> <C-W>s
-nnoremap <unique> <M-v> <C-W>v
-nnoremap <unique> <M-w> <C-W>w
+" Use Alt+x for <C-W>x (without overwriting anything)
+for c in split('abcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+<>=', '\zs')
+  exe 'sil! nnoremap <unique> <M-'.c.'> <C-W>'.c
+endfor
 nnoremap <unique> <M-Left> <C-W>h
 nnoremap <unique> <M-Down> <C-W>j
 nnoremap <unique> <M-Up> <C-W>k
 nnoremap <unique> <M-Right> <C-W>l
-
 
 " Various other mappings {{{1
 imap <unique> <C-Space> <C-X><C-O>
