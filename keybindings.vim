@@ -178,7 +178,7 @@ nnoremap <unique> <M-Right> <C-W>l
 " Various other mappings {{{1
 imap <unique> <C-Space> <C-X><C-O>
 nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
-vnoremap gG :call OpenURL('http://www.google.com/search?q='.substitute(GetVisualLine(),'\s','+','g'))<CR>
+vnoremap gG :call OpenURL('http://www.google.com/search?q='.substitute(substitute(GetVisualLine(),'[^a-zA-Z ]','','g'),'\s','+','g'))<CR>
 nnoremap gK K
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
