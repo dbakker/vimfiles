@@ -1,6 +1,6 @@
 # Vim configuration
 
-This vim configuration uses git & the Vundle plugin.
+This Vim configuration uses git & the [Vundle plugin](http://guessurl.appspot.com/?q=vundle).
 
 To just install the basic standalone .vimrc use:
 
@@ -20,15 +20,16 @@ Then download the settings:
     git clone git://github.com/gmarik/vundle.git .vim/bundle/vundle
     gvim -c "BundleInstall"
 
-then restart vim.
+then restart Vim.
 
 ## Doing a full install on Windows
 
 Manually install:
-  * GVim
-  * Msysgit (git for windows)
-  * Ctags (for tag navigation)
-  * Mingw (if you add it to your PATH it enables unix commands)
+
+  * [GVim](http://guessurl.appspot.com/?q=download+gvim)
+  * [Msysgit](http://guessurl.appspot.com/?q=download+msysgit) (git for windows)
+  * [Exuberant tags](http://guessurl.appspot.com/?q=download+exuberant+tags) (for tag navigation)
+  * [Mingw](http://guessurl.appspot.com/?q=download+mingw) (if you add it to your PATH it enables unix commands)
 
 Then download the settings:
 
@@ -37,17 +38,17 @@ Then download the settings:
     echo source ~/.vim/.vimrc > .vimrc
     git clone git://github.com/gmarik/vundle.git .vim/bundle/vundle
 
-Start vim, and install the plugins:
+Start Vim, and install the plugins:
 
     :BundleInstall
 
-then restart vim.
+then restart Vim.
 
 It might be a good idea to create a .vim/local.vim file with a subset of these:
 
-    set mouse=a " Enable mouse (annoying on laptops with touchpads)
+    set mouse= " Disable mouse (for laptops with touchpads)
     set foldcolumn=3 " Allows mouse to click open folds
-    set ffs=dos " Force CR, LF line endings
+    set ff=unix " Force unix line endings
     set shellslash " Use / instead of \ in paths; don't combine with cmd.exe
 
 ## Setting up CTags for standard libraries
