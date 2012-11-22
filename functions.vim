@@ -149,8 +149,11 @@ fun! GetNextBuffer(count)
 endf
 
 fun! s:GetRelativeBuffer(buflist, count)
-  let l=copy(a:buflist)
-  let thisbuf = bufnr('')
+  let l=[]
+  for b in a:buflist
+		call add(l, len(bufname(b))?bufname(b):b)
+	endfor
+  let thisbuf = len(bufname(''))?bufname(''):bufnr('')
   if index(l, thisbuf)==-1
     call add(l, thisbuf)
   endif
@@ -159,7 +162,7 @@ fun! s:GetRelativeBuffer(buflist, count)
   let i = index(l, thisbuf)
   let s = len(l)
   let target = (((i+a:count) % s)+s) % s
-  return get(l, target, thisbuf)
+  return bufnr(get(l, target, thisbuf))
 endf
 
 " GetNextFileInDir(count) {{{2
