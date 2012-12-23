@@ -18,8 +18,9 @@ nnoremap <unique> <up> gk<C-y>
 nnoremap <unique> j gj
 nnoremap <unique> k gk
 
-" Use ,/ to clear search highlighting {{{1
-nmap <silent> ,/ :nohlsearch<CR>
+" Use ,/ and ,\ to clear search highlighting {{{1
+noremap <unique> <silent> ,/ :nohlsearch<CR>
+noremap <unique> <silent> ,\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <unique> <leader>wa :wa<cr>
