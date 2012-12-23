@@ -155,6 +155,7 @@ imap <F2> <C-O><F2>
 xmap <F2> <Esc><F2>gv
 nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
 nnoremap <unique> <silent> <F7> :call OpenPrompt()<cr>
+nnoremap <unique> <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
 nnoremap <unique> <silent> <F9> :call NERDTreeSmartToggle()<cr>
 nnoremap <unique> <silent> <F10> :call ToggleQuickFix()<cr>
 nnoremap <unique> <silent> <F12> :TagbarToggle<cr>
