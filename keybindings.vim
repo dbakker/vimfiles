@@ -55,6 +55,7 @@ nnoremap <unique> <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
 nnoremap <unique> <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
 nnoremap <unique> <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
 nnoremap <unique> <silent> ]o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(1)<cr>
+" The original mappings for [p and ]p have become =p
 nnoremap <unique> <silent> [p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1)<cr>
 nnoremap <unique> <silent> ]p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1)<cr>
 nnoremap <unique> <silent> [q :cprev<cr>
@@ -188,6 +189,9 @@ nnoremap gI `.
 nnoremap gV `[v`]
 " Paste without overwriting any register
 xnoremap <unique> <silent> P "_dP
+" =p is paste & indent
+noremap <unique> =p ]p
+noremap <unique> =P ]P
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
