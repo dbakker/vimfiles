@@ -37,6 +37,7 @@ Bundle 'git://github.com/vim-scripts/nginx.vim.git'
 Bundle 'git://github.com/vim-scripts/searchfold.vim.git'
 Bundle 'git://github.com/vim-scripts/wombat256.vim'
 Bundle 'git://github.com/xolox/vim-session.git'
+call TrySource('~/.vim/local/bundles.vim')
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!

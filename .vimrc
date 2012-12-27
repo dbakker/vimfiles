@@ -21,7 +21,6 @@ call TrySource('~/.vim/functions.vim')
 call TrySource('~/.vim/local/functions.vim')
 " initialize plugin stuff (Vundle/Pathogen)
 call TrySource('~/.vim/initplugin.vim')
-call TrySource('~/.vim/local/initplugin.vim')
 
 " Get that filetype stuff happening (assume version>600)
 filetype plugin indent on
