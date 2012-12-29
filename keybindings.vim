@@ -190,8 +190,10 @@ nnoremap gV `[v`]
 " Paste without overwriting any register
 xnoremap <unique> <silent> P "_dP
 " =p is paste & indent
-noremap <unique> =p ]p
-noremap <unique> =P ]P
+nnoremap <unique> =p ]p
+vnoremap <unique> =p ]p
+nnoremap <unique> =P ]P
+vnoremap <unique> =P ]P
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
