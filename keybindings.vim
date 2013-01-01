@@ -32,6 +32,10 @@ nnoremap <silent> <unique> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qf :BD!<cr>
 nnoremap <silent> <unique> <leader>qj :BD<cr>
 
+" Swap two pieces of text {{{1
+" To use: first delete something, then visual something else
+vnoremap <unique> Q <esc>`.``gvP``P
+
 " File management mappings {{{1
 fun! EditFromDir(dir)
   if isdirectory(a:dir) && a:dir!='.'
@@ -189,6 +193,8 @@ nnoremap gI `.
 nnoremap gV `[v`]
 " Paste without overwriting any register
 xnoremap <unique> <silent> P "_dP
+" Delete without overwriting any register
+vnoremap <unique> X "_X
 " =p is paste & indent
 nnoremap <unique> =p ]p
 vnoremap <unique> =p ]p
