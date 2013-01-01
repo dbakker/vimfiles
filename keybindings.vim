@@ -18,6 +18,12 @@ nnoremap <unique> <up> gk<C-y>
 nnoremap <unique> j gj
 nnoremap <unique> k gk
 
+" Mapping for swapping the system and unnamed register {{{1
+" The greatest thing about this is that you can use it *after* you
+" have already deleted (or yanked) something.
+nnoremap <silent> <unique> <space> :call SwapRegisters('+', '"')<cr>
+vnoremap <silent> <unique> <space> <esc>:call SwapRegisters('+', '"')<cr>gv
+
 " Use ,/ and ,\ to clear search highlighting {{{1
 noremap <unique> <silent> ,/ :nohlsearch<CR>
 noremap <unique> <silent> ,\ :nohlsearch<CR>
@@ -173,7 +179,9 @@ noremap <unique> <silent> <C-F11> :resize -10<cr>
 noremap <unique> <silent> <C-F12> :vertical resize +10<cr>
 
 " Window management {{{1
-" Use Alt+x for <C-W>x (without overwriting anything)
+" Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
+" Alt is somewhat unreliable, as it only works in the Vim GUI version,
+" but I almost never use windows in the console version anyway.
 for c in split('abcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+<>=', '\zs')
   exe 'sil! nnoremap <unique> <M-'.c.'> <C-W>'.c
 endfor
