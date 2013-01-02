@@ -156,6 +156,9 @@ nnoremap <leader>gp :Git push<space>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gw :Gwrite<cr>
 
+" Switch plugin {{{1
+nnoremap <unique> - :Switch<cr>
+
 " File/text search {{{1
 nnoremap <leader>aa :Ack<space>
 nnoremap <leader>apy :Ack --python<space>
