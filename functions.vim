@@ -50,11 +50,18 @@ fun! FindInDict(key, dictname, ...)
 endf
 
 " GetVisualLine() {{{2
-function! GetVisualLine()
+fun! GetVisualLine()
   let col1 = getpos("'<")[2]
   let col2 = getpos("'>")[2]
   return getline('.')[col1-1:col2-1]
-endfunction
+endf
+
+" SwapRegisters(reg1, reg2) {{{2
+fun! SwapRegisters(reg1, reg2)
+  exe 'let tmp=@'.a:reg1
+  exe 'let @'.a:reg1.'=@'.a:reg2
+  exe 'let @'.a:reg2.'=tmp'
+endf
 
 " IsExtraBuffer(buffer) {{{2
 fun! IsExtraBuffer(...)
@@ -258,6 +265,11 @@ endif
 
 fun! CompileAndRun()
   try
+    if exists('b:crcmd')
+      sil exe b:crcmd
+      return
+    endif
+
     " Try to do project wide compilations/runs
     let s:projectRoot = ProjectRootGuess("%")
     if &ft=='java' || expand('%:t')=='build.xml'
