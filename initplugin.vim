@@ -77,7 +77,7 @@ elseif executable('ack')
 endif
 
 " NERDTree {{{2
-let NERDTreeHijackNetrw=0
+let NERDTreeHijackNetrw=1
 let NERDTreeBookmarksFile=expand('~/.vim/local/NERDTreeBookmarks.txt')
 let NERDTreeMouseMode=2
 fun! NERDTreeSmartToggle()
