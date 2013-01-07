@@ -283,9 +283,7 @@ fun! CompileAndRun()
     endif
 
     " Fall back to single file compilations/runs
-    if &modified
-      write
-    endif
+		update " Write file if modified
     let shebang = matchstr(getline(1),'^#!\zs[^ ]*')
     if shebang == '/usr/bin/env'
       exe '!'.strpart(getline(1), 15).' %'
