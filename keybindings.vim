@@ -161,7 +161,7 @@ nnoremap <unique> - :Switch<cr>
 
 " File/text search {{{1
 nnoremap <leader>aa :Ack<space>
-nnoremap <leader>apy :Ack --python<space>
+nnoremap <expr> <leader>aj ':Ack'.(len(&ft)?' --'.&ft:'').' -Q -i '
 
 " <F1-12> mappings {{{1
 nnoremap <F2> :set invlist list?<cr>
