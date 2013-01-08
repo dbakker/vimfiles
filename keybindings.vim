@@ -209,11 +209,6 @@ nnoremap gV `[v`]
 xnoremap <unique> <silent> P "_dP
 " Delete without overwriting any register
 vnoremap <unique> X "_X
-" =p is paste & indent
-nnoremap <unique> =p ]p
-vnoremap <unique> =p ]p
-nnoremap <unique> =P ]P
-vnoremap <unique> =P ]P
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
