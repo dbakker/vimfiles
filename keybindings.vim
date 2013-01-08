@@ -24,9 +24,10 @@ nnoremap <unique> k gk
 nnoremap <silent> <unique> <space> :call SwapRegisters('+', '"')<cr>
 vnoremap <silent> <unique> <space> <esc>:call SwapRegisters('+', '"')<cr>gv
 
-" Use ,/ and ,\ to clear search highlighting {{{1
-noremap <unique> <silent> ,/ :nohlsearch<CR>
-noremap <unique> <silent> ,\ :nohlsearch<CR>
+" Clear search highlighting or refresh screen {{{1
+nnoremap <unique> <silent> <C-L> :nohlsearch<CR><C-L>
+nnoremap <unique> <silent> ,/ :nohlsearch<CR>
+nnoremap <unique> <silent> ,\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <unique> <leader>wa :wa<cr>
