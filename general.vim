@@ -105,6 +105,12 @@ if exists('+undofile')
   set undofile
 endif
 
+" Matchit {{{2
+" Load matchit.vim, but only if the user hasn't installed a newer version. (tpope)
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
 " Visual options {{{1
 " Standard settings {{{2
 if &t_Co > 2 || has("gui_running")
@@ -166,6 +172,8 @@ set list
 if has("gui_running")
     " Remove all menus, scollbars, etc.
     set guioptions=git
+    " Maximize Vim as much as possible
+    set lines=999 columns=999
 
     " Set font depending on system (tpope)
     if exists("&guifont")
