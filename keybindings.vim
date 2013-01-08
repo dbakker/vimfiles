@@ -50,8 +50,8 @@ fun! EditFromDir(dir)
   endif
   return ':e '
 endf
-sil! nnoremap <unique> <silent> go :exe 'ptag '.expand('<cword>')<cr>
-sil! xnoremap <unique> <silent> go :exe 'ptag '.GetVisualLine()<cr>
+nnoremap <unique> <silent> go :exe 'ptag '.expand('<cword>')<cr>
+xnoremap <unique> <silent> go :exe 'ptag '.GetVisualLine()<cr>
 nnoremap <unique> <leader>d<space> :e<space>
 nnoremap <unique> <leader>db :NERDTreeFromBookmark<space>
 nnoremap <unique> <leader>dc :cd<space>
@@ -174,8 +174,8 @@ nnoremap <unique> <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
 nnoremap <unique> <silent> <F9> :call NERDTreeSmartToggle()<cr>
 nnoremap <unique> <silent> <F10> :call ToggleQuickFix()<cr>
 nnoremap <unique> <silent> <F12> :TagbarToggle<cr>
-sil! nnoremap <unique> <silent> <F3> :call ToggleModeless()<cr>
-sil! inoremap <unique> <silent> <F3> <C-O>:call ToggleModeless()<cr>
+nnoremap <unique> <silent> <F3> :call ToggleModeless()<cr>
+inoremap <unique> <silent> <F3> <C-O>:call ToggleModeless()<cr>
 
 noremap <unique> <silent> <C-F9>  :vertical resize -10<cr>
 noremap <unique> <silent> <C-F10> :resize +10<cr>
@@ -187,7 +187,9 @@ noremap <unique> <silent> <C-F12> :vertical resize +10<cr>
 " Alt is somewhat unreliable, as it only works in the Vim GUI version,
 " but I almost never use windows in the console version anyway.
 for c in split('abcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+<>=', '\zs')
-  exe 'sil! nnoremap <unique> <M-'.c.'> <C-W>'.c
+  if maparg('<M-'.c.'>', 'n') ==# ''
+    exe 'nnoremap <unique> <M-'.c.'> <C-W>'.c
+  endif
 endfor
 nnoremap <unique> <M-Left> <C-W>h
 nnoremap <unique> <M-Down> <C-W>j
