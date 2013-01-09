@@ -21,8 +21,8 @@ nnoremap <unique> k gk
 " Mapping for swapping the system and unnamed register {{{1
 " The greatest thing about this is that you can use it *after* you
 " have already deleted (or yanked) something.
-nnoremap <silent> <unique> <space> :call SwapRegisters('+', '"')<cr>
-vnoremap <silent> <unique> <space> <esc>:call SwapRegisters('+', '"')<cr>gv
+nnoremap <silent> <unique> <leader><space> :call SwapRegisters('+', '"')<cr>
+vnoremap <silent> <unique> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
 
 " Clear search highlighting or refresh screen {{{1
 nnoremap <unique> <silent> <C-L> :nohlsearch<CR><C-L>
