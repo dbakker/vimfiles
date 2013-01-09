@@ -83,7 +83,7 @@ command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=sub
 noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
-" Use ,y/p/P to yank/paste to the OS clipboard {{{1
+" Use ,y/p/P/vp/vP to yank/paste to the OS clipboard {{{1
 nnoremap <unique> <leader>y "+y
 vnoremap <unique> <leader>y "+y
 nnoremap <unique> <leader>Y "+Y
@@ -92,6 +92,11 @@ nnoremap <unique> <leader>p "+p
 vnoremap <unique> <leader>p "+p
 nnoremap <unique> <leader>P "+P
 vnoremap <unique> <leader>P "+P
+" Paste+visually select what was just pasted
+nnoremap <unique> <leader>vp "+p`[v`]
+nnoremap <unique> <leader>vP "+P`[v`]
+vnoremap <unique> <leader>vp "+p`[v`]
+vnoremap <unique> <leader>vP "+P`[v`]
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap <unique> Y y$
