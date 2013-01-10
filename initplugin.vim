@@ -11,7 +11,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
-Bundle 'AndrewRadev/switch.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'altercation/vim-colors-solarized'
@@ -40,6 +39,7 @@ Bundle 'vim-scripts/nginx.vim'
 Bundle 'vim-scripts/searchfold.vim'
 Bundle 'vim-scripts/wombat256.vim'
 Bundle 'xolox/vim-session'
+Bundle 'zef/vim-cycle'
 call TrySource('~/.vim/local/bundles.vim')
 
 " Configuration of options for plugins {{{1
