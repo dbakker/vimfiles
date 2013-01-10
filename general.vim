@@ -13,14 +13,16 @@ set copyindent                  " copy the previous indentation on autoindenting
 set fileformat=unix
 set fileformats=unix,dos,mac
 set fillchars=""                " get rid of the silly chars in separators
-set formatoptions+=1            " when wrapping paragraphs, don't end lines with 1-letter words
+set formatoptions+=1clqr
+set formatoptions-=aow
 set gdefault                    " search/replace "globally" (on a line) by default
 set hidden                      " dont complain about hiding unsaved buffers
 set history=1000                " remember more commands and search history
 set ignorecase                  " case insensitive search
+set infercase                   " adjust keyword completion matches to the case of the typed text
 set modeline                    " allow files to define some custom settings like foldmethod
-set modelines=5
-set nobackup                    " do not keep backup files, it's 70's style cluttering
+set modelines=5                 " check 5 lines from the bottom&top for modelines
+set nobackup                    " do not keep backup files
 set noerrorbells                " don't beep
 set nofoldenable                " do not fold by default (use zM/zR)
 set nojoinspaces                " only insert 1 space after . ? and !
@@ -34,7 +36,7 @@ set tags=./tags;                " search for tags in the file directory and uppe
 set timeoutlen=20000            " wait a long time before timeout
 set ttyfast                     " always use a fast terminal
 set undolevels=1000             " use many muchos levels of undo
-set viminfo='20,\"80            " read/write a .viminfo file
+set viminfo^=!,h
 set visualbell                  " flash the screen on error
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe,tags
 set wildmenu                    " make tab completion for files/buffers act like bash
