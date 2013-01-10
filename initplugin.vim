@@ -12,6 +12,7 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 Bundle 'AndrewRadev/switch.vim'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bronson/vim-visual-star-search'
@@ -97,9 +98,15 @@ endf
 " Nginx {{{2
 au BufNewFile,BufRead nginx.conf set filetype=nginx.conf
 
+" Easymotion {{{2
+let g:EasyMotion_leader_key = '<space>'
+
 " Java autocomplete {{{2
 if has("autocmd")
   autocmd Filetype java setlocal omnifunc=javacomplete#Complete
 endif
+
+" Misc {{{2
+au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 
 endif
