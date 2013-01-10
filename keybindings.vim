@@ -123,7 +123,6 @@ cnoremap <unique> <C-B> <Left>
 cnoremap <unique> <C-D> <Del>
 cnoremap <unique> <C-E> <End>
 cnoremap <unique> <C-F> <Right>
-cnoremap <unique> <C-P> <Up>
 
 " Navigate/create tabpages with g<num> {{{1
 fun! NavTabPage(num)
@@ -214,6 +213,8 @@ nnoremap gV `[v`]
 xnoremap <unique> <silent> P "_dP
 " Delete without overwriting any register
 vnoremap <unique> X "_X
+" Make CTRL-^ also go to the right column of the alternate file
+noremap <C-^> <C-^>`"
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
