@@ -250,6 +250,35 @@ fun! SwitchMain()
 endf
 com! -nargs=0 SwitchMain call SwitchMain()
 
+" Tags {{{2
+if !exists('g:ctagsoptions')
+	let g:ctagsoptions='--file-scope=no --fields=-f --java-kinds=-p --python-kinds=-i --languages=-JavaScript --fields=+S --exclude=.git'
+endif
+fun! s:TagsExe(tagdir, tagfile)
+	if !exists('g:ctagsprg')
+		let g:ctagsprg='ctags'
+		if executable('ctags-exuberant')
+			let g:ctagsprg='ctags-exuberant'
+		endif
+	endif
+
+  silent exe '!'.g:ctagsprg.' '.g:ctagsoptions.' -f '.a:tagfile.' -R '.a:tagdir
+endf
+fun! TagRegenerate()
+  let f = findfile('tags', '.;')
+  if !filereadable(f)
+    throw "Can't find tags file"
+  endif
+  let f = fnamemodify(f, ':p')
+  call s:TagsExe(fnamemodify(f, ':h'), f)
+endf
+fun! TagInit()
+  let dir = getcwd()
+  call s:TagsExe(dir, dir.'/tags')
+endf
+com! -nargs=0 TagRegenerate call TagRegenerate()
+com! -nargs=0 TagInit call TagInit()
+
 " CompileAndRun() {{{2
 let cnr_scriptlangs={}
 let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
