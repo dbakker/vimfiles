@@ -110,19 +110,18 @@ command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=h
 " Add commandline/emacs style mappings for insert/command mode {{{1
 inoremap <unique> <C-X><C-@> <C-A>
 inoremap <unique> <C-A> <C-O>^
-inoremap <unique> <C-B> <Left>
-inoremap <unique> <C-D> <Del>
-inoremap <unique> <C-E> <End>
-inoremap <unique> <C-F> <Right>
-inoremap <unique> <S-CR> <C-O>O
-inoremap <unique> <C-CR> <C-O>o
+inoremap <unique> <C-X><C-A> <C-A>
+inoremap <unique> <expr> <C-B> getline('.')=~'^\s*$'&&col('.')>strlen(getline('.'))?"0\<Lt>C-D>\<Lt>Esc>kJs":"\<Lt>Left>"
+inoremap <unique> <expr> <C-D> col('.')>strlen(getline('.'))?"\<Lt>C-D>":"\<Lt>Del>"
+inoremap <unique> <expr> <C-E> col('.')>strlen(getline('.'))?"\<Lt>C-E>":"\<Lt>End>"
+inoremap <unique> <expr> <C-F> col('.')>strlen(getline('.'))?"\<Lt>C-F>":"\<Lt>Right>"
 
 cnoremap <unique> <C-X><C-A> <C-A>
 cnoremap <unique> <C-A> <Home>
 cnoremap <unique> <C-B> <Left>
-cnoremap <unique> <C-D> <Del>
+cnoremap <unique> <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
 cnoremap <unique> <C-E> <End>
-cnoremap <unique> <C-F> <Right>
+cnoremap <unique> <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Navigate/create tabpages with g<num> {{{1
 fun! NavTabPage(num)
