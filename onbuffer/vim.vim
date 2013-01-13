@@ -1,1 +1,1 @@
-setl foldenable foldmethod=marker shiftwidth=2 tabstop=2
+setl foldenable fdm=marker sw=2 ts=2 et ai
