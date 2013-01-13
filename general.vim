@@ -34,6 +34,8 @@ set smarttab                    " insert tabs on the start of a line according t
 set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
 set tags=./tags;                " search for tags in the file directory and upper directories
 set timeoutlen=20000            " wait a long time before timeout
+set ttimeout
+set ttimeoutlen=50
 set ttyfast                     " always use a fast terminal
 set undolevels=1000             " use many muchos levels of undo
 set viminfo^=!,h
