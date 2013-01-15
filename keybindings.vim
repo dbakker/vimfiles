@@ -1,7 +1,7 @@
 
-" Since I never use the ; key anyway, this is a real optimization for almost
-" all Vim commands, as I don't have to press the Shift key to form chords to
-" enter ex mode.
+" I still mostly use `:` because it is annoying when you are used to `;` and
+" then have to work on a system that doesn't have this map. But I won't use it
+" for its original purpose anyway.
 noremap <unique> ; :
 
 " Swap meaning of 0 and ^ {{{1
@@ -39,7 +39,12 @@ nnoremap <silent> <unique> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qf :BD!<cr>
 nnoremap <silent> <unique> <leader>qj :BD<cr>
 
-" Swap two pieces of text {{{1
+" Use (normal) Q as alias for @j (execute 'j' recording) {{{1
+" This is great because you can just do something like QnQnnQ to quickly
+" repeat your recording where needed. You never have to press `@` again.
+nnoremap <unique> Q @j
+
+" Use (visual) Q to swap two pieces of text {{{1
 " To use: first delete something, then visual something else
 vnoremap <unique> Q <esc>`.``gvP``P
 
@@ -101,13 +106,10 @@ vnoremap <unique> <leader>vP "+P`[v`]
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap <unique> Y y$
 
-" Use Q as alias for @j (execute 'j' recording) {{{1
-nnoremap <unique> Q @j
-
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
-" Add commandline/emacs style mappings for insert/command mode {{{1
+" Add readline/emacs style mappings for insert/command mode {{{1
 inoremap <unique> <C-X><C-@> <C-A>
 inoremap <unique> <C-A> <C-O>^
 inoremap <unique> <C-X><C-A> <C-A>

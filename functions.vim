@@ -158,8 +158,8 @@ endf
 fun! s:GetRelativeBuffer(buflist, count)
   let l=[]
   for b in a:buflist
-		call add(l, len(bufname(b))?bufname(b):b)
-	endfor
+    call add(l, len(bufname(b))?bufname(b):b)
+  endfor
   let thisbuf = len(bufname(''))?bufname(''):bufnr('')
   if index(l, thisbuf)==-1
     call add(l, thisbuf)
@@ -252,15 +252,15 @@ com! -nargs=0 SwitchMain call SwitchMain()
 
 " Tags {{{2
 if !exists('g:ctagsoptions')
-	let g:ctagsoptions='--file-scope=no --fields=-f --java-kinds=-p --python-kinds=-i --languages=-JavaScript --fields=+S --exclude=.git'
+  let g:ctagsoptions='--file-scope=no --fields=-f --java-kinds=-p --python-kinds=-i --languages=-JavaScript --fields=+S --exclude=.git'
 endif
 fun! s:TagsExe(tagdir, tagfile)
-	if !exists('g:ctagsprg')
-		let g:ctagsprg='ctags'
-		if executable('ctags-exuberant')
-			let g:ctagsprg='ctags-exuberant'
-		endif
-	endif
+  if !exists('g:ctagsprg')
+    let g:ctagsprg='ctags'
+    if executable('ctags-exuberant')
+      let g:ctagsprg='ctags-exuberant'
+    endif
+  endif
 
   silent exe '!'.g:ctagsprg.' '.g:ctagsoptions.' -f '.a:tagfile.' -R '.a:tagdir
 endf
@@ -312,7 +312,7 @@ fun! CompileAndRun()
     endif
 
     " Fall back to single file compilations/runs
-		update " Write file if modified
+    update " Write file if modified
     let shebang = matchstr(getline(1),'^#!\zs[^ ]*')
     if shebang == '/usr/bin/env'
       exe '!'.strpart(getline(1), 15).' %'

@@ -1,16 +1,23 @@
 # Vim configuration
 
-This Vim configuration uses git & the [Vundle plugin](http://guessurl.appspot.com/?q=vundle).
+This Vim configuration uses Git & the [Vundle plugin](https://github.com/gmarik/vundle).
 
-To just install the basic standalone .vimrc use:
+## For scavengers
 
-    curl -o ~/.vimrc https://raw.github.com/dbakker/vimfiles/master/.vimrc
+I hope you enjoy reading this and will find some interesting ideas for your own
+Vim! If you are hungry for more, some other cool places to check out are:
+
+  * [Vim Tips Wiki](http://vim.wikia.com/wiki/Vim_Tips_Wiki)
+  * [Derek Wyatt videos](http://guessurl.appspot.com/?q=derek+wyatt+advanced+videos)
+  * [Tpope dotfiles](https://github.com/tpope/tpope)
+  * [Spf13 vimfiles](https://github.com/spf13/spf13-vim/)
+  * [AndrewRadev vimfiles](https://github.com/AndrewRadev/Vimfiles)
 
 ## Doing a full install on Linux
 
-First install gvim, git and optionally exuberant tags:
+First install GVim, git and optional dependencies:
 
-    sudo pacman -S gvim git ctags
+    sudo pacman -S gvim git ctags perl ack
 
 Then download the settings:
 
@@ -29,7 +36,8 @@ Manually install:
   * [GVim](http://guessurl.appspot.com/?q=download+gvim)
   * [Msysgit](http://guessurl.appspot.com/?q=download+msysgit) (git for windows)
   * [Exuberant tags](http://guessurl.appspot.com/?q=download+exuberant+tags) (for tag navigation)
-  * [Mingw](http://guessurl.appspot.com/?q=download+mingw) (if you add it to your PATH it enables unix commands)
+  * [Mingw](http://guessurl.appspot.com/?q=download+mingw) (if you add it to your PATH it enables Unix commands)
+  * [Strawberry Perl](http://strawberryperl.com/) (for Ack and general use, add to PATH)
 
 Then download the settings:
 
@@ -49,7 +57,7 @@ It might be a good idea to create a .vim/local.vim file with a subset of these:
     set mouse= " Disable mouse (for laptops with touchpads)
     set foldcolumn=3 " Allows mouse to click open folds
     set ff=unix " Force unix line endings
-    set shellslash " Use / instead of \ in paths; don't combine with cmd.exe
+    set shellslash " Use / instead of \ in paths; useful with Cygwin
 
 ## Setting up CTags for standard libraries
 This configuration automatically looks in `~/.vim/local/tags/[language]` when
@@ -66,12 +74,16 @@ we are not interested in their private variables/methods.
 ## Setting file/folder specific scripts
 Vim searches for file/folder specific scripts to execute. To edit or create one, use
 `:EditScript` or `:EditScript file/folder`. Scripts created for a specific folder will
-be executed whenever one of its files is opened.
+be executed whenever one of its files is opened. The scripts themselves will be
+stored in the ~/.vim/local directory so they won't clutter your filesystem.
 
-This feature is interesting for overriding global settings such as `makeprg`, `tags`,
-`expandtab`, `shiftwidth`, `textwidth` and so on. Some other interesting settings:
+This feature is interesting for overriding settings, for example:
 
     let b:projectroot='/path/' " Override the path detected by GuessProjectRoot
+    setl tags^=/path/tags
     setl bufhidden=delete " Useful for documentation that you don't need to keep open
+    setl textwidth=80 shiftwidth=2 textwidth=2
+    setl noexpandtab
+    setl makeprg=make
     Wrap
 
