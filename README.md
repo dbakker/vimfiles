@@ -82,7 +82,8 @@ This feature is interesting for overriding settings, for example:
     let b:projectroot='/path/' " Override the path detected by GuessProjectRoot
     setl tags^=/path/tags
     setl bufhidden=delete " Useful for documentation that you don't need to keep open
-    setl textwidth=80 shiftwidth=2 textwidth=2
+    setl textwidth=80
+    setl tabstop=2 softtabstop=2 shiftwidth=2
     setl noexpandtab
     setl makeprg=make
     Wrap
