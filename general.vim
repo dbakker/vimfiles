@@ -6,6 +6,7 @@
 " Standard settings {{{2
 
 set autoindent                  " always set autoindenting on
+set autoread                    " lets assume the original file is in version control
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set clipboard-=autoselect       " do not automatically copy visually selected things to the clipboard
 set complete-=i                 " do not search in include files for completes
