@@ -204,16 +204,37 @@ endf
 
 " OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
+  let url = substitute(a:url, '%', '\\%', 'g')
+  let url = substitute(url, '#', '\\#', 'g')
   if has("win32")
-    exe '!start cmd /cstart /b '.a:url
+    exe '!start cmd /cstart /b '.url
   elseif $DISPLAY !~ '^\w'
-    exe 'silent !sensible-browser "'.a:url.'"'
+    exe 'silent !sensible-browser "'.url.'"'
   else
-    exe 'silent !sensible-browser -T "'.a:url.'"'
+    exe 'silent !sensible-browser -T "'.url.'"'
   endif
-  redraw!
+  " redraw!
 endfunction
 command! -nargs=1 OpenURL :call OpenURL(<q-args>)
+
+" SearchWeb(terms) {{{2
+fun! SearchWeb(terms)
+  let t = a:terms
+  let t = substitute(t, '^\s\+', '', '')
+  let t = substitute(t, '\s\+$', '', '')
+  let t = substitute(t,'\W\+','+','g')
+  call OpenURL('http://www.google.com/search?q='.t)
+endf
+fun! SearchWebMap(terms)
+  " Same as SearchWeb, unless there is an URL under the cursor
+  let line = getline(".")
+  let url = matchstr(line, "http://[^ ,;\t\"']*")
+  if len(url)>0
+    return OpenURL(url)
+  else
+    return SearchWeb(a:terms)
+  endif
+endf
 
 " GuessMainBuffer() {{{2
 fun! GuessMainBuffer()
