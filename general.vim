@@ -37,7 +37,6 @@ set tags=./tags;                " search for tags in the file directory and uppe
 set timeoutlen=20000            " wait a long time before timeout
 set ttimeout
 set ttimeoutlen=50
-set ttyfast                     " always use a fast terminal
 set undolevels=1000             " use many muchos levels of undo
 set viminfo^=!,h
 set visualbell                  " flash the screen on error
