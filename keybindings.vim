@@ -39,14 +39,15 @@ nnoremap <silent> <unique> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <unique> <leader>qf :BD!<cr>
 nnoremap <silent> <unique> <leader>qj :BD<cr>
 
-" Use (normal) Q as alias for @j (execute 'j' recording) {{{1
+" Use Q as alias for @j (execute 'j' recording) {{{1
 " This is great because you can just do something like QnQnnQ to quickly
 " repeat your recording where needed. You never have to press `@` again.
 nnoremap <unique> Q @j
+vnoremap <unique> Q @j
 
-" Use (visual) Q to swap two pieces of text {{{1
+" Use (visual) X to eXchange two pieces of text {{{1
 " To use: first delete something, then visual something else
-vnoremap <unique> Q <esc>`.``gvP``P
+vnoremap <unique> X <esc>`.``gvP``P
 
 " File management mappings {{{1
 fun! EditFromDir(dir)
@@ -209,8 +210,6 @@ nnoremap gI `.
 nnoremap gV `[v`]
 " Paste without overwriting any register
 xnoremap <unique> <silent> P "_dP
-" Delete without overwriting any register
-vnoremap <unique> X "_X
 " Make CTRL-^ also go to the right column of the alternate file
 noremap <C-^> <C-^>`"
 command! -nargs=0 Wrap setl wrap nolist
