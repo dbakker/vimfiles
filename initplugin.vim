@@ -39,7 +39,6 @@ Bundle 'vim-scripts/nginx.vim'
 Bundle 'vim-scripts/searchfold.vim'
 Bundle 'vim-scripts/wombat256.vim'
 Bundle 'xolox/vim-session'
-Bundle 'zef/vim-cycle'
 call TrySource('~/.vim/local/bundles.vim')
 
 " Configuration of options for plugins {{{1
