@@ -194,9 +194,9 @@ fun! OpenPrompt()
   else
     for p in ['rxvt', 'gnome-terminal', 'xterm', &shell]
       if executable(p)
-        exe 'sil !'.p.' &'
+        sil exe '!'.p.' &'
+        return
       endif
-      return
     endfor
   endif
   throw 'Could not find a way to open a prompt'

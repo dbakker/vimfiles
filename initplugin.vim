@@ -50,8 +50,10 @@ let MRU_Exclude_Files = '\.git'
 let MRU_Add_Menu = 0
 
 " Tcomment {{{2
-let g:tcomment_types={'java': '// %s'}
-call tcomment#DefineType('markdown', g:tcommentInlineXML)
+if isdirectory(expand('~/.vim/bundle/tcomment_vim'))
+  let g:tcomment_types={'java': '// %s'}
+  call tcomment#DefineType('markdown', g:tcommentInlineXML)
+endif
 
 " Fuzzy finder: ignore stuff that can't be opened, and generated files {{{2
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
