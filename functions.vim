@@ -301,17 +301,23 @@ com! -nargs=0 TagRegenerate call TagRegenerate()
 com! -nargs=0 TagInit call TagInit()
 
 " CompileAndRun() {{{2
-let cnr_scriptlangs={}
 let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
+let cnr_defhandlers={'py': 'python', 'sh': 'sh', 'php': 'php', 'pl': 'perl', 'jar': 'java -jar'}
 
-for lang in ['python', 'php', 'perl', 'sh']
-  if executable(lang)
-    let cnr_scriptlangs[lang] = lang
+fun! GetDefaultHandler(filename)
+  if filereadable(a:filename)
+    let first = readfile(a:filename, '', 1)
+    let prg = matchstr(getline(1),'^#!\zs[^ ]*')
+    if prg=='/usr/bin/env'
+      let prg=strpart(getline(1), 15)
+    endif
+    if executable(prg)
+      return prg
+    endif
   endif
-endfor
-if executable('ipython')
-  cnr_scriptlangs['python'] = 'ipython'
-endif
+  let ext = fnamemodify(a:filename, ':e')
+  return get(g:cnr_defhandlers, ext, '')
+endf
 
 fun! CompileAndRun()
   try
@@ -321,26 +327,31 @@ fun! CompileAndRun()
     endif
 
     " Try to do project wide compilations/runs
-    let s:projectRoot = ProjectRootGuess("%")
-    if &ft=='java' || expand('%:t')=='build.xml'
-      if(filereadable(s:projectRoot.'/build.xml'))
-        wa
-        exe 'setl makeprg=ant\ -f\ '.s:projectRoot.'/build.xml run'
-        setl efm=\ %#[javac]\ %#%f:%l:%c:%*\\d:%*\\d:\ %t%[%^:]%#:%m,\%A\ %#[javac]\ %f:%l:\ %m,%-Z\ %#[javac]\ %p^,%-C%.%#
-        make
-        return
-      endif
+    let projectRoot = ProjectRootGuess("%")
+    let crscript = glob(projectRoot.'/crscript*')
+    if len(crscript)>0
+      wa
+      let cmd = GetDefaultHandler(crscript)
+      try
+        let pr=getcwd()
+        sil exe ':cd '.projectRoot
+        if has("win32")
+          sil exe '!start '.cmd.'"'.crscript.'"'
+        else
+          sil exe '!'.cmd.crscript.' &'
+        endif
+      finally
+        sil exe ':cd '.pr
+        redraw
+      endtry
+      return
     endif
 
     " Fall back to single file compilations/runs
     update " Write file if modified
-    let shebang = matchstr(getline(1),'^#!\zs[^ ]*')
-    if shebang == '/usr/bin/env'
-      exe '!'.strpart(getline(1), 15).' %'
-    elseif executable(shebang)
-      exe '!'.matchstr(getline(1),'^#!\zs.*').' %'
-    elseif has_key(g:cnr_scriptlangs, &ft)
-      exe '!'.g:cnr_scriptlangs[&ft].' %'
+    let defhandler = GetDefaultHandler(expand('%'))
+    if len(defhandler)>0
+      exe '!'.defhandler.' %'
     elseif index(g:cnr_browserlangs, &ft)>=0
       if exists('b:url')
         call OpenURL(b:url)
