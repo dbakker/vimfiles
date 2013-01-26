@@ -212,6 +212,8 @@ nnoremap gV `[v`]
 xnoremap <unique> <silent> P "_dP
 " Make CTRL-^ also go to the right column of the alternate file
 noremap <C-^> <C-^>`"
+" Remove all trailing spaces
+nnoremap <silent> <leader>S :retab<Bar>:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 command! -nargs=0 Wrap setl wrap nolist
 command! -nargs=0 NoWrap setl nowrap list&
 
