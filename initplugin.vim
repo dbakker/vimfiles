@@ -12,11 +12,11 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bronson/vim-visual-star-search'
 Bundle 'dbakker/vim-md-noerror'
 Bundle 'dbakker/vim-paragraph-motion'
+Bundle 'dbakker/vim-powerline'
 Bundle 'dbakker/vim-projectroot'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
