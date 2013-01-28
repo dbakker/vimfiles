@@ -126,6 +126,19 @@ cnoremap <unique> <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<L
 cnoremap <unique> <C-E> <End>
 cnoremap <unique> <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
+" Add columnwise 0 and $ mappings {{{1
+" This one is really cool. These mappings motion columnwise until
+" a non-character (eg. empty or shorter line) is encountered.
+fun! s:Columnwise(dir)
+  let l=line('.')
+  while len(getline(l))>=col('.')
+    let l=l+a:dir
+  endw
+  return abs(l-line('.'))-1
+endf
+xnoremap <unique> <expr> <leader>j <SID>Columnwise(1).'j'
+xnoremap <unique> <expr> <leader>k <SID>Columnwise(-1).'k'
+
 " Navigate/create tabpages with g<num> {{{1
 fun! NavTabPage(num)
   while tabpagenr('$')<a:num
