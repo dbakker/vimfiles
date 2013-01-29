@@ -230,8 +230,8 @@ xnoremap <unique> <silent> P "_dP
 noremap <C-^> <C-^>`"
 " Remove all trailing spaces
 nnoremap <silent> <leader>S :retab<Bar>:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-command! -nargs=0 Wrap setl wrap nolist
-command! -nargs=0 NoWrap setl nowrap list&
+command! -nargs=0 Wrap let w:wrapnu=&nu<Bar>setl wrap nolist nu
+command! -nargs=0 NoWrap let &nu=w:wrapnu<Bar>setl nowrap list&
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
