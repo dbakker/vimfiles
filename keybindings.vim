@@ -107,6 +107,17 @@ vnoremap <unique> <leader>vP "+P`[v`]
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap <unique> Y y$
 
+" Remap `cw` to a repeatable `dwi` {{{1
+fun! PrepareCW()
+  aug restoreThing
+    au InsertLeave * silent! call repeat#set("cw".@.."\<ESC>", s:count)
+    au InsertLeave * au! restoreThing
+  aug END
+  let s:count = v:count
+  return 'dwi'
+endf
+
+nmap <expr> cw PrepareCW()
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
