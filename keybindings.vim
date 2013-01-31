@@ -118,6 +118,23 @@ fun! PrepareCW()
 endf
 
 nmap <expr> cw PrepareCW()
+
+" Add []<space> mappings for adding spaces {{{1
+fun! AddSpace(before)
+  let [bufnum, lnum, col, off] = getpos('.')
+  if a:before
+    let lnum += (v:count>0) ? v:count : 1
+  endif
+
+  let result = (a:before ? "O" : "o") . "x\<C-U>\<esc>"
+  let result .= ":" . lnum . "\<CR>\<Home>"
+  let result .= col>0 ? (col-1) . "l" : ""
+  let result .= ':silent! call repeat#set("'.(a:before ? '[' : ']').' ", '.v:count.')'."\<CR>"
+  return result
+endf
+nnoremap <expr> [<space> AddSpace(1)
+nnoremap <expr> ]<space> AddSpace(0)
+
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
