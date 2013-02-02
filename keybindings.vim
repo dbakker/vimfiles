@@ -2,13 +2,13 @@
 " I still mostly use `:` because it is annoying when you are used to `;` and
 " then have to work on a system that doesn't have this map. But I won't use it
 " for its original purpose anyway.
-noremap <unique> ; :
+map <unique> ; :
 
 " Swap meaning of 0 and ^ {{{1
 nnoremap <unique> 0 ^
-vnoremap <unique> 0 ^
+xnoremap <unique> 0 ^
 nnoremap <unique> ^ 0
-vnoremap <unique> ^ 0
+xnoremap <unique> ^ 0
 
 " Make the up and down arrows also move the screen {{{1
 nnoremap <unique> <down> gj<C-e>
@@ -22,10 +22,11 @@ nnoremap <unique> k gk
 " The greatest thing about this is that you can use it *after* you
 " have already deleted (or yanked) something.
 nnoremap <silent> <unique> <leader><space> :call SwapRegisters('+', '"')<cr>
-vnoremap <silent> <unique> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
+xnoremap <silent> <unique> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
 
 " Clear search highlighting or refresh screen {{{1
 nnoremap <unique> <silent> <C-L> :nohlsearch<CR><C-L>
+xnoremap <unique> <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
 nnoremap <unique> <silent> ,/ :nohlsearch<CR>
 nnoremap <unique> <silent> ,\ :nohlsearch<CR>
 
@@ -43,11 +44,11 @@ nnoremap <silent> <unique> <leader>qj :BD<cr>
 " This is great because you can just do something like QnQnnQ to quickly
 " repeat your recording where needed. You never have to press `@` again.
 nnoremap <unique> Q @j
-vnoremap <unique> Q @j
+xnoremap <unique> Q @j
 
 " Use (visual) X to eXchange two pieces of text {{{1
 " To use: first delete something, then visual something else
-vnoremap <unique> X <esc>`.``gvP``P
+xnoremap <unique> X <esc>`.``gvP``P
 
 " File management mappings {{{1
 fun! EditFromDir(dir)
@@ -90,34 +91,36 @@ noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
 " Use ,y/p/P/vp/vP to yank/paste to the OS clipboard {{{1
-nnoremap <unique> <leader>y "+y
-vnoremap <unique> <leader>y "+y
-nnoremap <unique> <leader>Y "+Y
-vnoremap <unique> <leader>Y "+Y
-nnoremap <unique> <leader>p "+p
-vnoremap <unique> <leader>p "+p
-nnoremap <unique> <leader>P "+P
-vnoremap <unique> <leader>P "+P
+nmap <unique> <leader>y "+y
+xmap <unique> <leader>y "+y
+nmap <unique> <leader>Y "+Y
+xmap <unique> <leader>Y "+Y
+nmap <unique> <leader>p "+p
+xmap <unique> <leader>p "+p
+nmap <unique> <leader>P "+P
+xmap <unique> <leader>P "+P
 " Paste+visually select what was just pasted
-nnoremap <unique> <leader>vp "+p`[v`]
-nnoremap <unique> <leader>vP "+P`[v`]
-vnoremap <unique> <leader>vp "+p`[v`]
-vnoremap <unique> <leader>vP "+P`[v`]
+nmap <unique> <leader>vp "+p`[v`]
+nmap <unique> <leader>vP "+P`[v`]
+xmap <unique> <leader>vp "+p`[v`]
+xmap <unique> <leader>vP "+P`[v`]
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap <unique> Y y$
 
 " Remap `cw` to a repeatable `dwi` {{{1
-fun! PrepareCW()
+fun! s:PrepareCW(w)
+  let s:w = a:w
   aug restoreThing
-    au InsertLeave * silent! call repeat#set("cw".@.."\<ESC>", s:count)
+    au InsertLeave * silent! call repeat#set("c".s:w.@.."\<ESC>", s:count)
     au InsertLeave * au! restoreThing
   aug END
   let s:count = v:count
-  return 'dwi'
+  return 'd'.s:w.'i'
 endf
 
-nmap <expr> cw PrepareCW()
+nmap <expr> cw <SID>PrepareCW('w')
+nmap <expr> cW <SID>PrepareCW('W')
 
 " Add []<space> mappings for adding spaces {{{1
 fun! s:AddSpace(before)
@@ -203,15 +206,15 @@ nnoremap <unique> <silent> g5 :call NavTabPage(5)<CR>
 nnoremap <unique> <silent> g6 :call NavTabPage(6)<CR>
 nnoremap <unique> <silent> g7 :call NavTabPage(7)<CR>
 
-" Tabulurize {{{1
+" Tabularize {{{1
 nnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
-vnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
+xnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
 nnoremap <unique> <Leader>t: :Tabularize /:<CR>
-vnoremap <unique> <Leader>t: :Tabularize /:<CR>
+xnoremap <unique> <Leader>t: :Tabularize /:<CR>
 nnoremap <unique> <Leader>t, :Tabularize /,<CR>
-vnoremap <unique> <Leader>t, :Tabularize /,<CR>
+xnoremap <unique> <Leader>t, :Tabularize /,<CR>
 nnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
-vnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
+xnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
 
 " Fugitive plugin {{{1
 nnoremap <leader>g<space> :Git<space>
@@ -253,24 +256,26 @@ noremap <unique> <silent> <C-F12> :vertical resize +10<cr>
 " but I almost never use windows in the console version anyway.
 for c in split('abcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+<>=', '\zs')
   if maparg('<M-'.c.'>', 'n') ==# ''
-    exe 'nnoremap <unique> <M-'.c.'> <C-W>'.c
+    exe 'nmap <M-'.c.'> <C-W>'.c
   endif
 endfor
-nnoremap <unique> <M-Left> <C-W>h
-nnoremap <unique> <M-Down> <C-W>j
-nnoremap <unique> <M-Up> <C-W>k
-nnoremap <unique> <M-Right> <C-W>l
+nmap <unique> <M-Left> <C-W>h
+nmap <unique> <M-Down> <C-W>j
+nmap <unique> <M-Up> <C-W>k
+nmap <unique> <M-Right> <C-W>l
 
 " Various other mappings {{{1
 imap <unique> <C-Space> <C-X><C-O>
 nnoremap gG :call SearchWebMap(expand("<cword>"))<CR>
-vnoremap gG :call SearchWeb(GetVisualLine())<CR>
+xnoremap gG :call SearchWeb(GetVisualLine())<CR>
 nnoremap gK K
+nnoremap <unique> <C-K> v$
+xnoremap <unique> <C-K> $
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
-" Make CTRL-^ also go to the right column of the alternate file
+" Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
 " Remove all trailing spaces
 nnoremap <silent> <leader>S :retab<Bar>:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
