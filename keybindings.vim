@@ -139,6 +139,20 @@ endf
 nnoremap <expr> [<space> <SID>AddSpace(1)
 nnoremap <expr> ]<space> <SID>AddSpace(0)
 
+" Paste without overwriting any register {{{1
+fun! s:PasteOver()
+  if getreg(v:register)=~#"\<C-J>"
+    if mode(1)==#'V'
+      return ":\<C-U>let b:move=getpos(\"'>\")[1]-getpos(\"\'<\")[1]\<CR>".'gv"_dP:sil! call repeat#set("V".(b:move?b:move."j":"")."P",0)'."\<CR>"
+    else
+      return '"_dP'
+    endif
+  else
+    return "\"_c\<C-R>\"\<ESC>"
+  endif
+endf
+xnoremap <unique> <expr> <silent> P <SID>PasteOver()
+
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
@@ -256,8 +270,6 @@ nnoremap gK K
 nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
-" Paste without overwriting any register
-xnoremap <unique> <silent> P "_dP
 " Make CTRL-^ also go to the right column of the alternate file
 noremap <C-^> <C-^>`"
 " Remove all trailing spaces
