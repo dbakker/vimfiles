@@ -269,8 +269,9 @@ imap <unique> <C-Space> <C-X><C-O>
 nnoremap gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap gG :call SearchWeb(GetVisualLine())<CR>
 nnoremap gK K
-nnoremap <unique> <C-K> v$
-xnoremap <unique> <C-K> $
+" With C, D and Y we can't leave v$ behind, unfortunately V is already taken
+nmap <unique> <C-K> v<C-K>
+xnoremap <unique> <expr> <C-K> len(getline('.'))>1 ? "\<Home>".(len(getline('.'))-1).'l' : '$'
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text
