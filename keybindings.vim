@@ -156,6 +156,17 @@ fun! s:PasteOver()
 endf
 xnoremap <unique> <expr> <silent> P <SID>PasteOver()
 
+" Add maps for <C-V>$ and friends {{{1
+" Using C, D and Y instead of c$, d$ and y$ is cool. I think v$ would also be
+" useful. Unfortunately V is already taken, so I'll be bold and sacrifice K.
+
+" The idea here is to try to always select from the current cursor position to
+" the end of the line. Unless it is already like that in which case we exit
+" visual mode.
+
+nnoremap <unique> <expr> K (v:count>1 ? "\<ESC>\<C-V>".v:count : "\<C-V>")."$"
+xnoremap <unique> <expr> K mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
+
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
@@ -269,13 +280,12 @@ imap <unique> <C-Space> <C-X><C-O>
 nnoremap gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap gG :call SearchWeb(GetVisualLine())<CR>
 nnoremap gK K
-" With C, D and Y we can't leave v$ behind, unfortunately V is already taken
-nmap <unique> <C-K> v<C-K>
-xnoremap <unique> <expr> <C-K> len(getline('.'))>1 ? "\<Home>".(len(getline('.'))-1).'l' : '$'
+map <C-K> %
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text
 nnoremap gV `[v`]
+xnoremap gV <ESC>`[v`]
 " Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
 " Remove all trailing spaces

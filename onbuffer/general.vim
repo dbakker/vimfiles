@@ -7,7 +7,3 @@ if len(&filetype)>0
 else
   setl tags+=~/.vim/local/tags/*
 endif
-
-if ((&kp=~'help') || (&kp=~':man')) && &ft!='vim' && &ft!='man'
-  exe 'nnoremap <buffer> <silent> K :OpenURL http://www.google.com/search?q=<cword>\%20'.&ft.'<CR>'
-endif
