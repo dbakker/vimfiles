@@ -2,53 +2,53 @@
 " I still mostly use `:` because it is annoying when you are used to `;` and
 " then have to work on a system that doesn't have this map. But I won't use it
 " for its original purpose anyway.
-map <unique> ; :
+map ; :
 
 " Swap meaning of 0 and ^ {{{1
-nnoremap <unique> 0 ^
-xnoremap <unique> 0 ^
-nnoremap <unique> ^ 0
-xnoremap <unique> ^ 0
+nnoremap 0 ^
+xnoremap 0 ^
+nnoremap ^ 0
+xnoremap ^ 0
 
 " Make the up and down arrows also move the screen {{{1
-nnoremap <unique> <down> gj<C-e>
-nnoremap <unique> <up> gk<C-y>
+nnoremap <down> gj<C-e>
+nnoremap <up> gk<C-y>
 
 " Remap j and k to act as expected when used on long, wrapped, lines {{{1
-nnoremap <unique> j gj
-nnoremap <unique> k gk
+nnoremap j gj
+nnoremap k gk
 
 " Mapping for swapping the system and unnamed register {{{1
 " The greatest thing about this is that you can use it *after* you
 " have already deleted (or yanked) something.
-nnoremap <silent> <unique> <leader><space> :call SwapRegisters('+', '"')<cr>
-xnoremap <silent> <unique> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
+nnoremap <silent> <leader><space> :call SwapRegisters('+', '"')<cr>
+xnoremap <silent> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
 
 " Clear search highlighting or refresh screen {{{1
-nnoremap <unique> <silent> <C-L> :nohlsearch<CR><C-L>
-xnoremap <unique> <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
-nnoremap <unique> <silent> ,/ :nohlsearch<CR>
-nnoremap <unique> <silent> ,\ :nohlsearch<CR>
+nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+xnoremap <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
+nnoremap <silent> ,/ :nohlsearch<CR>
+nnoremap <silent> ,\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
-nnoremap <silent> <unique> <leader>wa :wa<cr>
-nnoremap <silent> <unique> <leader>wf :w!<cr>
-nnoremap <silent> <unique> <leader>wj :w<cr>
-nnoremap <silent> <unique> <leader>wq :w<cr>:BD<cr>
-nnoremap <silent> <unique> <leader>wx :wa<cr>:bufdo BD<cr>
-nnoremap <silent> <unique> <leader>qa :bufdo BD<cr>
-nnoremap <silent> <unique> <leader>qf :BD!<cr>
-nnoremap <silent> <unique> <leader>qj :BD<cr>
+nnoremap <silent> <leader>wa :wa<cr>
+nnoremap <silent> <leader>wf :w!<cr>
+nnoremap <silent> <leader>wj :w<cr>
+nnoremap <silent> <leader>wq :w<cr>:BD<cr>
+nnoremap <silent> <leader>wx :wa<cr>:bufdo BD<cr>
+nnoremap <silent> <leader>qa :bufdo BD<cr>
+nnoremap <silent> <leader>qf :BD!<cr>
+nnoremap <silent> <leader>qj :BD<cr>
 
 " Use Q as alias for @j (execute 'j' recording) {{{1
 " This is great because you can just do something like QnQnnQ to quickly
 " repeat your recording where needed. You never have to press `@` again.
-nnoremap <unique> Q @j
-xnoremap <unique> Q @j
+nnoremap Q @j
+xnoremap Q @j
 
 " Use (visual) X to eXchange two pieces of text {{{1
 " To use: first delete something, then visual something else
-xnoremap <unique> X <esc>`.``gvP``P
+xnoremap X <esc>`.``gvP``P
 
 " File management mappings {{{1
 fun! EditFromDir(dir)
@@ -57,29 +57,29 @@ fun! EditFromDir(dir)
   endif
   return ':e '
 endf
-nnoremap <unique> <silent> go :exe 'ptag '.expand('<cword>')<cr>
-xnoremap <unique> <silent> go :exe 'ptag '.GetVisualLine()<cr>
-nnoremap <unique> <leader>d<space> :e<space>
-nnoremap <unique> <leader>db :NERDTreeFromBookmark<space>
-nnoremap <unique> <leader>dc :cd<space>
-nnoremap <unique> <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
-nnoremap <unique> <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
-nnoremap <unique> <expr> <leader>dj EditFromDir(ProjectRootGuess(GuessMainFile()))
-nnoremap <unique> <silent> <leader>dt :call NERDTreeSmartToggle()<cr>
-nnoremap <unique> <leader>dr :SwitchMain<cr>:MRU<space>
-nnoremap <unique> <silent> <leader>dp :exe 'cd '.ProjectRootGuess(GuessMainFile())<cr>
-nnoremap <unique> <silent> <leader>du :cd ..<cr>
-nnoremap <unique> <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
-nnoremap <unique> <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
-nnoremap <unique> <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
-nnoremap <unique> <silent> ]o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(1)<cr>
+nnoremap <silent> go :exe 'ptag '.expand('<cword>')<cr>
+xnoremap <silent> go :exe 'ptag '.GetVisualLine()<cr>
+nnoremap <leader>d<space> :e<space>
+nnoremap <leader>db :NERDTreeFromBookmark<space>
+nnoremap <leader>dc :cd<space>
+nnoremap <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
+nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
+nnoremap <expr> <leader>dj EditFromDir(ProjectRootGuess(GuessMainFile()))
+nnoremap <silent> <leader>dt :call NERDTreeSmartToggle()<cr>
+nnoremap <leader>dr :SwitchMain<cr>:MRU<space>
+nnoremap <silent> <leader>dp :exe 'cd '.ProjectRootGuess(GuessMainFile())<cr>
+nnoremap <silent> <leader>du :cd ..<cr>
+nnoremap <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
+nnoremap <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
+nnoremap <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
+nnoremap <silent> ]o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(1)<cr>
 " The original mappings for [p and ]p have become =p
-nnoremap <unique> <silent> [p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1)<cr>
-nnoremap <unique> <silent> ]p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1)<cr>
-nnoremap <unique> <silent> [q :cprev<cr>
-nnoremap <unique> <silent> ]q :cnext<cr>
-nnoremap <unique> <silent> [t :tprev<cr>
-nnoremap <unique> <silent> ]t :tnext<cr>
+nnoremap <silent> [p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1)<cr>
+nnoremap <silent> ]p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1)<cr>
+nnoremap <silent> [q :cprev<cr>
+nnoremap <silent> ]q :cnext<cr>
+nnoremap <silent> [t :tprev<cr>
+nnoremap <silent> ]t :tnext<cr>
 if has("gui_mac")
   noremap <C-6> <C-^>
 endif
@@ -91,22 +91,22 @@ noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
 " Use ,y/p/P/vp/vP to yank/paste to the OS clipboard {{{1
-nmap <unique> <leader>y "+y
-xmap <unique> <leader>y "+y
-nmap <unique> <leader>Y "+Y
-xmap <unique> <leader>Y "+Y
-nmap <unique> <leader>p "+p
-xmap <unique> <leader>p "+p
-nmap <unique> <leader>P "+P
-xmap <unique> <leader>P "+P
+nmap <leader>y "+y
+xmap <leader>y "+y
+nmap <leader>Y "+Y
+xmap <leader>Y "+Y
+nmap <leader>p "+p
+xmap <leader>p "+p
+nmap <leader>P "+P
+xmap <leader>P "+P
 " Paste+visually select what was just pasted
-nmap <unique> <leader>vp "+p`[v`]
-nmap <unique> <leader>vP "+P`[v`]
-xmap <unique> <leader>vp "+p`[v`]
-xmap <unique> <leader>vP "+P`[v`]
+nmap <leader>vp "+p`[v`]
+nmap <leader>vP "+P`[v`]
+xmap <leader>vp "+p`[v`]
+xmap <leader>vP "+P`[v`]
 
 " Give Y a more logical purpose than aliasing yy {{{1
-nnoremap <unique> Y y$
+nnoremap Y y$
 
 " Remap `cw` to a repeatable `dwi` {{{1
 fun! s:PrepareCW(w)
@@ -154,7 +154,7 @@ fun! s:PasteOver()
     return "\"_c\<C-R>\"\<ESC>"
   endif
 endf
-xnoremap <unique> <expr> <silent> P <SID>PasteOver()
+xnoremap <expr> <silent> P <SID>PasteOver()
 
 " Add maps for <C-V>$ and friends {{{1
 " Using C, D and Y instead of c$, d$ and y$ is cool. I think v$ would also be
@@ -164,27 +164,27 @@ xnoremap <unique> <expr> <silent> P <SID>PasteOver()
 " the end of the line. Unless it is already like that in which case we exit
 " visual mode.
 
-nnoremap <unique> <expr> K (v:count>1 ? "\<ESC>\<C-V>".v:count : "\<C-V>")."$"
-xnoremap <unique> <expr> K mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
+nnoremap <expr> K (v:count>1 ? "\<ESC>\<C-V>".v:count : "\<C-V>")."$"
+xnoremap <expr> K mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
 
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 " Add readline/emacs style mappings for insert/command mode {{{1
-inoremap <unique> <C-X><C-@> <C-A>
-inoremap <unique> <C-A> <C-O>^
-inoremap <unique> <C-X><C-A> <C-A>
-inoremap <unique> <expr> <C-B> getline('.')=~'^\s*$'&&col('.')>strlen(getline('.'))?"0\<Lt>C-D>\<Lt>Esc>kJs":"\<Lt>Left>"
-inoremap <unique> <expr> <C-D> col('.')>strlen(getline('.'))?"\<Lt>C-D>":"\<Lt>Del>"
-inoremap <unique> <expr> <C-E> col('.')>strlen(getline('.'))?"\<Lt>C-E>":"\<Lt>End>"
-inoremap <unique> <expr> <C-F> col('.')>strlen(getline('.'))?"\<Lt>C-F>":"\<Lt>Right>"
+inoremap <C-X><C-@> <C-A>
+inoremap <C-A> <C-O>^
+inoremap <C-X><C-A> <C-A>
+inoremap <expr> <C-B> getline('.')=~'^\s*$'&&col('.')>strlen(getline('.'))?"0\<Lt>C-D>\<Lt>Esc>kJs":"\<Lt>Left>"
+inoremap <expr> <C-D> col('.')>strlen(getline('.'))?"\<Lt>C-D>":"\<Lt>Del>"
+inoremap <expr> <C-E> col('.')>strlen(getline('.'))?"\<Lt>C-E>":"\<Lt>End>"
+inoremap <expr> <C-F> col('.')>strlen(getline('.'))?"\<Lt>C-F>":"\<Lt>Right>"
 
-cnoremap <unique> <C-X><C-A> <C-A>
-cnoremap <unique> <C-A> <Home>
-cnoremap <unique> <C-B> <Left>
-cnoremap <unique> <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
-cnoremap <unique> <C-E> <End>
-cnoremap <unique> <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
+cnoremap <C-X><C-A> <C-A>
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
+cnoremap <C-E> <End>
+cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Add columnwise 0 and $ mappings {{{1
 " This one is really cool. These mappings motion columnwise until
@@ -199,8 +199,8 @@ fun! s:Columnwise(d)
   endw
   return abs(l-line('.'))
 endf
-xnoremap <unique> <expr> <leader>j <SID>Columnwise(1).'j'
-xnoremap <unique> <expr> <leader>k <SID>Columnwise(-1).'k'
+xnoremap <expr> <leader>j <SID>Columnwise(1).'j'
+xnoremap <expr> <leader>k <SID>Columnwise(-1).'k'
 
 " Navigate/create tabpages with g<num> {{{1
 fun! NavTabPage(num)
@@ -209,23 +209,23 @@ fun! NavTabPage(num)
   endwhile
   exe 'tabnext '.a:num
 endf
-nnoremap <unique> <silent> g1 :call NavTabPage(1)<CR>
-nnoremap <unique> <silent> g2 :call NavTabPage(2)<CR>
-nnoremap <unique> <silent> g3 :call NavTabPage(3)<CR>
-nnoremap <unique> <silent> g4 :call NavTabPage(4)<CR>
-nnoremap <unique> <silent> g5 :call NavTabPage(5)<CR>
-nnoremap <unique> <silent> g6 :call NavTabPage(6)<CR>
-nnoremap <unique> <silent> g7 :call NavTabPage(7)<CR>
+nnoremap <silent> g1 :call NavTabPage(1)<CR>
+nnoremap <silent> g2 :call NavTabPage(2)<CR>
+nnoremap <silent> g3 :call NavTabPage(3)<CR>
+nnoremap <silent> g4 :call NavTabPage(4)<CR>
+nnoremap <silent> g5 :call NavTabPage(5)<CR>
+nnoremap <silent> g6 :call NavTabPage(6)<CR>
+nnoremap <silent> g7 :call NavTabPage(7)<CR>
 
 " Tabularize {{{1
-nnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
-xnoremap <unique> <Leader>t= :Tabularize /=>\?<CR>
-nnoremap <unique> <Leader>t: :Tabularize /:<CR>
-xnoremap <unique> <Leader>t: :Tabularize /:<CR>
-nnoremap <unique> <Leader>t, :Tabularize /,<CR>
-xnoremap <unique> <Leader>t, :Tabularize /,<CR>
-nnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
-xnoremap <unique> <Leader>t<Bar> :Tabularize /<Bar><CR>
+nnoremap <Leader>t= :Tabularize /=>\?<CR>
+xnoremap <Leader>t= :Tabularize /=>\?<CR>
+nnoremap <Leader>t: :Tabularize /:<CR>
+xnoremap <Leader>t: :Tabularize /:<CR>
+nnoremap <Leader>t, :Tabularize /,<CR>
+xnoremap <Leader>t, :Tabularize /,<CR>
+nnoremap <Leader>t<Bar> :Tabularize /<Bar><CR>
+xnoremap <Leader>t<Bar> :Tabularize /<Bar><CR>
 
 " Fugitive plugin {{{1
 nnoremap <leader>g<space> :Git<space>
@@ -247,19 +247,19 @@ nnoremap <expr> <leader>aj ':Ack'.(len(&ft)?' --'.&ft:'').' -Q -i '
 nnoremap <F2> :set invlist list?<cr>
 imap <F2> <C-O><F2>
 xmap <F2> <Esc><F2>gv
-nnoremap <unique> <silent> <F5> :call CompileAndRun()<cr>
-nnoremap <unique> <silent> <F7> :call OpenPrompt()<cr>
-nnoremap <unique> <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
-nnoremap <unique> <silent> <F9> :call NERDTreeSmartToggle()<cr>
-nnoremap <unique> <silent> <F10> :call ToggleQuickFix()<cr>
-nnoremap <unique> <silent> <F12> :TagbarToggle<cr>
-nnoremap <unique> <silent> <F3> :call ToggleModeless()<cr>
-inoremap <unique> <silent> <F3> <C-O>:call ToggleModeless()<cr>
+nnoremap <silent> <F5> :call CompileAndRun()<cr>
+nnoremap <silent> <F7> :call OpenPrompt()<cr>
+nnoremap <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
+nnoremap <silent> <F9> :call NERDTreeSmartToggle()<cr>
+nnoremap <silent> <F10> :call ToggleQuickFix()<cr>
+nnoremap <silent> <F12> :TagbarToggle<cr>
+nnoremap <silent> <F3> :call ToggleModeless()<cr>
+inoremap <silent> <F3> <C-O>:call ToggleModeless()<cr>
 
-noremap <unique> <silent> <C-F9>  :vertical resize -10<cr>
-noremap <unique> <silent> <C-F10> :resize +10<cr>
-noremap <unique> <silent> <C-F11> :resize -10<cr>
-noremap <unique> <silent> <C-F12> :vertical resize +10<cr>
+noremap <silent> <C-F9>  :vertical resize -10<cr>
+noremap <silent> <C-F10> :resize +10<cr>
+noremap <silent> <C-F11> :resize -10<cr>
+noremap <silent> <C-F12> :vertical resize +10<cr>
 
 " Window management {{{1
 " Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
@@ -270,13 +270,13 @@ for c in split('abcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+<>=', '\zs')
     exe 'nmap <M-'.c.'> <C-W>'.c
   endif
 endfor
-nmap <unique> <M-Left> <C-W>h
-nmap <unique> <M-Down> <C-W>j
-nmap <unique> <M-Up> <C-W>k
-nmap <unique> <M-Right> <C-W>l
+nmap <M-Left> <C-W>h
+nmap <M-Down> <C-W>j
+nmap <M-Up> <C-W>k
+nmap <M-Right> <C-W>l
 
 " Various other mappings {{{1
-imap <unique> <C-Space> <C-X><C-O>
+imap <C-Space> <C-X><C-O>
 nnoremap gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap gG :call SearchWeb(GetVisualLine())<CR>
 nnoremap gK K
