@@ -60,13 +60,13 @@ endf
 nnoremap <silent> go :exe 'ptag '.expand('<cword>')<cr>
 xnoremap <silent> go :exe 'ptag '.GetVisualLine()<cr>
 nnoremap <leader>d<space> :e<space>
-nnoremap <leader>db :NERDTreeFromBookmark<space>
+nnoremap <leader>db :CtrlPBuffer<cr>
 nnoremap <leader>dc :cd<space>
 nnoremap <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
 nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
 nnoremap <expr> <leader>dj EditFromDir(ProjectRootGuess(GuessMainFile()))
-nnoremap <silent> <leader>dt :call NERDTreeSmartToggle()<cr>
-nnoremap <leader>dr :SwitchMain<cr>:MRU<space>
+nnoremap <silent> <leader>dt :CtrlPTag<cr>
+nnoremap <leader>dr :SwitchMain<cr>:CtrlPMRU<cr>
 nnoremap <silent> <leader>dp :exe 'cd '.ProjectRootGuess(GuessMainFile())<cr>
 nnoremap <silent> <leader>du :cd ..<cr>
 nnoremap <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>

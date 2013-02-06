@@ -59,12 +59,6 @@ endif
 " Fuzzy finder: ignore stuff that can't be opened, and generated files {{{2
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
 
-" Settings for ctrl-p plugin
-" the nearest ancestor that contains one of these
-" directories or files: .git .hg .svn .bzr _darcs
-let g:ctrlp_working_path_mode = 2
-let g:ctrlp_cmd = 'CtrlPMixed'
-
 " Settings for Session plugin {{{2
 let g:session_directory = '~/.vim/local/session'
 let g:session_autoload = 'no'
@@ -110,5 +104,10 @@ endif
 
 " Misc {{{2
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
+
+" CtrlP {{{2
+let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_cmd = 'CtrlP'
 
 endif
