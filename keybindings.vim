@@ -92,7 +92,7 @@ noremap <C-kMinus> :Smaller<CR>
 
 
 " Use ,y/p/P/vp/vP to yank/paste to the OS clipboard {{{1
-" Try to cleanup what is about to be pasted. Inspired by the WhitesPaste plugin
+" Try to cleanup what is about to be pasted. Inspired by the WhitesPaste plugin.
 fun! s:FixedPaste(c)
   let r = []
   for l in split(@+, '\n', 1)
@@ -100,14 +100,27 @@ fun! s:FixedPaste(c)
     let l = &et ? substitute(l,'^\t\+','\=substitute(submatch(0),"\t",repeat(" ",&ts),"")','g') : l
     call insert(r, l, len(r))
   endfor
+
   while len(r)>2 && len(r[0])==0 && len(r[1])==0
     call remove(r, 0)
   endwhile
   while len(r)>2 && len(r[len(r)-1])==0 && len(r[len(r)-2])==0
     call remove(r, len(r)-1)
   endwhile
-  let @+ = (@+=~"\n" ? join(r,"\n") . "\n" : @+)
-  return '"+'.a:c
+
+  if mode(1)=='n'
+    let linebefore = getline(line('.') - (a:c==#'P'?1:0))
+    if linebefore=~'^\s*$' && len(r[0])==0
+      call remove(r, 0)
+    endif
+    let lineafter = getline((line('.') - (a:c==#'P'?1:0)) + 1)
+    if lineafter=~'^\s*$' && len(r[len(r)-1])==0
+      call remove(r, len(r)-1)
+    endif
+  endif
+
+  let @9 = (@+=~"\n" ? join(r,"\n") . "\n" : @+)
+  return '"9'.a:c
 endf
 nmap <expr> <leader>y "+y
 xmap <expr> <leader>y "+y
