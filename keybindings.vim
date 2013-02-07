@@ -90,15 +90,33 @@ command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=sub
 noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
+
 " Use ,y/p/P/vp/vP to yank/paste to the OS clipboard {{{1
-nmap <leader>y "+y
-xmap <leader>y "+y
-nmap <leader>Y "+Y
-xmap <leader>Y "+Y
-nmap <leader>p "+p
-xmap <leader>p "+p
-nmap <leader>P "+P
-xmap <leader>P "+P
+" Try to cleanup what is about to be pasted. Inspired by the WhitesPaste plugin
+fun! s:FixedPaste(c)
+  let r = []
+  for l in split(@+, '\n', 1)
+    let l = substitute(l,'\s\+$','','')
+    let l = &et ? substitute(l,'^\t\+','\=substitute(submatch(0),"\t",repeat(" ",&ts),"")','g') : l
+    call insert(r, l, len(r))
+  endfor
+  while len(r)>2 && len(r[0])==0 && len(r[1])==0
+    call remove(r, 0)
+  endwhile
+  while len(r)>2 && len(r[len(r)-1])==0 && len(r[len(r)-2])==0
+    call remove(r, len(r)-1)
+  endwhile
+  let @+ = (@+=~"\n" ? join(r,"\n") . "\n" : @+)
+  return '"+'.a:c
+endf
+nmap <expr> <leader>y "+y
+xmap <expr> <leader>y "+y
+nmap <expr> <leader>Y "+Y
+xmap <expr> <leader>Y "+Y
+nmap <expr> <leader>p <SID>FixedPaste('p')
+xmap <expr> <leader>p <SID>FixedPaste('p')
+nmap <expr> <leader>P <SID>FixedPaste('P')
+xmap <expr> <leader>P <SID>FixedPaste('P')
 " Paste+visually select what was just pasted
 nmap <leader>vp "+p`[v`]
 nmap <leader>vP "+P`[v`]
@@ -194,13 +212,13 @@ fun! s:Columnwise(d)
   let l = line('.')+a:d
   let c = len(getline('.'))
   let c = col('.')<c ? col('.') : (c>0 ? c : 1)
-  while len(getline(l+a:d))>=c
+  while len(substitute(getline(l+a:d),'\s\+$','',''))>=c
     let l = l+a:d
   endw
   return abs(l-line('.'))
 endf
-xnoremap <expr> <leader>j <SID>Columnwise(1).'j'
-xnoremap <expr> <leader>k <SID>Columnwise(-1).'k'
+noremap <expr> <leader>j <SID>Columnwise(1).'j'
+noremap <expr> <leader>k <SID>Columnwise(-1).'k'
 
 " Navigate/create tabpages with g<num> {{{1
 fun! NavTabPage(num)
