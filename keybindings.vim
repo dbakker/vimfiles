@@ -31,9 +31,9 @@ nnoremap <silent> ,/ :nohlsearch<CR>
 nnoremap <silent> ,\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
-nnoremap <silent> <leader>wa :wa<cr>
-nnoremap <silent> <leader>wf :w!<cr>
-nnoremap <silent> <leader>wj :w<cr>
+nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
+nnoremap <silent> <leader>wf :w!<cr>:redraw<cr>
+nnoremap <silent> <leader>wj :w<cr>:redraw<cr>
 nnoremap <silent> <leader>wq :w<cr>:BD<cr>
 nnoremap <silent> <leader>wx :wa<cr>:bufdo BD<cr>
 nnoremap <silent> <leader>qa :bufdo BD<cr>
