@@ -131,10 +131,10 @@ xmap <expr> <leader>p <SID>FixedPaste('p')
 nmap <expr> <leader>P <SID>FixedPaste('P')
 xmap <expr> <leader>P <SID>FixedPaste('P')
 " Paste+visually select what was just pasted
-nmap <leader>vp "+p`[v`]
-nmap <leader>vP "+P`[v`]
-xmap <leader>vp "+p`[v`]
-xmap <leader>vP "+P`[v`]
+nmap <leader>vp "+pgV
+nmap <leader>vP "+PgV
+xmap <leader>vp "+pgV
+xmap <leader>vP "+PgV
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap Y y$
@@ -315,8 +315,8 @@ map <C-K> %
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text
-nnoremap gV `[v`]
-xnoremap gV <ESC>`[v`]
+nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
+xmap gV <ESC>gV
 " Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
 " Remove all trailing spaces
