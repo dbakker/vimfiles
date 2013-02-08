@@ -122,10 +122,10 @@ fun! s:FixedPaste(c)
   let @9 = (@+=~"\n" ? join(r,"\n") . "\n" : @+)
   return '"9'.a:c
 endf
-nmap <expr> <leader>y "+y
-xmap <expr> <leader>y "+y
-nmap <expr> <leader>Y "+Y
-xmap <expr> <leader>Y "+Y
+nmap <leader>y "+y
+xmap <leader>y "+y
+nmap <leader>Y "+Y
+xmap <leader>Y "+Y
 nmap <expr> <leader>p <SID>FixedPaste('p')
 xmap <expr> <leader>p <SID>FixedPaste('p')
 nmap <expr> <leader>P <SID>FixedPaste('P')
