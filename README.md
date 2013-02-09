@@ -17,7 +17,7 @@ Vim! If you are hungry for more, some other cool places to check out are:
 
 First install GVim, git and optional dependencies:
 
-    sudo pacman -S gvim git ctags perl ack
+    sudo pacman -S gvim git ctags perl ack python2
 
 Then download the settings:
 
@@ -31,13 +31,15 @@ then restart Vim.
 
 ## Doing a full install on Windows
 
-Manually install:
+Manually install (or maybe use [Chocolatey](http://chocolatey.org/)):
 
   * [GVim](http://guessurl.appspot.com/?q=download+gvim)
   * [Msysgit](http://guessurl.appspot.com/?q=download+msysgit) (git for windows)
   * [Exuberant tags](http://guessurl.appspot.com/?q=download+exuberant+tags) (for tag navigation)
   * [Mingw](http://guessurl.appspot.com/?q=download+mingw) (if you add it to your PATH it enables Unix commands)
   * [Strawberry Perl](http://strawberryperl.com/) (for Ack and general use, add to PATH)
+  * [Python 2 (32-bit)](http://www.python.org/getit/) (useful for some plugins,
+    the 32-bit version is necessary if Vim is 32-bit)
 
 Then download the settings:
 
