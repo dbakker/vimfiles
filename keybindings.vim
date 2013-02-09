@@ -130,6 +130,7 @@ nmap <expr> <leader>p <SID>FixedPaste('p')
 xmap <expr> <leader>p <SID>FixedPaste('p')
 nmap <expr> <leader>P <SID>FixedPaste('P')
 xmap <expr> <leader>P <SID>FixedPaste('P')
+map <expr> <MiddleMouse> <SID>FixedPaste('p')
 " Paste+visually select what was just pasted
 nmap <leader>vp "+pgV
 nmap <leader>vP "+PgV
@@ -196,6 +197,7 @@ xnoremap <expr> <silent> P <SID>PasteOver()
 " visual mode.
 
 nnoremap <expr> K (v:count>1 ? "\<ESC>\<C-V>".v:count : "\<C-V>")."$"
+onoremap K $
 xnoremap <expr> K mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
 
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
