@@ -314,6 +314,7 @@ nnoremap gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap gG :call SearchWeb(GetVisualLine())<CR>
 nnoremap gK K
 map <C-K> %
+imap <C-R><space> <+.+>
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text
