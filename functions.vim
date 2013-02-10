@@ -319,10 +319,12 @@ fun! ToggleModeless()
     let s:tm_insertmode=&insertmode
     let s:tm_fdc=&fdc
     let s:tm_mapcvi=maparg('<C-V>', 'i')
+    let s:tm_mapcvv=maparg('<C-V>', 'v')
     let s:tm_mapcc=maparg('<C-C>', 'v')
     let s:tm_slm=&slm
     let s:tm_ve=&ve
     inoremap <C-V> <C-R>+
+    vnoremap <C-V> "+p
     vnoremap <C-C> "+y
     if has("gui_running")
       let s:tm_guioptions=&guioptions
@@ -340,8 +342,10 @@ fun! ToggleModeless()
     let &insertmode=s:tm_insertmode
     let &slm=s:tm_slm
     sil! exe 'iunmap <C-V>'
+    sil! exe 'vunmap <C-V>'
     sil! exe 'vunmap <C-C>'
     sil! exe 'inoremap <silent> <C-V> '.s:tm_mapcvi
+    sil! exe 'vnoremap <silent> <C-V> '.s:tm_mapcvv
     sil! exe 'vnoremap <silent> <C-C> '.s:tm_mapcc
     let &guioptions=s:tm_guioptions
     let &ve=s:tm_ve
