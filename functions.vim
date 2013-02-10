@@ -300,6 +300,56 @@ endf
 com! -nargs=0 TagRegenerate call TagRegenerate()
 com! -nargs=0 TagInit call TagInit()
 
+" ToggleQuickFix() {{{2
+fun! ToggleQuickFix()
+  for b in tabpagebuflist()
+    if getbufvar(b, '&buftype') == 'quickfix'
+      cclose
+      return
+    endif
+  endfor
+  botright copen
+endf
+
+" ToggleModeless(): Turn Vim into notepad {{{2
+let s:tm_toggle = 0
+fun! ToggleModeless()
+  if s:tm_toggle == 0
+    let s:tm_toggle = 1
+    let s:tm_insertmode=&insertmode
+    let s:tm_fdc=&fdc
+    let s:tm_mapcvi=maparg('<C-V>', 'i')
+    let s:tm_mapcc=maparg('<C-C>', 'v')
+    let s:tm_slm=&slm
+    let s:tm_ve=&ve
+    inoremap <C-V> <C-R>+
+    vnoremap <C-C> "+y
+    if has("gui_running")
+      let s:tm_guioptions=&guioptions
+      set guioptions=bgmrLtT
+    endif
+    if &fdc<2
+      set fdc=3
+    endif
+    sil! exe "normal \<C-W>o"
+    set selectmode^=mouse,key,cmd
+    set ve=block
+    set insertmode
+  else
+    let s:tm_toggle = 0
+    let &insertmode=s:tm_insertmode
+    let &slm=s:tm_slm
+    sil! exe 'iunmap <C-V>'
+    sil! exe 'vunmap <C-C>'
+    sil! exe 'inoremap <silent> <C-V> '.s:tm_mapcvi
+    sil! exe 'vnoremap <silent> <C-C> '.s:tm_mapcc
+    let &guioptions=s:tm_guioptions
+    let &ve=s:tm_ve
+    let &fdc=s:tm_fdc
+  endif
+endf
+command! -nargs=0 ToggleModeless call ToggleModeless()
+
 " CompileAndRun() {{{2
 let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
 let cnr_defhandlers={'py': 'python', 'sh': 'sh', 'php': 'php', 'pl': 'perl', 'jar': 'java -jar'}
@@ -387,39 +437,4 @@ fun! CompileAndRun()
     redraw!
   endtry
 endf
-
-" ToggleQuickFix() {{{2
-fun! ToggleQuickFix()
-  for b in tabpagebuflist()
-    if getbufvar(b, '&buftype') == 'quickfix'
-      cclose
-      return
-    endif
-  endfor
-  botright copen
-endf
-
-" ToggleModeless(): Turn Vim into a modeless editor {{{2
-let s:tm_toggle = 0
-fun! ToggleModeless()
-  if s:tm_toggle == 0
-    let s:tm_toggle = 1
-    let s:tm_insertmode=&insertmode
-    let s:tm_fdc=&fdc
-    if has("gui_running")
-      let s:tm_guioptions=&guioptions
-      set guioptions=gmrLtT
-    endif
-    set insertmode
-    if &fdc<2
-      set fdc=3
-    endif
-  else
-    let s:tm_toggle = 0
-    let &insertmode=s:tm_insertmode
-    let &guioptions=s:tm_guioptions
-    let &fdc=s:tm_fdc
-  endif
-endf
-command! -nargs=0 ToggleModeless call ToggleModeless()
 
