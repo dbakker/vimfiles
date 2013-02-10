@@ -7,15 +7,15 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " Load plugins {{{1
-" let Vundle manage Vundle (required!)
+" let Vundle manage Vundle (required first line!)
 Bundle 'gmarik/vundle'
 
-" My Bundles here:
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bronson/vim-visual-star-search'
 Bundle 'dbakker/vim-md-noerror'
 Bundle 'dbakker/vim-paragraph-motion'
+Bundle 'dbakker/vim-placeholders'
 Bundle 'dbakker/vim-powerline'
 Bundle 'dbakker/vim-projectroot'
 Bundle 'ervandew/supertab'
@@ -28,6 +28,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/argtextobj.vim'
