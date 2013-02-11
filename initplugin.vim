@@ -22,6 +22,7 @@ Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
+Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'mileszs/ack.vim'
 Bundle 'nelstrom/vim-markdown-folding'
 Bundle 'scrooloose/nerdtree'
@@ -41,6 +42,7 @@ Bundle 'vim-scripts/nginx.vim'
 Bundle 'vim-scripts/searchfold.vim'
 Bundle 'vim-scripts/wombat256.vim'
 Bundle 'xolox/vim-session'
+
 call TrySource('~/.vim/local/bundles.vim')
 
 " Configuration of options for plugins {{{1
