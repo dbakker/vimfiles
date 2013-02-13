@@ -189,7 +189,11 @@ endf
 " OpenPrompt() {{{2
 fun! OpenPrompt()
   if has('win32')
-    exe 'sil !start cmd'
+    if executable(expand('$ProgramFiles').'/Git/bin/sh.exe')
+      sil exe '!start '.expand('$ProgramFiles').'/Git/bin/sh.exe --login -i'
+    else
+      exe 'sil !start cmd'
+    endif
     return
   else
     for p in ['rxvt', 'gnome-terminal', 'xterm', &shell]
