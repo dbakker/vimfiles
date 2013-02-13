@@ -72,6 +72,14 @@ augroup resCur
   autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif
 augroup END
 
+" Set initial directory {{{2
+augroup initialDir
+  au!
+  if (has('win32') || has('win64'))
+    au VimEnter * if !len(bufname('')) && !filereadable(expand('%')) | exe 'sil! cd '.$HOME | endif
+  endif
+augroup END
+
 " Set working directory to root of first opened file {{{2
 if has("gui_running")
   fun! s:WorkDirRead()
@@ -166,13 +174,10 @@ if has("gui_running")
     endif
 
     set guicursor+=n-v:blinkon0
-else
-    set bg=dark
 endif
 
 " Select theme {{{2
 if has("gui_running")
-    set background=dark
     colorscheme wombat256mod
 else
     let g:solarized_termcolors=256
