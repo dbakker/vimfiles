@@ -14,7 +14,6 @@ fun! MarkdownAutoTitle()
         let line = matchstr(prev, '^\s*')
         let line .= repeat(symbol, len(prev)-len(line))
         call setline(i, line)
-        return
       endif
     endif
   endfor
