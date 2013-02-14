@@ -261,7 +261,19 @@ endf
 
 " GuessMainWindow() {{{2
 fun! GuessMainWindow()
-  return bufwinnr(GuessMainBuffer())
+  let win=winnr()
+  if !IsExtraBuffer()
+    return win
+  endif
+  let size=-1
+  for i in range(1, tabpagewinnr('', '$'))
+    let s = winheight(i) * winwidth(i)
+    if s>size
+      let size=s
+      let win=i
+    endif
+  endfor
+  return win
 endf
 
 " GuessMainFile() {{{2
