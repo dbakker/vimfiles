@@ -241,14 +241,13 @@ nnoremap <silent> g6 :call NavTabPage(6)<CR>
 nnoremap <silent> g7 :call NavTabPage(7)<CR>
 
 " Tabularize {{{1
-nnoremap <Leader>t= :Tabularize /=>\?<CR>
-xnoremap <Leader>t= :Tabularize /=>\?<CR>
-nnoremap <Leader>t: :Tabularize /:<CR>
-xnoremap <Leader>t: :Tabularize /:<CR>
-nnoremap <Leader>t, :Tabularize /,<CR>
-xnoremap <Leader>t, :Tabularize /,<CR>
-nnoremap <Leader>t<Bar> :Tabularize /<Bar><CR>
-xnoremap <Leader>t<Bar> :Tabularize /<Bar><CR>
+let s:tabularize_map = {'=': '=>\?'}
+fun! s:Tabularize()
+  let c = nr2char(getchar())
+  return ":Tabularize /".get(s:tabularize_map, c, c)."\<CR>"
+endf
+noremap <expr> <leader>t <SID>Tabularize()
+sunmap <leader>t
 
 " Fugitive plugin {{{1
 nnoremap <leader>g<space> :Git<space>
