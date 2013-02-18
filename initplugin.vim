@@ -13,6 +13,7 @@ Bundle 'gmarik/vundle'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bronson/vim-visual-star-search'
+Bundle 'davidhalter/jedi-vim'
 Bundle 'dbakker/vim-md-noerror'
 Bundle 'dbakker/vim-paragraph-motion'
 Bundle 'dbakker/vim-placeholders'
@@ -112,5 +113,14 @@ au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cmd = 'CtrlP'
+
+" Vim-Jedi {{{2
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#goto_command = "<leader>ig"
+let g:jedi#get_definition_command = "<leader>id"
+let g:jedi#pydoc = "<leader>iK"
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#rename_command = "<leader>ir"
+let g:jedi#related_names_command = "<leader>in"
 
 endif
