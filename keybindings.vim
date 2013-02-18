@@ -154,25 +154,15 @@ endf
 nmap <expr> cw <SID>PrepareCW('w')
 nmap <expr> cW <SID>PrepareCW('W')
 
-" Add []<space> mappings for adding spaces {{{1
-fun! s:AddSpace(before)
-  let [bufnum, lnum, col, off] = getpos('.')
-  if a:before
-    let lnum += (v:count>0) ? v:count : 1
-  endif
-
-  let result = (a:before ? "O" : "o") . "\<esc>"
-  let result .= ":" . lnum . "\<CR>\<Home>"
-  let result .= col>0 ? (col-1) . "l" : ""
-  if &fo =~# 'o'
-    setl fo-=o
-    let result .= ":setl fo+=o\<CR>"
-  endif
-  let result .= ':silent! call repeat#set("'.(a:before ? '[' : ']').' ", '.v:count.')'."\<CR>"
-  return result
+" Add []<space> mappings for adding empty lines {{{1
+fun! s:AddLines(before)
+  let cnt = (v:count>0) ? v:count : 1
+  call append(line('.')-a:before, repeat([''], cnt))
+  silent! call repeat#set((a:before ? '[ ' : '] '), cnt)
 endf
-nnoremap <expr> [<space> <SID>AddSpace(1)
-nnoremap <expr> ]<space> <SID>AddSpace(0)
+
+nnoremap [<space> :<C-U>call <SID>AddLines(1)<CR>
+nnoremap ]<space> :<C-U>call <SID>AddLines(0)<CR>
 
 " Paste without overwriting any register {{{1
 fun! s:PasteOver()
