@@ -157,8 +157,6 @@ set foldtext=MyFoldText()
 if has("gui_running")
     " Remove all menus, scollbars, etc.
     set guioptions=git
-    " Maximize Vim as much as possible
-    set lines=70 columns=140
 
     " Set font depending on system (tpope)
     if exists("&guifont")
@@ -166,7 +164,7 @@ if has("gui_running")
             set guifont=Monaco:h12
         elseif has("unix")
             if &guifont == ""
-                set guifont=Inconsolata\ 14,bitstream\ vera\ sans\ mono\ 11
+                set guifont=Inconsolata\ 11,bitstream\ vera\ sans\ mono\ 11
             endif
         elseif has("win32")
             set guifont=Consolas:h11,Courier\ New:h10
