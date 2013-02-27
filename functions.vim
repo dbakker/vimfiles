@@ -196,7 +196,7 @@ fun! OpenPrompt()
     endif
     return
   else
-    for p in ['rxvt', 'gnome-terminal', 'xterm', &shell]
+    for p in ['xfce4-terminal', 'rxvt', 'gnome-terminal', 'xterm', &shell]
       if executable(p)
         sil exe '!'.p.' &'
         return
@@ -213,9 +213,9 @@ function! OpenURL(url) " (tpope)
   if has("win32")
     exe '!start cmd /cstart /b '.url
   elseif $DISPLAY !~ '^\w'
-    exe 'silent !sensible-browser "'.url.'"'
+    exe 'silent !sensible-browser "'.url.'" &'
   else
-    exe 'silent !sensible-browser -T "'.url.'"'
+    exe 'silent !sensible-browser -T "'.url.'" &'
   endif
   " redraw!
 endfunction
