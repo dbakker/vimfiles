@@ -123,6 +123,7 @@ set linebreak                   " if we do wrap, wrap whole words, and mark it w
 set list                        " show tabs and trailing spaces by default
 set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 set nowrap                      " don't wrap lines by default
+set rnu
 set scrolloff=1                 " keep 1 line distance from the edges of the screen
 set showbreak=>\ 
 set showcmd                     " show (partial) command in the last line of the screen
