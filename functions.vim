@@ -194,16 +194,17 @@ fun! OpenPrompt()
     else
       exe 'sil !start cmd'
     endif
-    return
+  elseif executable('exo-open')
+    sil exe '!exo-open --launch TerminalEmulator &'
   else
-    for p in ['xfce4-terminal', 'rxvt', 'gnome-terminal', 'xterm', &shell]
+    for p in ['rxvt', 'gnome-terminal', 'xterm', &shell]
       if executable(p)
         sil exe '!'.p.' &'
         return
       endif
     endfor
+    throw 'Could not find a way to open a prompt'
   endif
-  throw 'Could not find a way to open a prompt'
 endf
 
 " OpenURL(url) {{{2
@@ -212,6 +213,8 @@ function! OpenURL(url) " (tpope)
   let url = substitute(url, '#', '\\#', 'g')
   if has("win32")
     exe '!start cmd /cstart /b '.url
+  elseif executable('exo-open')
+    exe 'silent !exo-open "'.url.'" &'
   elseif $DISPLAY !~ '^\w'
     exe 'silent !sensible-browser "'.url.'" &'
   else
