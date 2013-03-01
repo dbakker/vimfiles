@@ -1,51 +1,12 @@
-if getftype(glob("~/.vim/bundle/vundle"))=="dir"
+if getftype(glob("~/.vim/bundle/vim-pathogen"))=="dir"
 
 filetype off                   " required!
 
 " Setup plugin loader {{{1
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
 
 " Load plugins {{{1
-" let Vundle manage Vundle (required first line!)
-Bundle 'gmarik/vundle'
-
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'bronson/vim-visual-star-search'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'dbakker/vim-md-noerror'
-Bundle 'dbakker/vim-paragraph-motion'
-Bundle 'dbakker/vim-placeholders'
-Bundle 'dbakker/vim-powerline'
-Bundle 'dbakker/vim-projectroot'
-Bundle 'dbakker/wombat256.vim'
-Bundle 'ervandew/supertab'
-Bundle 'godlygeek/tabular'
-Bundle 'kien/ctrlp.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'mileszs/ack.vim'
-Bundle 'nelstrom/vim-markdown-folding'
-Bundle 'rodjek/vim-puppet'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-ragtag'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'vim-scripts/argtextobj.vim'
-Bundle 'vim-scripts/bufexplorer.zip'
-Bundle 'vim-scripts/eclipse.vim'
-Bundle 'vim-scripts/javacomplete'
-Bundle 'vim-scripts/md5.vim'
-Bundle 'vim-scripts/mru.vim'
-Bundle 'vim-scripts/nginx.vim'
-Bundle 'vim-scripts/searchfold.vim'
-Bundle 'xolox/vim-session'
-
-call TrySource('~/.vim/local/bundles.vim')
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
