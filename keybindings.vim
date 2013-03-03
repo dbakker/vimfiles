@@ -161,8 +161,8 @@ fun! s:AddLines(before)
   silent! call repeat#set((a:before ? '[ ' : '] '), cnt)
 endf
 
-nnoremap [<space> :<C-U>call <SID>AddLines(1)<CR>
-nnoremap ]<space> :<C-U>call <SID>AddLines(0)<CR>
+nnoremap <silent> [<space> :<C-U>call <SID>AddLines(1)<CR>
+nnoremap <silent> ]<space> :<C-U>call <SID>AddLines(0)<CR>
 
 " Paste without overwriting any register {{{1
 fun! s:PasteOver()
