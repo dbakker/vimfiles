@@ -176,10 +176,11 @@ if has("gui_running")
 endif
 
 " Select theme {{{2
-if has("gui_running")
-    colorscheme wombat256mod
-else
-    let g:solarized_termcolors=256
-    set t_Co=256
-    colorscheme wombat256mod
-endif
+try
+  colorscheme wombat256mod
+  if !has("gui_running")
+      set t_Co=256
+  endif
+catch
+  let &bg=has("gui_running")?"light" : "dark"
+endtry
