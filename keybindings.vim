@@ -312,7 +312,7 @@ xmap gV <ESC>gV
 " Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
 " Remove all trailing spaces
-nnoremap <silent> <leader>S :retab<Bar>:let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <leader>S :let g:pos=getpos('.')<Bar>:retab<Bar>:let _s=@/<Bar>:keepjumps %s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<Bar>:call setpos('.',g:pos)<CR>
 command! -nargs=0 Wrap let w:wrapnu=&nu<Bar>setl wrap nolist nu
 command! -nargs=0 NoWrap let &nu=w:wrapnu<Bar>setl nowrap list&
 
