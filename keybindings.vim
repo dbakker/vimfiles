@@ -315,6 +315,10 @@ noremap <C-^> <C-^>`"
 nnoremap <silent> <leader>S :let g:pos=getpos('.')<Bar>:retab<Bar>:let _s=@/<Bar>:keepjumps %s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<Bar>:call setpos('.',g:pos)<CR>
 command! -nargs=0 Wrap let w:wrapnu=&nu<Bar>setl wrap nolist nu
 command! -nargs=0 NoWrap let &nu=w:wrapnu<Bar>setl nowrap list&
+" Typos
+nmap dD D
+nmap cC C
+nmap yY Y
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
