@@ -207,6 +207,13 @@ fun! OpenPrompt()
   endif
 endf
 
+" ToggleFullscreen() {{{2
+fun! ToggleFullscreen()
+  if executable('wmctrl')
+    call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
+  endif
+endf
+
 " OpenURL(url) {{{2
 function! OpenURL(url) " (tpope)
   let url = substitute(a:url, '%', '\\%', 'g')

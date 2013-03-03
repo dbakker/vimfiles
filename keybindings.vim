@@ -274,6 +274,7 @@ nnoremap <silent> <F7> :call OpenPrompt()<cr>
 nnoremap <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
 nnoremap <silent> <F9> :call NERDTreeSmartToggle()<cr>
 nnoremap <silent> <F10> :call ToggleQuickFix()<cr>
+nnoremap <silent> <F11> :call ToggleFullscreen()<cr>
 nnoremap <silent> <F12> :TagbarToggle<cr>
 nnoremap <silent> <F3> :call ToggleModeless()<cr>
 inoremap <silent> <F3> <C-O>:call ToggleModeless()<cr>
