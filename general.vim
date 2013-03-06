@@ -165,7 +165,7 @@ if has("gui_running")
             set guifont=Monaco:h12
         elseif has("unix")
             if &guifont == ""
-                set guifont=Inconsolata\ 11,bitstream\ vera\ sans\ mono\ 11
+                set guifont=Ubuntu\ Mono\ 12,Inconsolata\ 11,bitstream\ vera\ sans\ mono\ 11
             endif
         elseif has("win32")
             set guifont=Consolas:h11,Courier\ New:h10
