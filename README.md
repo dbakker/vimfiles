@@ -1,35 +1,29 @@
 # Vim configuration
 
-This Vim configuration uses Git & the [Vundle plugin](https://github.com/gmarik/vundle).
+This is my own complete Vim configuration. I hope you enjoy reading this and
+will find some interesting ideas for your own Vim!
 
-## For scavengers
-
-I hope you enjoy reading this and will find some interesting ideas for your own
-Vim! If you are hungry for more, some other cool places to check out are:
-
-  * [Vim Tips Wiki](http://vim.wikia.com/wiki/Vim_Tips_Wiki)
-  * [Derek Wyatt videos](http://guessurl.appspot.com/?q=derek+wyatt+advanced+videos)
-  * [Tpope dotfiles](https://github.com/tpope/tpope)
-  * [Spf13 vimfiles](https://github.com/spf13/spf13-vim/)
-  * [AndrewRadev vimfiles](https://github.com/AndrewRadev/Vimfiles)
-
-## Doing a full install on Linux
+## Installing on Linux
 
 First install GVim, git and optional dependencies:
 
-    sudo pacman -S gvim git ctags perl ack python2
+    sudo pacman -S gvim git ctags curl ack python2
+    sudo apt-get install vim vim-gtk git exuberant-ctags perl ack-grep curl python2 pyflakes wmctrl
 
-Then download the settings:
+Download the configuration:
 
-    cd
-    git clone https://github.com/dbakker/vimfiles.git .vim
-    ln -s .vim/.vimrc .vimrc
-    git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
-    gvim -c "BundleInstall"
+    $ bash <(curl -s https://raw.github.com/dbakker/vimfiles/master/install.sh)
 
-then restart Vim.
+And, to install plugins:
 
-## Doing a full install on Windows
+    $ ~/.vim/install.sh URL
+
+That last one will download a `.tar.xz` file from the given URL, and put the
+contents (the plugins) into the ~/.vim/bundle folder. I like managing my
+plugins like this over using something like Vundle, because this method is way
+faster and cleaner (no `.git` repos, only 1 file to download) and more reliable.
+
+## Installing on Windows
 
 Manually install (or maybe use [Chocolatey](http://chocolatey.org/)):
 
@@ -46,13 +40,8 @@ Then download the settings:
     cd %UserProfile%
     git clone https://github.com/dbakker/vimfiles.git .vim
     echo source ~/.vim/.vimrc > .vimrc
-    git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
 
-Start Vim, and install the plugins:
-
-    :BundleInstall
-
-then restart Vim.
+then manually add the plugins.
 
 It might be a good idea to create a .vim/local.vim file with a subset of these:
 
@@ -89,4 +78,14 @@ This feature is interesting for overriding settings, for example:
     setl noexpandtab
     setl makeprg=make
     Wrap
+
+## For scavengers
+
+If you are hungry for more, some other cool places to check out are:
+
+  * [Vim Tips Wiki](http://vim.wikia.com/wiki/Vim_Tips_Wiki)
+  * [Derek Wyatt videos](http://guessurl.appspot.com/?q=derek+wyatt+advanced+videos)
+  * [Tpope dotfiles](https://github.com/tpope/tpope)
+  * [Spf13 vimfiles](https://github.com/spf13/spf13-vim/)
+  * [AndrewRadev vimfiles](https://github.com/AndrewRadev/Vimfiles)
 
