@@ -266,9 +266,13 @@ nnoremap <leader>aa :Ack<space>
 nnoremap <expr> <leader>aj ':Ack'.(len(&ft)?' --'.&ft:'').' -Q -i '
 
 " <F1-12> mappings {{{1
-nnoremap <F2> :set invlist list?<cr>
-imap <F2> <C-O><F2>
-xmap <F2> <Esc><F2>gv
+nnoremap <F1> <Nop>
+set pastetoggle=<F2>
+nnoremap <silent> <F3> :call ToggleModeless()<cr>
+inoremap <silent> <F3> <C-O>:call ToggleModeless()<cr>
+nnoremap <F4> :set invlist list?<cr>
+imap <F4> <C-O><F2>
+xmap <F4> <Esc><F2>gv
 nnoremap <silent> <F5> :call CompileAndRun()<cr>
 nnoremap <silent> <F7> :call OpenPrompt()<cr>
 nnoremap <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
@@ -276,8 +280,6 @@ nnoremap <silent> <F9> :call NERDTreeSmartToggle()<cr>
 nnoremap <silent> <F10> :call ToggleQuickFix()<cr>
 nnoremap <silent> <F11> :call ToggleFullscreen()<cr>
 nnoremap <silent> <F12> :TagbarToggle<cr>
-nnoremap <silent> <F3> :call ToggleModeless()<cr>
-inoremap <silent> <F3> <C-O>:call ToggleModeless()<cr>
 
 noremap <silent> <C-F9>  :vertical resize -10<cr>
 noremap <silent> <C-F10> :resize +10<cr>
