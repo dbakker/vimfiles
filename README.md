@@ -10,18 +10,9 @@ First install GVim, git and optional dependencies:
     sudo pacman -S gvim git ctags curl ack python2
     sudo apt-get install vim vim-gtk git exuberant-ctags perl ack-grep curl python2 pyflakes wmctrl
 
-Download the configuration:
+Install the configuration:
 
     $ bash <(curl -s https://raw.github.com/dbakker/vimfiles/master/install.sh)
-
-And, to install plugins:
-
-    $ ~/.vim/install.sh URL
-
-That last one will download a `.tar.xz` file from the given URL, and put the
-contents (the plugins) into the ~/.vim/bundle folder. I like managing my
-plugins like this over using something like Vundle, because this method is way
-faster and cleaner (no `.git` repos, only 1 file to download) and more reliable.
 
 ## Installing on Windows
 

@@ -1,9 +1,6 @@
-if getftype(glob("~/.vim/bundle/vim-pathogen"))=="dir"
-
 filetype off                   " required!
 
 " Setup plugin loader {{{1
-runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
 " Load plugins {{{1
@@ -84,5 +81,3 @@ let g:jedi#pydoc = "<leader>iK"
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#rename_command = "<leader>ir"
 let g:jedi#related_names_command = "<leader>in"
-
-endif
