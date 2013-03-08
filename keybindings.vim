@@ -73,9 +73,10 @@ nnoremap <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
 nnoremap <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
 nnoremap <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
 nnoremap <silent> ]o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(1)<cr>
-" The original mappings for [p and ]p have become =p
 nnoremap <silent> [p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1)<cr>
 nnoremap <silent> ]p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1)<cr>
+nnoremap <silent> [f :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1, GetMarkFile('F'))<cr>
+nnoremap <silent> ]f :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1, GetMarkFile('F'))<cr>
 nnoremap <silent> [q :cprev<cr>
 nnoremap <silent> ]q :cnext<cr>
 nnoremap <silent> [t :tprev<cr>

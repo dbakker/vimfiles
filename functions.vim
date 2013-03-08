@@ -114,6 +114,22 @@ fun! BufDelete(...)
 endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
 
+" GetMarkFile(mark) {{{2
+fun! GetMarkFile(mark)
+  try
+    let message=''
+    redir => message
+    sil exe ':marks '.a:mark
+    redir END
+    let lines=split(message, '\n')
+    let lastline=split(lines[len(lines)-1])
+    let f = expand(lastline[len(lastline)-1])
+    return filereadable(f) ? f : ''
+  catch
+    return ''
+  endtry
+endf
+
 " GetListedBuffers() {{{2
 fun! GetListedBuffers()
   let all = range(1, bufnr('$'))
@@ -126,12 +142,12 @@ fun! GetListedBuffers()
   return res
 endfunction
 
-" GetNextProjectBuffer(count) {{{2
+" GetNextProjectBuffer(count[, file]) {{{2
 " Creates a list of all open buffers sharing a projectroot with
 " this buffer, and goes to the next buffer on that list.
 
-fun! GetNextProjectBuffer(count)
-  let root = ProjectRootGuess()
+fun! GetNextProjectBuffer(count, ...)
+  let root = a:0 ? fnamemodify(a:1, ':p') : ProjectRootGuess()
   let bufs = []
   for b in GetListedBuffers()
     let bname = bufname(b)
