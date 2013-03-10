@@ -65,6 +65,20 @@ if executable('grep')
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 endif
 
+" Ask to create directories
+fun! s:MkNonExDir(file, buf)
+  if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+    let dir=fnamemodify(a:file, ':h')
+    if !isdirectory(dir) && confirm("Create directory ".dir."?", "Yes\nNo")==1
+      call mkdir(dir, 'p')
+    endif
+  endif
+endf
+aug BWCCreateDir
+  au!
+  au BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+aug END
+
 " Restore cursor position upon reopening files {{{2
 augroup resCur
   autocmd!
