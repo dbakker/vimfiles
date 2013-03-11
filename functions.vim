@@ -147,7 +147,7 @@ endfunction
 " this buffer, and goes to the next buffer on that list.
 
 fun! GetNextProjectBuffer(count, ...)
-  let root = a:0 ? fnamemodify(a:1, ':p') : ProjectRootGuess()
+  let root = a:0 ? fnamemodify(a:1, ':p:h') : ProjectRootGuess()
   let bufs = []
   for b in GetListedBuffers()
     let bname = bufname(b)
