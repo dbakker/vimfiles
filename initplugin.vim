@@ -67,6 +67,8 @@ endif
 
 " Misc {{{2
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
+let g:solarized_contrast = "high"
+let g:solarized_visibility = "high"
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
