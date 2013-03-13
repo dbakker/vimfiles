@@ -40,6 +40,34 @@ nnoremap <silent> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <leader>qf :BD!<cr>
 nnoremap <silent> <leader>qj :BD<cr>
 
+fun! s:MapObjectPair(c, m1, m2)
+  exe 'xnoremap i'.a:c." :\<C-U>call SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 1)<CR>"
+  exe 'xnoremap a'.a:c." :\<C-U>call SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 0)<CR>"
+  exe 'omap i'.a:c." vi".a:c
+  exe 'omap a'.a:c." va".a:c
+endf
+fun! SelectObjectPair(c, m1, m2, inside)
+  if stridx(getline('.'), a:m1)>=col('.')
+    let start=stridx(getline('.'), a:m1)
+  else
+    let start=col('.')
+    while strpart(getline('.'), start, 1)!=a:m1
+      let start-=1
+      if start<1
+        throw 'boo'
+      endif
+    endwhile
+  endif
+  let end=stridx(getline('.'), a:c, start+1)
+  let start+=a:inside
+  let end-=a:inside
+  call setpos('.', [bufnr(''), line('.'), start, 0])
+  exe "silent! normal! \<ESC>v".(end-start)."l"
+  " echo "silent! normal! \<ESC>\<Home>".start."lv".(end-start)."l"
+endf
+call s:MapObjectPair('/', '/', '/')
+
+" ooo /aeee/b eeeee /ooo / rr
 " Use Q as alias for @j (execute 'j' recording) {{{1
 " This is great because you can just do something like QnQnnQ to quickly
 " repeat your recording where needed. You never have to press `@` again.
@@ -57,18 +85,24 @@ fun! EditFromDir(dir)
   endif
   return ':e '
 endf
-nnoremap <silent> go :exe 'ptag '.expand('<cword>')<cr>
-xnoremap <silent> go :exe 'ptag '.GetVisualLine()<cr>
-nnoremap <leader>d<space> :e<space>
-nnoremap <leader>db :CtrlPBuffer<cr>
 nnoremap <leader>dc :cd<space>
 nnoremap <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
 nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
-nnoremap <expr> <leader>dj EditFromDir(ProjectRootGuess(GuessMainFile()))
-nnoremap <silent> <leader>dt :CtrlPTag<cr>
-nnoremap <leader>dr :SwitchMain<cr>:CtrlPMRU<cr>
 nnoremap <silent> <leader>dp :exe 'cd '.ProjectRootGuess(GuessMainFile())<cr>
 nnoremap <silent> <leader>du :cd ..<cr>
+
+" CtrlP mappings
+nnoremap <silent> <leader>l :SwitchMain<cr>:CtrlPLine<cr>
+nnoremap <silent> <leader>r :SwitchMain<cr>:CtrlPMRU<cr>
+nnoremap <silent> <leader>ea :SwitchMain<cr>:CtrlPMixed<cr>
+nnoremap <silent> <leader>eb :SwitchMain<cr>:CtrlPBuffer<cr>
+nnoremap <silent> <leader>ed :SwitchMain<cr>:CtrlPCurWD<cr>
+nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'CtrlP '.ProjectRootGuess(GetMarkFile('F'))<cr>
+nnoremap <silent> <leader>ep :SwitchMain<cr>:exe 'CtrlP '.ProjectRootGuess()<cr>
+nnoremap <silent> <leader>es :SwitchMain<cr>:CtrlPBufTag<cr>
+nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
+nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
+
 nnoremap <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
 nnoremap <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
 nnoremap <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
