@@ -40,34 +40,27 @@ nnoremap <silent> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <leader>qf :BD!<cr>
 nnoremap <silent> <leader>qj :BD<cr>
 
+" Create text objects based on character pairs
 fun! s:MapObjectPair(c, m1, m2)
-  exe 'xnoremap i'.a:c." :\<C-U>call SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 1)<CR>"
-  exe 'xnoremap a'.a:c." :\<C-U>call SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 0)<CR>"
-  exe 'omap i'.a:c." vi".a:c
-  exe 'omap a'.a:c." va".a:c
+  exe 'xnoremap i'.a:c." :\<C-U>exe 'normal '.SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 1)\<CR>"
+  exe 'xnoremap a'.a:c." :\<C-U>exe 'normal '.SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 0)\<CR>"
+  exe 'omap i'.a:c." :normal vi".a:c."\<CR>"
+  exe 'omap a'.a:c." :normal va".a:c."\<CR>"
 endf
 fun! SelectObjectPair(c, m1, m2, inside)
-  if stridx(getline('.'), a:m1)>=col('.')
-    let start=stridx(getline('.'), a:m1)
+  if stridx(getline('.'), a:m1)>col('.')
+    return "f".a:m1.(a:inside ? "lvt" : "vf").a:m2
+  elseif strridx(getline('.'), a:m2)<col('.')
+    return "F".a:m2.(a:inside ? "hvT" : "vF").a:m1
   else
-    let start=col('.')
-    while strpart(getline('.'), start, 1)!=a:m1
-      let start-=1
-      if start<1
-        throw 'boo'
-      endif
-    endwhile
+    return a:inside ? "T".a:m1."vt".a:m2 : "F".a:m1."vf".a:m2
   endif
-  let end=stridx(getline('.'), a:c, start+1)
-  let start+=a:inside
-  let end-=a:inside
-  call setpos('.', [bufnr(''), line('.'), start, 0])
-  exe "silent! normal! \<ESC>v".(end-start)."l"
-  " echo "silent! normal! \<ESC>\<Home>".start."lv".(end-start)."l"
 endf
-call s:MapObjectPair('/', '/', '/')
+for c in split("/\|?+-=_*\<Tab>", '\zs')
+  let c = escape(c, '|\')
+  call s:MapObjectPair(c, c, c)
+endfor
 
-" ooo /aeee/b eeeee /ooo / rr
 " Use Q as alias for @j (execute 'j' recording) {{{1
 " This is great because you can just do something like QnQnnQ to quickly
 " repeat your recording where needed. You never have to press `@` again.
