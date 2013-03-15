@@ -64,7 +64,8 @@ fun! ExecSymbolPair(packed)
     let r.=(cc<first_m1) ? 'f'.m1 : ''
     let cc=first_m1
   elseif cc>last_m1
-    let r.=(cc-last_m1).'h'
+    let r.=cc>strridx(l, m2) ? 'F'.m2 : ''
+    let r.='F'.m1
     let cc=last_m1
   else
     let r.='F'.m1
