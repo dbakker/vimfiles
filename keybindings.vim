@@ -258,6 +258,7 @@ onoremap K $
 xnoremap <expr> K mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
 
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
+" You can also just do ':R' to get an empty scratch buffer
 command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 " Add readline/emacs style mappings for insert/command mode {{{1
@@ -357,7 +358,7 @@ noremap <silent> <C-F12> :vertical resize +10<cr>
 " Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
 " Alt is somewhat unreliable, as it only works in the Vim GUI version,
 " but I almost never use windows in the console version anyway.
-for c in split('abcdefghijklmnopqrstuvwxyz!@#$%^&*()_-+<>=', '\zs')
+for c in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+<>=', '\zs')
   if maparg('<M-'.c.'>', 'n') ==# ''
     exe 'nmap <M-'.c.'> <C-W>'.c
   endif
