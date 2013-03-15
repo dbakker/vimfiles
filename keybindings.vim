@@ -40,26 +40,65 @@ nnoremap <silent> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <leader>qf :BD!<cr>
 nnoremap <silent> <leader>qj :BD<cr>
 
-" Create text objects based on character pairs
-fun! s:MapObjectPair(c, m1, m2)
-  exe 'xnoremap i'.a:c." :\<C-U>exe 'normal '.SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 1)\<CR>"
-  exe 'xnoremap a'.a:c." :\<C-U>exe 'normal '.SelectObjectPair('".a:c."','".a:m1."','".a:m2."', 0)\<CR>"
-  exe 'omap i'.a:c." :normal vi".a:c."\<CR>"
-  exe 'omap a'.a:c." :normal va".a:c."\<CR>"
-endf
-fun! SelectObjectPair(c, m1, m2, inside)
-  if stridx(getline('.'), a:m1)>col('.')
-    return "f".a:m1.(a:inside ? "lvt" : "vf").a:m2
-  elseif strridx(getline('.'), a:m2)<col('.')
-    return "F".a:m2.(a:inside ? "hvT" : "vF").a:m1
-  else
-    return a:inside ? "T".a:m1."vt".a:m2 : "F".a:m1."vf".a:m2
+" Create repeatable mappings similar to ci' and ca" for other symbols {{{1
+fun! s:MapSymbolPair(c, m1, m2)
+  for x in split("ycd", '\zs')
+    for y in split("ia", '\zs')
+      exe 'nnoremap <expr> '.x.y.a:c." ExecSymbolPair('".a:c.a:m1.a:m2.x.y."')"
+    endfor
+  endfor
+endfun
+
+fun! ExecSymbolPair(packed)
+  let [c, m1, m2, x, y] = split(a:packed, '\zs')
+  let l = getline('.')
+  let inside = y=='i'
+  let first_m1 = stridx(strpart(l,0,strridx(l, m2)), m1)
+  let last_m1 = strridx(strpart(l,0,strridx(l, m2)), m1)
+  if first_m1 == -1 || stridx(l, m2, first_m1+1)==-1
+    return "\<ESC>"
   endif
-endf
-for c in split("/\|?+-=_*\<Tab>", '\zs')
-  let c = escape(c, '|\')
-  call s:MapObjectPair(c, c, c)
+  let cc = col('.')-1
+  let r = ''
+  if cc<=first_m1
+    let r.=(cc<first_m1) ? 'f'.m1 : ''
+    let cc=first_m1
+  elseif cc>last_m1
+    let r.=(cc-last_m1).'h'
+    let cc=last_m1
+  else
+    let r.='F'.m1
+    let cc=strridx(strpart(l,0,strridx(l, m2, cc)), m1)
+  endif
+
+  let hit_m2 = stridx(l, m2, cc+1)
+  if y=='a'
+    let r.= x.'f'.m2
+  elseif cc+1 == hit_m2
+    if x=='c'
+      let r.= 'a'
+    endif
+  else
+    let r.='l'.x.'t'.m2
+  endif
+
+  let s:w = x.y.c
+  if x=='c'
+    aug repeatChange
+      au InsertLeave * silent! call repeat#set(s:w.@.."\<ESC>")
+      au InsertLeave * au! repeatChange
+    aug END
+    return r
+  else
+    return r.':sil! call repeat#set("'.s:w."\")\<CR>:\<CR>"
+  endif
+endfun
+
+for c in split('/\+-=_*,.:;&', '\zs')
+  call s:MapSymbolPair(c, c, c)
 endfor
+call s:MapSymbolPair("<tab>","\<tab>","\<tab>")
+call s:MapSymbolPair(">","<",">")
 
 " Use Q as alias for @j (execute 'j' recording) {{{1
 " This is great because you can just do something like QnQnnQ to quickly
