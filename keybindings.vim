@@ -237,6 +237,24 @@ endf
 nnoremap <silent> [<space> :<C-U>call <SID>AddLines(1)<CR>
 nnoremap <silent> ]<space> :<C-U>call <SID>AddLines(0)<CR>
 
+" Add [e and ]e mappings (from vim-unimpaired) {{{1
+function! s:Move(cmd, count, map) abort
+  normal! m`
+  exe 'move'.a:cmd.a:count
+  norm! ``
+  silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
+endfunction
+
+nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+nnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+xnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move--'.v:count1<CR>``
+xnoremap <silent> <Plug>unimpairedMoveDown :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move''>+'.v:count1<CR>``
+
+nmap [e <Plug>unimpairedMoveUp
+nmap ]e <Plug>unimpairedMoveDown
+xmap [e <Plug>unimpairedMoveUp
+xmap ]e <Plug>unimpairedMoveDown
+
 " Paste without overwriting any register {{{1
 fun! s:PasteOver()
   if getreg(v:register)=~#"\<C-J>"
