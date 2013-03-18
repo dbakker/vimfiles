@@ -51,6 +51,11 @@ endfun
 
 fun! ExecSymbolPair(packed)
   let [c, m1, m2, x, y] = split(a:packed, '\zs')
+  let d=''
+  if c=='f' " Add a special case for 'if' and 'af'
+    let [m1, m2] = [nr2char(getchar()), nr2char(getchar())]
+    let d=m1.m2
+  endif
   let l = getline('.')
   let inside = y=='i'
   let first_m1 = stridx(strpart(l,0,strridx(l, m2)), m1)
@@ -83,7 +88,7 @@ fun! ExecSymbolPair(packed)
     let r.='l'.x.'t'.m2
   endif
 
-  let s:w = x.y.c
+  let s:w = x.y.c.d
   if x=='c'
     aug repeatChange
       au InsertLeave * silent! call repeat#set(s:w.@.."\<ESC>")
@@ -95,7 +100,7 @@ fun! ExecSymbolPair(packed)
   endif
 endfun
 
-for c in split('/\+-=_*,.:;&', '\zs')
+for c in split('/\+-=_*,.:;&f', '\zs')
   call s:MapSymbolPair(c, c, c)
 endfor
 call s:MapSymbolPair("<tab>","\<tab>","\<tab>")
