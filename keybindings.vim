@@ -333,7 +333,7 @@ nnoremap <silent> g6 :call NavTabPage(6)<CR>
 nnoremap <silent> g7 :call NavTabPage(7)<CR>
 
 " Tabularize {{{1
-let s:tabularize_map = {'=': '=>\?'}
+let s:tabularize_map = {'=': '^[^=]*\zs=>\?', ':': ':\zs/l0r1'}
 fun! s:Tabularize()
   let c = nr2char(getchar())
   return ":Tabularize /".get(s:tabularize_map, c, c)."\<CR>"
