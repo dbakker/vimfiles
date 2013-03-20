@@ -89,7 +89,7 @@ fun! BufDelete(...)
     return
   endif
 
-  exe 'b ' . (bufloaded(bufnr('#')) ? '#' : GetNextBuffer(-1))
+  exe 'b' (bufloaded(bufnr('#')) ? '#' : GetNextBuffer(-1))
   if winbufnr(curwindow) == bufferToKill
     enew
     if winbufnr(curwindow) == bufferToKill
@@ -102,15 +102,15 @@ fun! BufDelete(...)
   let buf = winbufnr(i)
   while buf != -1
     if buf == bufferToKill
-      exe 'normal! ' . i . 'w'
-      exe 'b '.GetNextBuffer(-1)
+      exe 'normal! ' i . 'w'
+      exe 'b' GetNextBuffer(-1)
     endif
     let i = i + 1
     let buf = winbufnr(i)
   endwhile
 
-  exe 'normal! ' . curwindow . 'w'
-  sil! exe 'sil! bd'.bang.' '.bufferToKill
+  exe 'normal! ' curwindow . 'w'
+  sil! exe 'sil! bd'.bang bufferToKill
 endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
 
@@ -119,7 +119,7 @@ fun! GetMarkFile(mark)
   try
     let message=''
     redir => message
-    sil exe ':marks '.a:mark
+    sil exe ':marks' a:mark
     redir END
     let lines=split(message, '\n')
     let lastline=split(lines[len(lines)-1])
@@ -309,7 +309,7 @@ endf
 
 " SwitchMain() {{{2
 fun! SwitchMain()
-  exe 'normal! ' . GuessMainWindow() . 'w'
+  exe 'normal! ' GuessMainWindow() . 'w'
 endf
 com! -nargs=0 SwitchMain call SwitchMain()
 
@@ -325,7 +325,7 @@ fun! s:TagsExe(tagdir, tagfile)
     endif
   endif
 
-  silent exe '!'.g:ctagsprg.' '.g:ctagsoptions.' -f '.a:tagfile.' -R '.a:tagdir
+  silent exe '!'.g:ctagsprg g:ctagsoptions '-f' a:tagfile '-R' a:tagdir
 endf
 fun! TagRegenerate()
   let f = findfile('tags', '.;')
@@ -386,9 +386,9 @@ fun! ToggleModeless()
     sil! exe 'iunmap <C-V>'
     sil! exe 'vunmap <C-V>'
     sil! exe 'vunmap <C-C>'
-    sil! exe 'inoremap <silent> <C-V> '.s:tm_mapcvi
-    sil! exe 'vnoremap <silent> <C-V> '.s:tm_mapcvv
-    sil! exe 'vnoremap <silent> <C-C> '.s:tm_mapcc
+    sil! exe 'inoremap <silent> <C-V>' s:tm_mapcvi
+    sil! exe 'vnoremap <silent> <C-V>' s:tm_mapcvv
+    sil! exe 'vnoremap <silent> <C-C>' s:tm_mapcc
     let &guioptions=s:tm_guioptions
     let &ve=s:tm_ve
     let &fdc=s:tm_fdc
@@ -430,14 +430,14 @@ fun! CompileAndRun()
       let cmd = GetDefaultHandler(crscript)
       try
         let pr=getcwd()
-        sil exe ':cd '.projectRoot
+        sil exe ':cd' projectRoot
         if has("win32")
           sil exe '!start '.cmd.'"'.crscript.'"'
         else
           sil exe '!'.cmd.crscript.' &'
         endif
       finally
-        sil exe ':cd '.pr
+        sil exe ':cd' pr
         redraw
       endtry
       return
@@ -447,7 +447,7 @@ fun! CompileAndRun()
     update " Write file if modified
     let defhandler = GetDefaultHandler(expand('%'))
     if len(defhandler)>0
-      exe '!'.defhandler.' %'
+      exe '!'.defhandler '%'
     elseif index(g:cnr_browserlangs, &ft)>=0
       if exists('b:url')
         call OpenURL(b:url)

@@ -124,9 +124,9 @@ fun! EditFromDir(dir)
   return ':e '
 endf
 nnoremap <leader>dc :cd<space>
-nnoremap <silent> <leader>df :exe 'cd '.fnamemodify(GuessMainFile(), ':h')<cr>
+nnoremap <silent> <leader>df :exe 'cd' fnamemodify(GuessMainFile(), ':h')<cr>
 nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
-nnoremap <silent> <leader>dp :exe 'cd '.ProjectRootGuess(GuessMainFile())<cr>
+nnoremap <silent> <leader>dp :exe 'cd' ProjectRootGuess(GuessMainFile())<cr>
 nnoremap <silent> <leader>du :cd ..<cr>
 
 " CtrlP mappings
@@ -135,20 +135,20 @@ nnoremap <silent> <leader>r :SwitchMain<cr>:CtrlPMRU<cr>
 nnoremap <silent> <leader>ea :SwitchMain<cr>:CtrlPMixed<cr>
 nnoremap <silent> <leader>eb :SwitchMain<cr>:CtrlPBuffer<cr>
 nnoremap <silent> <leader>ed :SwitchMain<cr>:CtrlPCurWD<cr>
-nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'CtrlP '.ProjectRootGuess(GetMarkFile('F'))<cr>
-nnoremap <silent> <leader>ep :SwitchMain<cr>:exe 'CtrlP '.ProjectRootGuess()<cr>
+nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'CtrlP' ProjectRootGuess(GetMarkFile('F'))<cr>
+nnoremap <silent> <leader>ep :SwitchMain<cr>:exe 'CtrlP' ProjectRootGuess()<cr>
 nnoremap <silent> <leader>es :SwitchMain<cr>:CtrlPBufTag<cr>
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
 nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
 
-nnoremap <silent> [b :SwitchMain<cr>:exe 'b '.GetNextBuffer(-1)<cr>
-nnoremap <silent> ]b :SwitchMain<cr>:exe 'b '.GetNextBuffer(1)<cr>
-nnoremap <silent> [o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(-1)<cr>
-nnoremap <silent> ]o :SwitchMain<cr>:exe 'e '.GetNextFileInDir(1)<cr>
-nnoremap <silent> [p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1)<cr>
-nnoremap <silent> ]p :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1)<cr>
-nnoremap <silent> [f :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(-1, GetMarkFile('F'))<cr>
-nnoremap <silent> ]f :SwitchMain<cr>:exe 'b '.GetNextProjectBuffer(1, GetMarkFile('F'))<cr>
+nnoremap <silent> [b :SwitchMain<cr>:exe 'b' GetNextBuffer(-1)<cr>
+nnoremap <silent> ]b :SwitchMain<cr>:exe 'b' GetNextBuffer(1)<cr>
+nnoremap <silent> [o :SwitchMain<cr>:exe 'e' GetNextFileInDir(-1)<cr>
+nnoremap <silent> ]o :SwitchMain<cr>:exe 'e' GetNextFileInDir(1)<cr>
+nnoremap <silent> [p :SwitchMain<cr>:exe 'b' GetNextProjectBuffer(-1)<cr>
+nnoremap <silent> ]p :SwitchMain<cr>:exe 'b' GetNextProjectBuffer(1)<cr>
+nnoremap <silent> [f :SwitchMain<cr>:exe 'b' GetNextProjectBuffer(-1, GetMarkFile('F'))<cr>
+nnoremap <silent> ]f :SwitchMain<cr>:exe 'b' GetNextProjectBuffer(1, GetMarkFile('F'))<cr>
 nnoremap <silent> [q :cprev<cr>
 nnoremap <silent> ]q :cnext<cr>
 nnoremap <silent> [t :tprev<cr>
@@ -322,7 +322,7 @@ fun! NavTabPage(num)
   while tabpagenr('$')<a:num
     tabnew
   endwhile
-  exe 'tabnext '.a:num
+  exe 'tabnext' a:num
 endf
 nnoremap <silent> g1 :call NavTabPage(1)<CR>
 nnoremap <silent> g2 :call NavTabPage(2)<CR>

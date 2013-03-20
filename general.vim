@@ -90,7 +90,7 @@ augroup END
 augroup initialDir
   au!
   if (has('win32') || has('win64'))
-    au VimEnter * if !len(bufname('')) && !filereadable(expand('%')) | exe 'sil! cd '.$HOME | endif
+    au VimEnter * if !len(bufname('')) && !filereadable(expand('%')) | exe 'sil! cd' $HOME | endif
   endif
 augroup END
 
@@ -98,7 +98,7 @@ augroup END
 if has("gui_running")
   fun! s:WorkDirRead()
     if &bt=='' && filereadable(expand('%'))
-      exe 'sil cd '.ProjectRootGuess()
+      exe 'sil cd' ProjectRootGuess()
       au! workDir
     endif
   endf
