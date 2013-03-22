@@ -8,26 +8,16 @@ execute pathogen#infect()
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
 
-" MRU {{{2
-let MRU_File = expand('~/.vim/local/mru_data.txt')
-let MRU_Exclude_Files = '\.git'
-let MRU_Add_Menu = 0
-
 " Tcomment {{{2
 if isdirectory(expand('~/.vim/bundle/tcomment_vim'))
   let g:tcomment_types={'java': '// %s'}
   call tcomment#DefineType('markdown', g:tcommentInlineXML)
 endif
 
-" Fuzzy finder: ignore stuff that can't be opened, and generated files {{{2
-let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;"
-
 " Settings for Session plugin {{{2
 let g:session_directory = '~/.vim/local/session'
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
-
-let g:searchfold_foldlevel = 2
 
 " Settings for Ack plugin {{{2
 if executable('ack-grep')
@@ -68,11 +58,13 @@ endif
 " Misc {{{2
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:solarized_contrast = "high"
+let g:searchfold_foldlevel = 2
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*'
 
 " Vim-Jedi {{{2
 let g:jedi#auto_vim_configuration = 0
