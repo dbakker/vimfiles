@@ -458,9 +458,13 @@ fun! CompileAndRun()
       unlet! g:loaded_{expand('%:t:r')}
       so %
     elseif &ft=='markdown' && executable('markdown')
-      let tmp=expand('~/.vim/local/mdpreview.html')
+      let tmp=expand('~/.vim/local/preview.html')
       call writefile(['<title>Markdown preview</title>','<link href="file:///'.expand('~/.vim/assets/markdown.css').'" rel="stylesheet"></link>'], tmp)
       exe 'silent !markdown %>>'.tmp
+      call OpenURL(tmp)
+    elseif &ft=='rst' && executable('rst2html')
+      let tmp=expand('~/.vim/local/preview.html')
+      exe 'silent !rst2html %' tmp
       call OpenURL(tmp)
     elseif &ft=='java' && executable('java') && executable('javac')
       let package = search('\s*package\s', 'nw')
