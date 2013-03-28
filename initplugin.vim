@@ -59,6 +59,7 @@ endif
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:solarized_contrast = "high"
 let g:searchfold_foldlevel = 2
+let g:syntastic_python_flake8_args='--ignore=E501'
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
