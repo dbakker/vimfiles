@@ -76,3 +76,37 @@ let g:jedi#pydoc = "<leader>iK"
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#rename_command = "<leader>ir"
 let g:jedi#related_names_command = "<leader>in"
+
+" Read only conversions {{{2
+" `catdoc` {{{3
+if executable('catdoc')
+  au BufReadPre *.doc setl ro ft= wrap nolist
+  au BufReadPost *.doc sil! %!catdoc "%"
+endif
+if executable('xls2csv')
+  autocmd BufReadPre *.xls setl ro | setf csv
+  autocmd BufReadPost *.xls sil! %!xls2csv -q -x "%" -c -
+  autocmd BufReadPost *.xls redraw
+endif
+if executable('catppt')
+  autocmd BufReadPre *.ppt setl ro ft=
+  autocmd BufReadPost *.ppt sil! %!catppt "%"
+  autocmd BufReadPost *.ppt redraw
+endif
+
+" `xpdf` {{{3
+if executable('pdftotext')
+  au BufReadPre *.pdf setl ro ft=
+  au BufReadPost *.pdf sil! %!pdftotext -nopgbrk "%" -
+endif
+
+" `docx2txt` {{{3
+if executable('docx2txt')
+  au BufReadPre *.docx setl ro ft= wrap nolist
+  au BufReadPost *.docx sil! %!docx2txt
+endif
+
+" `xlsx2csv` {{{3
+autocmd BufReadPre *.xlsx setl ro | setf csv
+autocmd BufReadPost *.xlsx sil! %!python ~/.vim/assets/xlsx2csv.py "%"
+autocmd BufReadPost *.xlsx redraw
