@@ -44,8 +44,9 @@ fun! NERDTreeSmartToggle()
   endtry
 endf
 
-" Nginx {{{2
+" Filetype detection {{{2
 au BufNewFile,BufRead nginx.conf set filetype=nginx.conf
+au BufNewFile,BufRead *.muttrc set filetype=muttrc
 
 " Easymotion {{{2
 let g:EasyMotion_leader_key = '<space>'
