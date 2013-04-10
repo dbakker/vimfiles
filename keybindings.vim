@@ -358,20 +358,23 @@ nnoremap <leader>aa :Ack<space>
 nnoremap <expr> <leader>aj ':Ack'.(len(&ft)?' --'.&ft:'').' -Q -i '
 
 " <F1-12> mappings {{{1
-nnoremap <F1> <Nop>
+for i in range(1,12)
+  let c='<F'.i.'>'
+  if maparg(c, 'i') ==# ''
+    exe 'imap '.c.' <ESC>'.c
+  endif
+endfor
+noremap <F1> <Nop>
 set pastetoggle=<F2>
-nnoremap <silent> <F3> :call ToggleModeless()<cr>
-inoremap <silent> <F3> <C-O>:call ToggleModeless()<cr>
-nnoremap <F4> :set invlist list?<cr>
-imap <F4> <C-O><F2>
-xmap <F4> <Esc><F2>gv
-nnoremap <silent> <F5> :call CompileAndRun()<cr>
-nnoremap <silent> <F7> :call OpenPrompt()<cr>
-nnoremap <silent> <S-F7> :cd %:h<cr>:call OpenPrompt()<cr>
-nnoremap <silent> <F9> :call NERDTreeSmartToggle()<cr>
-nnoremap <silent> <F10> :call ToggleQuickFix()<cr>
-nnoremap <silent> <F11> :call ToggleFullscreen()<cr>
-nnoremap <silent> <F12> :TagbarToggle<cr>
+noremap <silent> <F3> :<C-U>call ToggleModeless()<cr>
+noremap <F4> :<C-U>set invlist list?<cr>
+noremap <silent> <F5> :<C-U>call CompileAndRun()<cr>
+noremap <silent> <F7> :<C-U>call OpenPrompt()<cr>
+noremap <silent> <S-F7> :<C-U>cd %:h<cr>:call OpenPrompt()<cr>
+noremap <silent> <F9> :<C-U>call NERDTreeSmartToggle()<cr>
+noremap <silent> <F10> :<C-U>call ToggleQuickFix()<cr>
+noremap <silent> <F11> :<C-U>call ToggleFullscreen()<cr>
+noremap <silent> <F12> :<C-U>TagbarToggle<cr>
 
 noremap <silent> <C-F9>  :vertical resize -10<cr>
 noremap <silent> <C-F10> :resize +10<cr>
