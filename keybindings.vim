@@ -303,16 +303,16 @@ cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Add columnwise 0 and $ mappings {{{1
 " This one is really cool. These mappings motion columnwise until
-" a non-character (eg. empty or shorter line) is encountered. It has
-" special behavior for corner cases.
+" an empty line is encountered.
 fun! s:Columnwise(d)
   let l = line('.')+a:d
-  let c = len(getline('.'))
-  let c = col('.')<c ? col('.') : (c>0 ? c : 1)
-  while len(substitute(getline(l+a:d),'\s\+$','',''))>=c
+  while getline(l)=~'^\s*$'
     let l = l+a:d
   endw
-  return abs(l-line('.'))
+  while !(getline(l)=~'^\s*$')
+    let l = l+a:d
+  endw
+  return max([1, abs(l-line('.'))-1])
 endf
 noremap <expr> <leader>j <SID>Columnwise(1).'j'
 noremap <expr> <leader>k <SID>Columnwise(-1).'k'
