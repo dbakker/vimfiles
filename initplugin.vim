@@ -30,6 +30,7 @@ endif
 let NERDTreeHijackNetrw=1
 let NERDTreeBookmarksFile=expand('~/.vim/local/NERDTreeBookmarks.txt')
 let NERDTreeMouseMode=2
+let NERDTreeIgnore=['\.o$', '\.pyc$', '\.exe$','\.class$', 'tags$', '\~$']
 fun! NERDTreeSmartToggle()
   for buf in tabpagebuflist()
     if bufname(buf) =~ 'NERD_tree'
