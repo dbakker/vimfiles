@@ -40,7 +40,7 @@ set ttimeoutlen=50
 set undolevels=1000             " use many muchos levels of undo
 set viminfo^=!,h
 set visualbell                  " flash the screen on error
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe,tags
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe,*.o,tags
 set wildmenu                    " make tab completion for files/buffers act like bash
 set wildmode=list:full          " show a list when pressing tab and complete first full match
 
@@ -189,11 +189,16 @@ if has("gui_running")
 endif
 
 " Select theme {{{2
-try
-  colorscheme wombat256mod
-  if !has("gui_running")
-      set t_Co=256
-  endif
-catch
-  let &bg=has("gui_running")?"light" : "dark"
-endtry
+if has("gui_running")
+  try
+    colorscheme wombat256mod
+    if !has("gui_running")
+        set t_Co=256
+    endif
+  catch
+    let &bg=has("gui_running")?"light" : "dark"
+  endtry
+else
+  set bg=dark nolist
+  sil! colorscheme ron
+endif
