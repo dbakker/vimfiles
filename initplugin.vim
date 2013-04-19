@@ -9,6 +9,7 @@ execute pathogen#infect()
 filetype plugin indent on     " required!
 
 " Tcomment {{{2
+let g:tcommentOptions = {'strip_whitespace': 1}
 if isdirectory(expand('~/.vim/bundle/tcomment_vim'))
   let g:tcomment_types={'java': '// %s'}
   call tcomment#DefineType('markdown', g:tcommentInlineXML)
@@ -85,7 +86,7 @@ if executable('catdoc')
   au BufReadPost *.doc sil! %!catdoc "%"
 endif
 if executable('xls2csv')
-  autocmd BufReadPre *.xls setl ro | setf csv
+  autocmd BufReadPre *.xls setl ro ft=csv
   autocmd BufReadPost *.xls sil! %!xls2csv -q -x "%" -c -
   autocmd BufReadPost *.xls redraw
 endif
@@ -108,6 +109,6 @@ if executable('docx2txt')
 endif
 
 " `xlsx2csv` {{{3
-autocmd BufReadPre *.xlsx setl ro | setf csv
+autocmd BufReadPre *.xlsx setl ro ft=csv
 autocmd BufReadPost *.xlsx sil! %!python ~/.vim/assets/xlsx2csv.py "%"
 autocmd BufReadPost *.xlsx redraw
