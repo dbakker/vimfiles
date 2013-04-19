@@ -63,6 +63,7 @@ au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:solarized_contrast = "high"
 let g:searchfold_foldlevel = 2
 let g:syntastic_python_flake8_args='--ignore=E501'
+set statusline=%-03l\ %t%m%r%{&paste?'[PASTE]':''}%{&ff!='unix'?'['.&ff.']':''}%#ErrorMsg#%{SyntasticStatuslineFlag()}%*%w%=\ %y%{fugitive#statusline()}\ %f%<
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
