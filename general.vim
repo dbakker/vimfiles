@@ -144,7 +144,6 @@ set showmode                    " always show what mode we're currently editing 
 set showtabline=0               " never show the list of open tabs
 set sidescroll=1                " continuous horizontal scroll rather than jumpy
 set sidescrolloff=7             " columns to keep visible before and after cursor
-set statusline=%f%m%r\ Line:%l/%L[%p%%]\ Col:%v
 set synmaxcol=2048              " don't syntax color long lines (such as minified js)
 set title                       " change the terminal's title
 set virtualedit=all             " allow the cursor to go in to "invalid" places
@@ -190,15 +189,9 @@ endif
 
 " Select theme {{{2
 if has("gui_running")
-  try
-    colorscheme wombat256mod
-    if !has("gui_running")
-        set t_Co=256
-    endif
-  catch
-    let &bg=has("gui_running")?"light" : "dark"
-  endtry
+  let &bg=has("gui_running")?"light" : "dark"
+  sil! colorscheme solarized
 else
-  set bg=dark nolist
+  set bg=dark nolist t_Co=256
   sil! colorscheme ron
 endif
