@@ -63,7 +63,72 @@ au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:solarized_contrast = "high"
 let g:searchfold_foldlevel = 2
 let g:syntastic_python_flake8_args='--ignore=E501'
-set statusline=%-03l\ %t%m%r%{&paste?'[PASTE]':''}%{&ff!='unix'?'['.&ff.']':''}%#ErrorMsg#%{SyntasticStatuslineFlag()}%*%w%=\ %y%{fugitive#statusline()}\ %f%<
+
+" Automatically set some file permissions {{{2
+if executable('chmod')
+  aug autoChmod
+    au!
+    au BufWritePost * if getline(1)=~'^#!' | call system('chmod u+x '.expand('%:p')) | endif
+    au BufWritePost ~/.netrc,~/.ssh/* call system('chmod go-rwx '.expand('%:p'))
+  aug END
+endif
+
+" Statusline {{{2
+set statusline=%-03l\ %t%m%r%{&paste?'[PASTE]':''}%{exists('b:file_status')\ ?b:file_status\ :\ ''}%w\ %#ErrorMsg#%{SyntasticStatuslineFlag()}%*%=\ %y%{exists('b:cvs_status')\ ?b:cvs_status\ :\ ''}\ %f%<
+let g:syntastic_stl_format = '[%E{%e ERR}%B{ }%W{%w WRN}]'
+
+fun! s:UpdateFileStatus()
+  let b:file_status = ''
+  if &ff != 'unix'
+    let b:file_status .= '['.&ff.']'
+  endif
+  if search(&et ? '\v^\t+' : '\v^('.repeat(' ', &sts).')+\S', 'cnw') != 0
+    let b:file_status .= '[mixed]'
+  endif
+  let b:cvs_status = s:GetCVSStatus(expand('%:p'))
+endf
+
+fun! s:GetCVSStatus(f)
+  try
+    if executable('git')
+      let git_dir = finddir('.git', a:f.';')
+      if git_dir==''
+        return ''
+      endif
+      let git_arg = '--git-dir="'.git_dir.'" --work-tree="'.fnamemodify(git_dir, ':h').'" '
+
+      let stat = system('git '.git_arg.' diff-files --numstat "'.a:f.'"')
+      if !v:shell_error && stat!=''
+        let s = matchlist(stat, '\v(\S+)\s*(\S+)')
+        if len(s)
+          let lines_added = str2nr(s[1])
+          let lines_removed = str2nr(s[2])
+          if lines_added!=0 || lines_removed!=0
+            let result = lines_added ? '+'.lines_added : ''
+            if lines_removed
+              let result .= len(result) ? ',' : ''
+              let result .= '-'.lines_removed
+            endif
+            return '[@ '.result.']'
+          endif
+        endif
+      endif
+      call system('git '.git_arg.' ls-files "'.a:f.'" --error-unmatch')
+      if !v:shell_error
+        return '[@]'
+      endif
+    endif
+    return ''
+  catch
+    return '[@error]'
+  endtry
+endf
+
+aug updateFileStatus
+  au!
+  au BufReadPost * call s:UpdateFileStatus()
+  au BufWritePost * call s:UpdateFileStatus()
+aug END
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
