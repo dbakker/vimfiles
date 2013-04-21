@@ -6,7 +6,7 @@ setl et ts=4 sw=4
 " also escape and fill the statement in later.
 fun! AutoPythonPlacehold()
   let l = substitute(getline('.'), '\s*#.*$', '', 'g')
-  if l !~ '.*:$' || l=~'class'
+  if l !~ '.*:$' || l=~'class' || col('.')<len(getline('.'))
     return "\<CR>"
   endif
 
@@ -18,7 +18,7 @@ fun! AutoPythonPlacehold()
     endif
     let n = matchstr(m, '^\s*')
     if len(n)<=len(ind)
-        return "\<CR>pass # <++.+>\<ESC>v^\<C-G>"
+        return "\<CR>pass\<ESC>v^\<C-G>"
     endif
   endfor
 
