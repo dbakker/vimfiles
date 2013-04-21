@@ -62,7 +62,8 @@ endif
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:solarized_contrast = "high"
 let g:searchfold_foldlevel = 2
-let g:syntastic_python_flake8_args='--ignore=E501'
+let g:syntastic_python_flake8_args='--ignore=E501,F401'
+let g:syntastic_warning_symbol='--'
 
 " Automatically set some file permissions {{{2
 if executable('chmod')
