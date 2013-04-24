@@ -409,6 +409,8 @@ nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
 xmap gV <ESC>gV
 " Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
+" Add an extra undo point after using <C-U>
+inoremap <C-U> <C-G>u<C-U>
 " Remove all trailing spaces
 nnoremap <silent> <leader>S :let g:pos=getpos('.')<Bar>:retab<Bar>:let _s=@/<Bar>:keepjumps %s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<Bar>:call setpos('.',g:pos)<CR>
 command! -nargs=0 Wrap let w:wrapnu=&nu<Bar>setl wrap nolist nu
