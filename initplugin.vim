@@ -69,7 +69,7 @@ let g:syntastic_warning_symbol='--'
 if executable('chmod')
   aug autoChmod
     au!
-    au BufWritePost * if getline(1)=~'^#!' | call system('chmod u+x '.expand('%:p')) | endif
+    au BufWritePost * if getline(1)=~'^#!' && getfperm(expand('%'))=~'^rw-' | call system('chmod u+x '.expand('%:p')) | endif
     au BufWritePost ~/.netrc,~/.ssh/* call system('chmod go-rwx '.expand('%:p'))
   aug END
 endif
