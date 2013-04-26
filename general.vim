@@ -189,9 +189,10 @@ endif
 
 " Select theme {{{2
 if has("gui_running")
-  let &bg=has("gui_running")?"light" : "dark"
+  set bg=light
   sil! colorscheme solarized
 else
   set bg=dark nolist t_Co=256
-  sil! colorscheme ron
+  let g:jellybeans_background_color_256="none"
+  sil! colorscheme jellybeans
 endif
