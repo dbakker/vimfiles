@@ -135,7 +135,7 @@ aug END
 let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*'
+let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*'
 
 " Vim-Jedi {{{2
 let g:jedi#auto_vim_configuration = 0
