@@ -65,6 +65,9 @@ let g:searchfold_foldlevel = 2
 let g:syntastic_python_flake8_args='--ignore=E501,F401'
 let g:syntastic_warning_symbol='--'
 
+let g:clang_hl_errors = 0
+let g:clang_close_preview = 1
+
 " Automatically set some file permissions {{{2
 if executable('chmod')
   aug autoChmod
@@ -82,9 +85,6 @@ fun! s:UpdateFileStatus()
   let b:file_status = ''
   if &ff != 'unix'
     let b:file_status .= '['.&ff.']'
-  endif
-  if search(&et ? '\v^\t+' : '\v^('.repeat(' ', &sts).')+\S', 'cnw') != 0
-    let b:file_status .= '[mixed]'
   endif
   let b:cvs_status = s:GetCVSStatus(expand('%:p'))
 endf
