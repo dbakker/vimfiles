@@ -32,6 +32,7 @@ nnoremap <silent> ,\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
+nnoremap <silent> <leader>we :<C-U>wa<cr>:call setloclist(0,[])<cr>:w<cr>:Errors<cr>:lrewind<cr>
 nnoremap <silent> <leader>wf :w!<cr>:redraw<cr>
 nnoremap <silent> <leader>wj :w<cr>:redraw<cr>
 nnoremap <silent> <leader>wq :w<cr>:BD<cr>
@@ -153,6 +154,8 @@ nnoremap <silent> [q :cprev<cr>
 nnoremap <silent> ]q :cnext<cr>
 nnoremap <silent> [t :tprev<cr>
 nnoremap <silent> ]t :tnext<cr>
+nnoremap <silent> [l :lprev<cr>
+nnoremap <silent> ]l :lnext<cr>
 if has("gui_mac")
   noremap <C-6> <C-^>
 endif
