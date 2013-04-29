@@ -4,6 +4,7 @@ if filereadable(s:makefile)
   for l in readfile(s:makefile)
     let z = matchstr(l, 'CFLAGS\s*=\s*\zs.*')
     if len(z)
+      let z = substitute(z, '\s\zs-Werror\s', '', 'g')
       let b:syntastic_c_cflags=z
       break
     endif
