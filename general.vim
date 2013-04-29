@@ -10,6 +10,7 @@ set autoread                    " lets assume the original file is in version co
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set clipboard-=autoselect       " do not automatically copy visually selected things to the clipboard
 set complete-=i                 " do not search in include files for completes
+set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
 set fileformat=unix
 set fileformats=unix,dos,mac
