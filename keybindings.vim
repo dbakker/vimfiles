@@ -405,6 +405,7 @@ xnoremap gG :call SearchWeb(GetVisualLine())<CR>
 nnoremap gK K
 map <C-K> %
 imap <C-R><space> <+.+>
+nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text
