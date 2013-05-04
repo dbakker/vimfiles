@@ -150,12 +150,12 @@ nnoremap <silent> [p :SwitchMain<cr>:ProjectBufPrev<cr>
 nnoremap <silent> ]p :SwitchMain<cr>:ProjectBufNext<cr>
 nnoremap <silent> [f :SwitchMain<cr>:ProjectBufPrev 'F<cr>
 nnoremap <silent> ]f :SwitchMain<cr>:ProjectBufNext 'F<cr>
-nnoremap <silent> [q :cprev<cr>
-nnoremap <silent> ]q :cnext<cr>
+nnoremap <silent> [q :cprev<cr>:ResetScroll<cr>
+nnoremap <silent> ]q :cnext<cr>:ResetScroll<cr>
 nnoremap <silent> [t :tprev<cr>
 nnoremap <silent> ]t :tnext<cr>
-nnoremap <silent> [l :lprev<cr>
-nnoremap <silent> ]l :lnext<cr>
+nnoremap <silent> [l :lprev<cr>:ResetScroll<cr>
+nnoremap <silent> ]l :lnext<cr>:ResetScroll<cr>
 if has("gui_mac")
   noremap <C-6> <C-^>
 endif
@@ -406,6 +406,9 @@ nnoremap gK K
 map <C-K> %
 imap <C-R><space> <+.+>
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
+for i in split('n N * # zr zm <C-O> <C-I> <C-W>o <C-U> <C-D>')
+  exe 'nnoremap '.i.' '.i.':ResetScroll<cr>'
+endfor
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 " Reselect last pasted/edited text

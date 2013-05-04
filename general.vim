@@ -84,8 +84,14 @@ aug END
 augroup resCur
   autocmd!
   autocmd BufReadPost * call setpos(".", getpos("'\""))
-  autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif
+  autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif | sil! ResetScroll
 augroup END
+
+" Resize windows upon Vim resize {{{2
+aug vimResize
+  au!
+  au VimResized * wincmd =
+aug END
 
 " Set initial directory {{{2
 augroup initialDir

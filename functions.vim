@@ -353,6 +353,32 @@ fun! ToggleQuickFix()
   botright copen
 endf
 
+" ResetScroll(): Choose a nice horizontal and vertical scroll position {{{2
+fun! ResetScroll()
+  normal! zt
+  let scroll = (winheight(0)-&scrolloff*2-1)/3
+  if scroll>0
+    exe 'normal! '.scroll."\<C-Y>"
+  endif
+
+  if line('$') == line('w$')
+    normal! zb
+    while line('$') != line('w$')
+      exe "normal! \<C-E>"
+    endwhile
+  endif
+
+  " Scroll the text horizontally to position the cursor at the right side of the screen.
+  normal! ze
+endf
+com! -nargs=0 ResetScroll call ResetScroll()
+
+aug AutoResetScroll
+  au!
+  au BufReadPost * exe &diff ? 'ResetScroll' : ''
+  au VimResized * ResetScroll
+aug END
+
 " ToggleModeless(): Turn Vim into notepad {{{2
 let s:tm_toggle = 0
 fun! ToggleModeless()
