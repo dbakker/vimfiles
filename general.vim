@@ -163,6 +163,13 @@ endif
 nnoremap <unique> <C-e> 2<C-e>
 nnoremap <unique> <C-y> 2<C-y>
 
+" Hide trailing whitespaces in insert mode
+aug trailing
+  au!
+  au InsertEnter * :let o_listchars=&listchars | let &listchars = substitute(&listchars, '\vtrail:.*(,|$)', '', '')
+  au InsertLeave * :let &listchars=o_listchars
+aug END
+
 " Set a nice default foldtext {{{2
 function! MyFoldText()
     " Trim unwanted symbols from the text
