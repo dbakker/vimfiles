@@ -24,6 +24,7 @@ set ignorecase                  " case insensitive search
 set infercase                   " adjust keyword completion matches to the case of the typed text
 set modeline                    " allow files to define some custom settings like foldmethod
 set modelines=5                 " check 5 lines from the bottom&top for modelines
+set mouse=a                     " always activate mouse for colleagues
 set nobackup                    " do not keep backup files
 set noerrorbells                " don't beep
 set nofoldenable                " do not fold by default (use zM/zR)
@@ -167,8 +168,8 @@ if has("balloon_eval") && has("unix")
 endif
 
 " Speed up scrolling of the viewport slightly
-nnoremap <unique> <C-e> 2<C-e>
-nnoremap <unique> <C-y> 2<C-y>
+sil! nnoremap <unique> <C-e> 2<C-e>
+sil! nnoremap <unique> <C-y> 2<C-y>
 
 " Hide trailing whitespaces in insert mode
 aug trailing
