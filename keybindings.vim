@@ -369,7 +369,20 @@ for i in range(1,12)
     exe 'imap '.c.' <ESC>'.c
   endif
 endfor
+fun! s:PasteToggle()
+  aug pasteToggle
+    au!
+    au InsertLeave * set nopaste | au! pasteToggle
+  aug END
+  set paste
+  if mode() != 'i'
+    return ":\<C-U>startinsert\<CR>"
+  endif
+  return ''
+endf
 noremap <F1> <Nop>
+noremap <silent> <expr> <F2> <SID>PasteToggle()
+inoremap <silent> <expr> <F2> <SID>PasteToggle()
 set pastetoggle=<F2>
 noremap <silent> <F3> :<C-U>call ToggleModeless()<cr>
 noremap <F4> :<C-U>set invlist list?<cr>
@@ -428,6 +441,9 @@ command! -nargs=0 NoWrap let &nu=w:wrapnu<Bar>setl nowrap list&
 nmap dD D
 nmap cC C
 nmap yY Y
+nnoremap z<CR> :<C-U>echoerr "BOO: Use zt"<CR>
+nnoremap z- :<C-U>echoerr "BOO: Use zb"<CR>
+nnoremap z. :<C-U>echoerr "BOO: You're thinking of zb (or zz)"<CR>
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
