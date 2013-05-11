@@ -356,6 +356,7 @@ nnoremap <leader>gl :Glog<space>
 nnoremap <leader>gm :Gmove<space>
 nnoremap <leader>gp :Git push<space>
 nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gv :Gitv<cr>
 nnoremap <leader>gw :Gwrite<cr>
 
 " File/text search {{{1
@@ -426,6 +427,11 @@ for i in split('n N * # zr zm <C-O> <C-I> <C-W>o <C-U> <C-D>')
 endfor
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
+map ,; :
+map ,: :
+map ,o <C-W>w,
+inoremap <S-Home> <C-O>v<Home><C-G>
+inoremap <S-End> <C-O>v<End><C-G>
 " Reselect last pasted/edited text
 nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
 xmap gV <ESC>gV
@@ -447,33 +453,24 @@ nnoremap z. :<C-U>echoerr "BOO: You're thinking of zb (or zz)"<CR>
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
-"
-" Motions to Ack for things.  Works with pretty much everything, including:
-"
-"   w, W, e, E, b, B, t*, f*, i*, a*, and custom text objects
-"
-" Awesome.
-"
-" Note: If the text covered by a motion contains a newline it won't work.  Ack
-" searches line-by-line.
 
 nnoremap <silent> <leader>am :set opfunc=<SID>AckMotion<CR>g@
 xnoremap <silent> <leader>am :<C-U>call <SID>AckMotion(visualmode())<CR>
 
-nnoremap <silent> <leader>aw :Ack! '\b<c-r><c-w>\b'<cr>
-xnoremap <silent> <leader>aw :<C-U>call <SID>AckMotion(visualmode())<CR>
+nnoremap <silent> <leader>aw :ProjectRootExe Ack! '\b<c-r><c-w>\b'<cr>
+xnoremap <silent> <leader>aw :<C-U>ProjectRootExe call <SID>AckMotion(visualmode())<CR>
 
-function! s:CopyMotionForType(type)
+fun! s:CopyMotionForType(type)
   if a:type ==# 'v'
     sil exe "normal! `<" . a:type . "`>y"
   elseif a:type ==# 'char'
     sil exe "normal! `[v`]y"
   endif
-endfunction
+endf
 
-function! s:AckMotion(type) abort
+fun! s:AckMotion(type) abort
   let reg_save = @@
   call s:CopyMotionForType(a:type)
   exe "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
   let @@ = reg_save
-endfunction
+endf
