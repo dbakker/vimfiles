@@ -168,52 +168,20 @@ command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=sub
 noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
-
-" Use ,y/p/P/vp/vP to yank/paste to the OS clipboard {{{1
-" Try to cleanup what is about to be pasted. Inspired by the WhitesPaste plugin.
-fun! s:FixedPaste(c)
-  let r = []
-  for l in split(@+, '\n', 1)
-    let l = substitute(l,'\s\+$','','')
-    let l = &et ? substitute(l,'^\t\+','\=substitute(submatch(0),"\t",repeat(" ",&ts),"")','g') : l
-    call insert(r, l, len(r))
-  endfor
-
-  while len(r)>2 && len(r[0])==0 && len(r[1])==0
-    call remove(r, 0)
-  endwhile
-  while len(r)>2 && len(r[len(r)-1])==0 && len(r[len(r)-2])==0
-    call remove(r, len(r)-1)
-  endwhile
-
-  if mode(1)=='n'
-    let linebefore = getline(line('.') - (a:c==#'P'?1:0))
-    if linebefore=~'^\s*$' && len(r[0])==0
-      call remove(r, 0)
-    endif
-    let lineafter = getline((line('.') - (a:c==#'P'?1:0)) + 1)
-    if lineafter=~'^\s*$' && len(r[len(r)-1])==0
-      call remove(r, len(r)-1)
-    endif
-  endif
-
-  let @9 = (@+=~"\n" ? join(r,"\n") . "\n" : @+)
-  return '"9'.a:c
-endf
+" Paste mappings {{{1
 nmap <leader>y "+y
 xmap <leader>y "+y
 nmap <leader>Y "+Y
 xmap <leader>Y "+Y
-nmap <expr> <leader>p <SID>FixedPaste('p')
-xmap <expr> <leader>p <SID>FixedPaste('p')
-nmap <expr> <leader>P <SID>FixedPaste('P')
-xmap <expr> <leader>P <SID>FixedPaste('P')
-map <expr> <MiddleMouse> <SID>FixedPaste('p')
-" Paste+visually select what was just pasted
-nmap <leader>vp "+pgV
-nmap <leader>vP "+PgV
-xmap <leader>vp "+pgV
-xmap <leader>vP "+PgV
+nmap <leader>p "+p
+xmap <leader>p "+p
+nmap <leader>P "+p
+xmap <leader>P "+p
+nnoremap <silent> p :<C-U>call mypaste#normal('p')<cr>
+nnoremap <silent> P :<C-U>call mypaste#normal('P')<cr>
+xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
+nnoremap gp p
+nnoremap gP P
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap Y y$
@@ -259,20 +227,6 @@ nmap [e <Plug>unimpairedMoveUp
 nmap ]e <Plug>unimpairedMoveDown
 xmap [e <Plug>unimpairedMoveUp
 xmap ]e <Plug>unimpairedMoveDown
-
-" Paste without overwriting any register {{{1
-fun! s:PasteOver()
-  if getreg(v:register)=~#"\<C-J>"
-    if mode(1)==#'V'
-      return ":\<C-U>let b:move=getpos(\"'>\")[1]-getpos(\"\'<\")[1]\<CR>".'gv"_dP:sil! call repeat#set("V".(b:move?b:move."j":"")."P",0)'."\<CR>"
-    else
-      return '"_dP'
-    endif
-  else
-    return "\"_c\<C-R>\"\<ESC>"
-  endif
-endf
-xnoremap <expr> <silent> P <SID>PasteOver()
 
 " Add maps for <C-V>$ and friends {{{1
 " Using C, D and Y instead of c$, d$ and y$ is cool. I think v$ would also be
