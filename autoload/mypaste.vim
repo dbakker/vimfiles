@@ -52,7 +52,13 @@ fun! s:normal_linewise(start, contents)
   endif
 
   " Write the lines to the buffer
-  call append(a:start, out)
+  let a=@"
+  try
+    let @"=join(out,"\n")."\n"
+    exe 'normal! :'.a:start."\<CR>p"
+  finally
+    let @"=a
+  endtry
 
   " Reindent the pasted code
   if get(g:reindent_langs, &ft, 0) != 0
