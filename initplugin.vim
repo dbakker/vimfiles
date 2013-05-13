@@ -82,15 +82,21 @@ if executable('chmod')
 endif
 
 " Statusline {{{2
-set statusline=%t%m%r%{&paste?'[PASTE]':''}%{exists('b:file_status')\ ?b:file_status\ :\ ''}%w%#ErrorMsg#%(\ %{SyntasticStatuslineFlag()}%)%*%{StatusDir()}%=\ %y%{exists('b:cvs_status')\ ?b:cvs_status\ :\ ''}\ %l%<
+set statusline=%t%m%r%{exists('b:statusnew')?'[new]':''}%{&paste?'[PASTE]':''}%{exists('b:file_status')\ ?b:file_status\ :\ ''}%w%#ErrorMsg#%(\ %{SyntasticStatuslineFlag()}%)%*%{StatusDir()}%=\ %y%{exists('b:cvs_status')\ ?b:cvs_status\ :\ ''}\ %l%<
 let g:syntastic_stl_format = '[%E{%e ERR}%B{ }%W{%w WRN}]'
+
+aug fileNew
+  au!
+  au BufNewFile * let b:statusnew = 1
+  au BufWritePost * unlet! b:statusnew
+aug END
 
 fun! StatusDir()
   if len(&bt)>0
     return ''
   endif
   let d = expand('%:h')
-  if isdirectory(d)
+  if isdirectory(d) && d!='.'
     return ' (' . substitute(d, expand('~'), '~', '') . ')'
   else
     return ''
