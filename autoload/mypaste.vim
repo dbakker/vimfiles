@@ -55,7 +55,7 @@ fun! s:normal_linewise(start, contents)
   let a=@"
   try
     let @"=join(out,"\n")."\n"
-    exe 'normal! :'.a:start."\<CR>p"
+    exe 'normal! :'.a:start."\<CR>".(a:start>0?'p':'P')
   finally
     let @"=a
   endtry
