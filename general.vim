@@ -212,7 +212,11 @@ endif
 " Select theme {{{2
 if has("gui_running")
   set bg=light
-  sil! colorscheme solarized
+  if expand('%:p')=~'/tmp' || expand('%:p')=~'.cache'
+    sil! colorscheme eclipse
+  else
+    sil! colorscheme solarized
+  endif
 else
   set bg=dark
   if &t_Co == 256
