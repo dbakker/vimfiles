@@ -168,6 +168,12 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#rename_command = "<leader>ir"
 let g:jedi#related_names_command = "<leader>in"
 
+" Clear select mode mappings {{{2
+aug clearSMap
+  au!
+  au VimEnter * smapclear
+aug END
+
 " Read only conversions {{{2
 " `catdoc` {{{3
 if executable('catdoc')
