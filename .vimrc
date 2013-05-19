@@ -71,6 +71,7 @@ fun! LoadBufScripts()
     let ftname=&filetype
     if len(ftname)==0
       let ftname='none'
+      let b:ftnone=1
     endif
     call TrySource('~/.vim/onbuffer/general.vim')
     call TrySource('~/.vim/onbuffer/'.ftname.'.vim')
@@ -79,6 +80,15 @@ fun! LoadBufScripts()
     call SourceFileScripts(expand('%:p'))
   endif
 endf
+
+aug ftChangeHook
+  au!
+  au FileType * if exists('b:ftnone')
+  au FileType * unlet b:ftnone
+  au FileType * call TrySource('~/.vim/onbuffer/'.&ft.'.vim')
+  au FileType * call TrySource('~/.vim/local/onbuffer/'.&ft.'.vim')
+  au FileType * endif
+aug END
 
 augroup LoadBufScripts
   au!
