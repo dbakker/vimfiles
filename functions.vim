@@ -258,7 +258,7 @@ endf
 fun! SearchWebMap(terms)
   " Same as SearchWeb, unless there is an URL under the cursor
   let line = getline(".")
-  let url = matchstr(line, "http://[^ ,;\t\"']*")
+  let url = matchstr(line, '\vhttps?://[^ ,;\t")''\]]*')
   if len(url)>0
     return OpenURL(url)
   else
