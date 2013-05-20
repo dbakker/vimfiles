@@ -48,7 +48,7 @@ fun! s:MapSymbolPair(c, m1, m2)
       exe 'nnoremap <expr> '.x.y.a:c." ExecSymbolPair('".a:c.a:m1.a:m2.x.y."')"
     endfor
   endfor
-endfun
+endf
 
 fun! ExecSymbolPair(packed)
   let [c, m1, m2, x, y] = split(a:packed, '\zs')
@@ -99,9 +99,9 @@ fun! ExecSymbolPair(packed)
   else
     return r.':sil! call repeat#set("'.s:w."\")\<CR>:\<CR>"
   endif
-endfun
+endf
 
-for c in split('/\+-=_*,.:;&f', '\zs')
+for c in split('%@#$^!~/\+-=_*,.:;&f', '\zs')
   call s:MapSymbolPair(c, c, c)
 endfor
 call s:MapSymbolPair("<tab>","\<tab>","\<tab>")
@@ -158,9 +158,6 @@ nnoremap <silent> [l :lprev<cr>:ResetScroll<cr>
 nnoremap <silent> ]l :lnext<cr>:ResetScroll<cr>
 nnoremap <silent> [L :lfirst<cr>:ResetScroll<cr>
 nnoremap <silent> ]L :llast<cr>:ResetScroll<cr>
-if has("gui_mac")
-  noremap <C-6> <C-^>
-endif
 
 " Increase/decrease font-size {{{1
 command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)+1','g')
@@ -211,12 +208,12 @@ nnoremap <silent> [<space> :<C-U>call <SID>AddLines(1)<CR>
 nnoremap <silent> ]<space> :<C-U>call <SID>AddLines(0)<CR>
 
 " Add [e and ]e mappings (from vim-unimpaired) {{{1
-function! s:Move(cmd, count, map) abort
+fun! s:Move(cmd, count, map) abort
   normal! m`
   exe 'move'.a:cmd.a:count
   norm! ``
   silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
-endfunction
+endf
 
 nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
 nnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
@@ -369,12 +366,10 @@ nmap <M-Up> <C-W>k
 nmap <M-Right> <C-W>l
 
 " Various other mappings {{{1
-imap <C-Space> <C-X><C-O>
-nnoremap gG :call SearchWebMap(expand("<cword>"))<CR>
-xnoremap gG :call SearchWeb(GetVisualLine())<CR>
-nnoremap gK K
-map <C-K> %
-imap <C-R><space> <+.+>
+nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>
+xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>
+nnoremap <silent> gK :<C-U>call searchdoc#ctext()<CR>
+xnoremap <silent> gK :<C-U>call searchdoc#visual()<CR>
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
 for i in split('n N * # zr zm <C-O> <C-I> <C-W>o <C-U> <C-D>')
   exe 'nnoremap '.i.' '.i.':ResetScroll<cr>'
@@ -386,6 +381,8 @@ map ,: :
 map ,o <C-W>w,
 inoremap <S-Home> <C-O>v<Home><C-G>
 inoremap <S-End> <C-O>v<End><C-G>
+inoremap <S-Right> <C-O>vw<C-G>
+inoremap <S-Left> <C-O>vb<C-G>
 " Reselect last pasted/edited text
 nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
 xmap gV <ESC>gV
