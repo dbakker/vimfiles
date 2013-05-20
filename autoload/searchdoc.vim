@@ -87,7 +87,21 @@ endf
 " Python {{{2
 if executable('pydoc')
   fun! searchdoc#ctext_python()
-    for w in s:ctext_list()
+    let cw=expand('<cword>')
+    let l = []
+
+    " Find `from foo import bar`
+    for line in getline(1, 20)
+      let w = matchstr(line, 'from\s*\zs\S\+\ze\s*import.*\<'.cw.'\>')
+      if len(w)>0
+        let l += [w.'.'.cw]
+        break
+      endif
+    endfor
+
+    let l += s:ctext_list()
+
+    for w in l
       let f = system('pydoc '.w)
       if f!~'no Python documentation'
         return {'result': f}
