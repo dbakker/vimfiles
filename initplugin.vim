@@ -174,6 +174,14 @@ aug clearSMap
   au VimEnter * smapclear
 aug END
 
+" DetectIdent {{{2
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_max_lines_to_analyse = 1024
+aug detectIndentRead
+  au!
+  autocmd BufReadPost * if exists(":DetectIndent") | DetectIndent | endif
+aug END
+
 " Read only conversions {{{2
 " `catdoc` {{{3
 if executable('catdoc')
