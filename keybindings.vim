@@ -309,6 +309,7 @@ nnoremap <leader>gp :Git push<space>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gv :Gitv<cr>
 nnoremap <leader>gw :Gwrite<cr>
+xmap <leader>g <ESC>,g
 
 " File/text search {{{1
 nnoremap <leader>aa :Ack<space>
@@ -358,12 +359,17 @@ noremap <silent> <C-F12> :vertical resize +10<cr>
 for c in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+<>=', '\zs')
   if maparg('<M-'.c.'>', 'n') ==# ''
     exe 'nmap <M-'.c.'> <C-W>'.c
+    exe 'xmap <M-'.c.'> <C-W>'.c
   endif
 endfor
 nmap <M-Left> <C-W>h
 nmap <M-Down> <C-W>j
 nmap <M-Up> <C-W>k
 nmap <M-Right> <C-W>l
+xmap <M-Left> <C-W>h
+xmap <M-Down> <C-W>j
+xmap <M-Up> <C-W>k
+xmap <M-Right> <C-W>l
 
 " Various other mappings {{{1
 nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>
@@ -401,6 +407,8 @@ nmap yY Y
 nnoremap z<CR> :<C-U>echoerr "BOO: Use zt"<CR>
 nnoremap z- :<C-U>echoerr "BOO: Use zb"<CR>
 nnoremap z. :<C-U>echoerr "BOO: You're thinking of zb (or zz)"<CR>
+xmap <PageUp> <ESC><PageUp>
+xmap <PageDown> <ESC><PageDown>
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
