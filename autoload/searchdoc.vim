@@ -6,6 +6,7 @@
 "   * Extra support is added for certain languages.
 "   * Instead of just the word `bar`, `foo.bar` is also tried for certain
 "     languages.
+"   * No window is opened if no documentation can be found
 "
 " Example mappings:
 "   nnoremap <silent> K :<C-U>call searchdoc#cword()<CR>
@@ -22,8 +23,15 @@ fun! searchdoc#ctext()
     let result = b:searchdoc#ctext_buffer()
   elseif exists('*searchdoc#ctext_'.&ft)
     let result = call('searchdoc#ctext_'.&ft, [])
-  elseif (has('gui_running') && &ft!='vim') || &kp!~'man'
-    let result = {}
+  elseif &kp!~'man' && &ft!='vim'
+    let result = {'kp': &kp}
+  elseif (has('gui_running') && &ft!='vim')
+    let d = system('man '.expand('<cword>'))
+    if d=~'No manual entry for '
+      let result = -1
+    else
+      let result = {'result': d}
+    endif
   else
     normal! K
     return
@@ -41,6 +49,7 @@ fun! searchdoc#ctext()
 endf
 
 " searchdoc#visual(): search documentation for selected text {{{1
+" TODO: flesh this out more
 fun! searchdoc#visual()
   if exists('*b:searchdoc#visual')
     let result = b:searchdoc#visual()
@@ -81,6 +90,7 @@ fun! s:display(args)
 
   let &ft=get(a:args, 'ft', 'man')
   keepj normal! gg
+  setl ro
 endf
 
 " Language specific code {{{1
@@ -128,7 +138,12 @@ if executable('pman')
   " $ sudo apt-get install php-pear
   " $ pear install doc.php.net/pman
   fun! searchdoc#ctext_php()
-    return {'kp': 'pman'}
+    let cw = expand('<cword>')
+    let f = system('pman '.cw)
+    if f!~'No manual entry'
+      return {'result': f}
+    endif
+    return -1
   endf
 endif
 
