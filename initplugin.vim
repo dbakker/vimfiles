@@ -182,6 +182,12 @@ aug detectIndentRead
   autocmd BufReadPost * if exists(":DetectIndent") | DetectIndent | endif
 aug END
 
+" RST Tables {{{2
+aug realignRST
+  au!
+  au InsertLeave *.rst call rst_tables#reformat()
+aug END
+
 " Read only conversions {{{2
 " `catdoc` {{{3
 if executable('catdoc')
