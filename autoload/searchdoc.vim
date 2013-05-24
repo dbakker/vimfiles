@@ -83,14 +83,37 @@ fun! s:display(args)
     let result = system(kp.' '.a:args['string'])
   endif
 
+  call s:closeold()
+
   new
+  let b:searchdoc_window = 1
   setl buftype=nofile bufhidden=delete noswapfile nobuflisted
+
   let z = split(result, "\n", 1)
+  while z[-1]=~'^\s*$'
+    call remove(z, -1)
+  endw
   call append(0, z)
 
   let &ft=get(a:args, 'ft', 'man')
   keepj normal! gg
   setl ro
+
+  if line('$')<winheight(0)
+    sil! exe 'resize '.line('$')
+  endif
+endf
+
+fun! s:closeold()
+  for wnr in range(1, winnr('$'))
+    let buf = winbufnr(wnr)
+    let bt = getbufvar(buf, '&bt')
+    if getbufvar(buf, 'searchdoc_window') == 1 || bt=='help'
+      exe "normal! ".wnr."\<C-W>w"
+      bdelete
+      return
+    endif
+  endfor
 endf
 
 " Language specific code {{{1
