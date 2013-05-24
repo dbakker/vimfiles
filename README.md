@@ -1,18 +1,26 @@
 # Vim configuration
 
 This is my own complete Vim configuration. I hope you enjoy reading this and
-will find some interesting ideas for your own Vim!
+will find some interesting snippets for your own Vim!
 
 ## Installing on Linux
 
 First install GVim, git and optional dependencies:
 
     sudo pacman -S gvim git ctags curl ack python2
-    sudo apt-get install vim vim-gtk git exuberant-ctags perl ack-grep curl python2 pyflakes wmctrl
+    sudo apt-get install vim vim-gtk git exuberant-ctags perl ack-grep curl python2 wmctrl
 
-Install the configuration:
+Download the configuration:
 
     $ bash <(curl -s https://raw.github.com/dbakker/vimfiles/master/install.sh)
+
+Install linters for Syntastic:
+
+    sudo apt-get install php5-dev php-pear 
+    sudo pear channel-discover pear.phpmd.org
+    sudo pear channel-discover pear.pdepend.org
+    sudo pear install --alldeps phpmd/PHP_PMD
+    sudo apt-get install pyflakes clang puppet-lint 
 
 ## Installing on Windows
 
