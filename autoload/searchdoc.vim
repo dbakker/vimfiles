@@ -121,9 +121,10 @@ fun! s:loadfile(tl_entry)
   let filename = a:tl_entry['filename']
   let cmd = a:tl_entry['cmd']
   let file = readfile(filename)
-  if cmd=~'/\^.*\$/'
-    let str = matchstr(cmd, '/\^\zs.*\ze\$/')
-    return [file, index(file, str)]
+  if cmd=~'^/'
+    let cmd = substitute(substitute(cmd, '^/\+', '', ''), '/\+$', '', '')
+    let cmd = escape(cmd, '\*')
+    return [file, match(file, cmd)]
   else
     throw 'Unknown cmd: '.cmd
   endif
@@ -150,7 +151,7 @@ if executable('pydoc')
     for w in l
       let f = s:check_call('pydoc', w)
       if f!~'no Python documentation'
-        let a:info[result] = f
+        let a:info['result'] = f
         return 0
       endif
     endfor
@@ -196,14 +197,14 @@ if executable('puppet')
 endif
 
 " Ctags {{{2
-" Tries to find comment blocks in tags files
+" Try to search source code using ctags to find documentation
 fun! searchdoc#ctext_ctags(info)
   let cw = expand('<cword>')
   let tl = taglist('^'.cw.'$')
   let tl = filter(tl, 'v:val["name"]==#"'.cw.'"')
 
-  if &ft=='php' && len(tl) > 1
-    let tl = filter(tl, 'v:val["kind"]!="v"')
+  if exists('*searchdoc#ctext_ctags_filter_'.&ft)
+    let tl = call('searchdoc#ctext_ctags_filter_'.&ft, [a:info, tl])
   endif
 
   if len(tl) == 0 || len(tl) > 1
@@ -221,6 +222,9 @@ fun! searchdoc#ctext_ctags(info)
     while start>0 && lines[start-1]=~'\v^\s*(\*|/)'
       let start -= 1
     endw
+    while lines[linenr]=~'(' && lines[end]!~')' && end<line('$')
+      let end += 1
+    endwhile
     exe 'let result = lines['.start.':'.end.']'
     if &ft=='php'
       call extend(a:info, {'result': ['<?php // Source: '.te['filename'], ''] + result, 'ft': 'php'})
@@ -239,4 +243,38 @@ fun! searchdoc#ctext_ctags(info)
     exe 'let result = lines['.start.':'.end.']'
   endif
   call extend(a:info, {'result': result, 'ft': &ft})
+endf
+
+" Context-aware language specific ctag filters {{{3
+" PHP {{{4
+fun! searchdoc#ctext_ctags_filter_php(info, tl)
+  let tl = filter(a:tl, 'v:val["kind"]!="v"')
+  if len(tl)>1
+    let tls = []
+    let class = matchstr(getline('.'), '.*\<\zs\w\+\ze::'.a:info['sel'])
+    if len(class)>0
+      let tl = filter(a:tl, 'v:val["kind"]=="f"')
+      for te in tl
+        let [lines, linenr] = s:loadfile(te)
+        for line in lines[0:linenr]
+          if line=~'\s*class\s.*'.class.'\>'
+            let tls += [te]
+            break
+          endif
+        endfor
+      endfor
+    endif
+    let tl = tls
+  endif
+
+  " Some PHP frameworks use empty classes that just extend another class
+  if len(tl)==1 && tl[0]['kind']=='c'
+    let [lines, linenr] = s:loadfile(tl[0])
+    let m = matchstr(lines[linenr], 'class\s*'.a:info['sel'].'\s*extends\s*\zs\S*\ze\s*{\s*}')
+    if len(m)>0
+      let tl = taglist('^'.m.'$')
+    endif
+  endif
+
+  return tl
 endf
