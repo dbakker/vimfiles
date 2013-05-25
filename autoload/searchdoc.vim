@@ -38,6 +38,11 @@ fun! searchdoc#ctext()
   endif
 
   if type(result) == 0
+    unlet result
+    let result = searchdoc#ctext_ctags()
+  endif
+
+  if type(result) == 0
     echohl WarningMsg
     echo "Could not find documentation"
     echohl None
@@ -83,13 +88,15 @@ fun! s:display(args)
     let result = system(kp.' '.a:args['string'])
   endif
 
+  let curbuf = bufnr('')
+
   call s:closeold()
 
   new
   let b:searchdoc_window = 1
   setl buftype=nofile bufhidden=delete noswapfile nobuflisted
 
-  let z = split(result, "\n", 1)
+  let z = type(result) == 3 ? result : split(result, "\n", 1)
   while z[-1]=~'^\s*$'
     call remove(z, -1)
   endw
@@ -97,11 +104,13 @@ fun! s:display(args)
 
   let &ft=get(a:args, 'ft', 'man')
   keepj normal! gg
-  setl ro
+  setl ro nolist
 
   if line('$')<winheight(0)
     sil! exe 'resize '.line('$')
   endif
+
+  exe "normal! ".bufwinnr(curbuf)."\<C-W>w"
 endf
 
 fun! s:closeold()
@@ -114,6 +123,18 @@ fun! s:closeold()
       return
     endif
   endfor
+endf
+
+fun! s:loadfile(tl_entry)
+  let filename = a:tl_entry['filename']
+  let cmd = a:tl_entry['cmd']
+  let file = readfile(filename)
+  if cmd=~'/\^.*\$/'
+    let str = matchstr(cmd, '/\^\zs.*\ze\$/')
+    return [file, index(file, str)]
+  else
+    echoerr 'Unknown cmd: '.cmd
+  endif
 endf
 
 " Language specific code {{{1
@@ -166,7 +187,6 @@ if executable('pman')
     if f!~'No manual entry'
       return {'result': f}
     endif
-    return -1
   endf
 endif
 
@@ -176,3 +196,48 @@ if executable('puppet')
     return {'kp': 'puppet describe', 'ft': 'markdown'}
   endf
 endif
+
+" Ctags {{{2
+" Tries to find comment blocks in tags files
+fun! searchdoc#ctext_ctags()
+  let cw = expand('<cword>')
+  let tl = taglist('^'.cw.'$')
+  let tl = filter(tl, 'v:val["name"]==#"'.cw.'"')
+
+  if &ft=='php' && len(tl) > 1
+    let tl = filter(tl, 'v:val["kind"]!="v"')
+  endif
+
+  if len(tl) == 0 || len(tl) > 1
+    return -1
+  endif
+
+  let te = tl[0]
+
+  let [lines, linenr] = s:loadfile(te)
+  let start = linenr
+  let end = linenr
+  let result = []
+
+  if &ft=='php' || &ft=='c' || &ft=='cpp' || &ft=='java'
+    while start>0 && lines[start-1]=~'\v^\s*(\*|/)'
+      let start -= 1
+    endw
+    exe 'let result = lines['.start.':'.end.']'
+    if &ft=='php'
+      return {'result': ['<?php // Source: '.te['filename'], ''] + result, 'ft': 'php'}
+    endif
+  elseif &ft=='python'
+    if lines[end+1]=~'"""'
+      let end += 3
+      while end<line('$') && lines[end]!~'"""'
+        let end += 1
+      endw
+    endif
+  endif
+
+  if len(result) == 0
+    exe 'let result = lines['.start.':'.end.']'
+  endif
+  return {'result': result, 'ft': &ft}
+endf
