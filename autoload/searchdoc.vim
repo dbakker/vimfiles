@@ -19,73 +19,65 @@ let g:loaded_searchdoc = 1
 
 " searchdoc#ctext(): search documentation for text under cursor {{{1
 fun! searchdoc#ctext()
-  if exists('*b:searchdoc#ctext_buffer')
-    let result = b:searchdoc#ctext_buffer()
-  elseif exists('*searchdoc#ctext_'.&ft)
-    let result = call('searchdoc#ctext_'.&ft, [])
-  elseif &kp!~'man' && &ft!='vim'
-    let result = {'kp': &kp}
-  elseif (has('gui_running') && &ft!='vim')
-    let d = system('man '.expand('<cword>'))
-    if d=~'No manual entry for '
-      let result = -1
-    else
-      let result = {'result': d}
-    endif
-  else
+  if &ft=='vim'
     normal! K
     return
   endif
 
-  if type(result) == 0
-    unlet result
-    let result = searchdoc#ctext_ctags()
-  endif
-
-  if type(result) == 0
-    echohl WarningMsg
-    echo "Could not find documentation"
-    echohl None
-    return
-  endif
-
-  let result['string'] = get(result, 'string', expand('<cword>'))
-  call s:display(result)
+  call s:search({'sel': expand('<cword>'), 'seltype': 'cword'})
 endf
 
 " searchdoc#visual(): search documentation for selected text {{{1
-" TODO: flesh this out more
 fun! searchdoc#visual()
-  if exists('*b:searchdoc#visual')
-    let result = b:searchdoc#visual()
-  elseif exists('*searchdoc#visual'.&ft)
-    let result = call('searchdoc#visual'.&ft, [])
-  elseif (has('gui_running') && &ft!='vim') || &kp!~'man'
-    let result = {}
-  else
+  if &ft=='vim'
     normal! gvK
     return
   endif
 
-  if type(result) == 0
-    echohl WarningMsg
-    echo "Could not find documentation"
-    echohl None
-    return
+  if line("'<")==line("'>")
+    let sel = strpart(getline("'<"), col("'<")-1, col("'>")-col("'<")+1)
+  else
+    let sel = expand('<cword>')
   endif
 
-  let result['string'] = get(result, 'string', strpart(getline("'<"), col("'<")-1, col("'>")-col("'<")+1))
-  call s:display(result)
+  call s:search({'sel': sel, 'seltype': 'cword'})
 endf
 
 " Utilities {{{1
+fun! s:search(info)
+  let pending = 1
+  if exists('*b:searchdoc#ctext_buffer')
+    let pending = b:searchdoc#ctext_buffer(a:info)
+  endif
+  if pending && exists('*searchdoc#ctext_'.&ft)
+    let pending = call('searchdoc#ctext_'.&ft, [a:info])
+  endif
+  if pending
+    let pending = searchdoc#ctext_ctags(a:info)
+  endif
+  if pending && executable('man')
+    let result = s:check_call('man', a:info['sel'])
+    if result!~'No manual entry'
+      let pending = 0
+      let a:info['result'] = result
+    endif
+  endif
+
+  if pending
+    echohl WarningMsg
+    echo "Could not find documentation"
+    echohl None
+  else
+    call s:display(a:info)
+  endif
+endf
 
 fun! s:display(args)
   if has_key(a:args, 'result')
     let result = a:args['result']
   else
     let kp = get(a:args, 'kp', &kp)
-    let result = system(kp.' '.a:args['string'])
+    let result = s:check_call(kp, a:args['string'])
   endif
 
   let curbuf = bufnr('')
@@ -97,7 +89,7 @@ fun! s:display(args)
   setl buftype=nofile bufhidden=delete noswapfile nobuflisted
 
   let z = type(result) == 3 ? result : split(result, "\n", 1)
-  while z[-1]=~'^\s*$'
+  while len(z)>1 && z[-1]=~'^\s*$'
     call remove(z, -1)
   endw
   call append(0, z)
@@ -133,14 +125,14 @@ fun! s:loadfile(tl_entry)
     let str = matchstr(cmd, '/\^\zs.*\ze\$/')
     return [file, index(file, str)]
   else
-    echoerr 'Unknown cmd: '.cmd
+    throw 'Unknown cmd: '.cmd
   endif
 endf
 
 " Language specific code {{{1
 " Python {{{2
 if executable('pydoc')
-  fun! searchdoc#ctext_python()
+  fun! searchdoc#ctext_python(info)
     let cw=expand('<cword>')
     let l = []
 
@@ -156,12 +148,13 @@ if executable('pydoc')
     let l += s:ctext_list()
 
     for w in l
-      let f = system('pydoc '.w)
+      let f = s:check_call('pydoc', w)
       if f!~'no Python documentation'
-        return {'result': f}
+        let a:info[result] = f
+        return 0
       endif
     endfor
-    return -1
+    return 1
   endf
 endif
 
@@ -177,29 +170,34 @@ fun! s:ctext_list()
   endif
 endf
 
+fun! s:check_call(...)
+  return system(join(map(copy(a:000), 'shellescape(v:val)')))
+endf
+
 " PHP {{{2
 if executable('pman')
   " $ sudo apt-get install php-pear
   " $ pear install doc.php.net/pman
-  fun! searchdoc#ctext_php()
-    let cw = expand('<cword>')
-    let f = system('pman '.cw)
+  fun! searchdoc#ctext_php(info)
+    let f = s:check_call('pman', a:info['sel'])
     if f!~'No manual entry'
-      return {'result': f}
+      let a:info['result'] = f
+      return 0
     endif
+    return 1
   endf
 endif
 
 " Puppet {{{2
 if executable('puppet')
-  fun! searchdoc#ctext_puppet()
-    return {'kp': 'puppet describe', 'ft': 'markdown'}
+  fun! searchdoc#ctext_puppet(info)
+    call extend(a:info, {'kp': 'puppet describe', 'ft': 'markdown'})
   endf
 endif
 
 " Ctags {{{2
 " Tries to find comment blocks in tags files
-fun! searchdoc#ctext_ctags()
+fun! searchdoc#ctext_ctags(info)
   let cw = expand('<cword>')
   let tl = taglist('^'.cw.'$')
   let tl = filter(tl, 'v:val["name"]==#"'.cw.'"')
@@ -209,7 +207,7 @@ fun! searchdoc#ctext_ctags()
   endif
 
   if len(tl) == 0 || len(tl) > 1
-    return -1
+    return 1
   endif
 
   let te = tl[0]
@@ -225,7 +223,8 @@ fun! searchdoc#ctext_ctags()
     endw
     exe 'let result = lines['.start.':'.end.']'
     if &ft=='php'
-      return {'result': ['<?php // Source: '.te['filename'], ''] + result, 'ft': 'php'}
+      call extend(a:info, {'result': ['<?php // Source: '.te['filename'], ''] + result, 'ft': 'php'})
+      return 0
     endif
   elseif &ft=='python'
     if lines[end+1]=~'"""'
@@ -239,5 +238,5 @@ fun! searchdoc#ctext_ctags()
   if len(result) == 0
     exe 'let result = lines['.start.':'.end.']'
   endif
-  return {'result': result, 'ft': &ft}
+  call extend(a:info, {'result': result, 'ft': &ft})
 endf
