@@ -3,13 +3,12 @@
 "
 " This plugin works similar to the way `keywordprg` is normally used, but:
 "   * GUI Vim opens a split window with syntax colors.
-"   * Extra support is added for certain languages.
-"   * Instead of just the word `bar`, `foo.bar` is also tried for certain
-"     languages.
+"   * Several doc programs are tried in order
+"   * If no manuals are found the tags file is searched for in-code documentation
 "   * No window is opened if no documentation can be found
 "
 " Example mappings:
-"   nnoremap <silent> K :<C-U>call searchdoc#cword()<CR>
+"   nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
 "   xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
 
 if exists('g:loaded_searchdoc')
