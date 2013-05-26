@@ -325,7 +325,22 @@ fun! s:TagsExe(tagdir, tagfile)
     endif
   endif
 
-  silent exe '!'.g:ctagsprg g:ctagsoptions '-f' a:tagfile '-R' a:tagdir
+  let tf = fnamemodify(a:tagfile, ':p')
+  let tmpfile = tf.'.tmp'
+  " Return if the temporary file was changed less than 10 secs ago
+  if filereadable(tmpfile)
+    if localtime()-getftime(tmpfile) > 10
+      call delete(tmpfile)
+    else
+      return
+    endif
+  endif
+
+  if has('unix')
+    sil! exe '!('.g:ctagsprg g:ctagsoptions '-f' tmpfile '-R' a:tagdir '&& rm' tf '&& mv' tmpfile tf ') &'
+  else
+    sil! exe '!'.g:ctagsprg g:ctagsoptions '-f' tf '-R' a:tagdir
+  endif
 endf
 fun! TagRegenerate()
   let f = findfile('tags', '.;')
