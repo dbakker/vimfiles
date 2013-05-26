@@ -17,7 +17,18 @@ endif
 let g:loaded_searchdoc = 1
 
 " searchdoc#ctext(): search documentation for text under cursor {{{1
+let s:lastpos = []
+let s:lastchangenr = -1
 fun! searchdoc#ctext()
+  " When invoked on exactly the same thing, instead close the doc window
+  if changenr()==s:lastchangenr && getpos('.') == s:lastpos
+    call s:closeold()
+    let s:lastchangenr = -1
+    return
+  endif
+  let s:lastchangenr = changenr()
+  let s:lastpos = getpos('.')
+
   if &ft=='vim'
     normal! K
     return
