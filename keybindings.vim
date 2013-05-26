@@ -227,15 +227,15 @@ xmap ]e <Plug>unimpairedMoveDown
 
 " Add maps for <C-V>$ and friends {{{1
 " Using C, D and Y instead of c$, d$ and y$ is cool. I think v$ would also be
-" useful. Unfortunately V is already taken, so I'll be bold and sacrifice K.
+" useful. Unfortunately V is already taken, so I'll be bold and sacrifice C-K.
 
 " The idea here is to try to always select from the current cursor position to
 " the end of the line. Unless it is already like that in which case we exit
 " visual mode.
 
-nnoremap <expr> K (v:count>1 ? "\<ESC>\<C-V>".v:count : "\<C-V>")."$"
-onoremap K $
-xnoremap <expr> K mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
+nnoremap <expr> <C-K> (v:count>1 ? "\<ESC>\<C-V>".v:count : "\<C-V>")."$"
+onoremap <C-K> $
+xnoremap <expr> <C-K> mode(1)=="\<C-V>" && col('.')>=len(getline('.')) ? "\<C-V>" : "\<ESC>'<\<Home>".(col('.')-1)."l\<C-V>'>$"
 
 " Use ':R foo' to run foo and capture its output in a scratch buffer {{{1
 " You can also just do ':R' to get an empty scratch buffer
@@ -374,8 +374,8 @@ xmap <M-Right> <C-W>l
 " Various other mappings {{{1
 nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>
-nnoremap <silent> gK :<C-U>call searchdoc#ctext()<CR>
-xnoremap <silent> gK :<C-U>call searchdoc#visual()<CR>
+nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
+xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
 for i in split('zr zm <C-O> <C-I> <C-W>o <C-U> <C-D> <PageUp> <PageDown>')
   exe 'nnoremap '.i.' '.i.':ResetScroll<cr>'
