@@ -409,6 +409,12 @@ nnoremap z- :<C-U>echoerr "BOO: Use zb"<CR>
 nnoremap z. :<C-U>echoerr "BOO: You're thinking of zb (or zz)"<CR>
 xmap <PageUp> <ESC><PageUp>
 xmap <PageDown> <ESC><PageDown>
+" Sometimes I use TMUX shortcuts
+map <C-W>% <C-W>v
+map <C-W>" <C-W>s
+if has('gui_running')
+  map <C-Z> <C-W>
+endif
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
