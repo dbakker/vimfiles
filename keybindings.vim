@@ -415,6 +415,7 @@ map <C-W>" <C-W>s
 if has('gui_running')
   map <C-Z> <C-W>
 endif
+nnoremap <leader>at :sil! grep! -e TODO -e XXX -e FIXME -e HACK -e BUG<cr>:copen<cr>:echo 'Found '.len(getqflist()).' todos'<cr>
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc
