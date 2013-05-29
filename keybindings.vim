@@ -371,6 +371,27 @@ xmap <M-Down> <C-W>j
 xmap <M-Up> <C-W>k
 xmap <M-Right> <C-W>l
 
+" Complete HTML tag (idea from ragtag) {{{1
+" Uses the built-in tag completion to let <C-x>/ complete a tag
+function! s:htmlEn()
+  let b:cot=&cot
+  let b:ofu=&ofu
+  let b:isk=&isk
+  setl cot=menu isk+=: omnifunc=htmlcomplete#CompleteTags
+  let before=strpart(getline('.'), 0, col('.')-1)
+  return before=~'<$' ? '/' : (before=~'</$' ? '' : '</')
+endfunction
+function! s:htmlDis()
+  if exists('b:cot')
+    let &cot=b:cot
+    let &ofu=b:ofu
+    let &isk=b:isk
+    unlet b:cot b:ofu b:isk
+  endif
+  return ""
+endfunction
+inoremap <silent> <C-X>/ <C-R>=<SID>htmlEn()<CR><C-X><C-O><C-R>=<SID>htmlDis()<CR>
+
 " Various other mappings {{{1
 nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>
