@@ -394,6 +394,22 @@ aug AutoResetScroll
   au VimResized * ResetScroll
 aug END
 
+
+" Update printed underline: {{{2
+fun! UpdateUnderlines()
+  for i in range(line("'["), line("']")+1)
+    if getline(i)=~'^\s*\(-\+\|=\+\)$'
+      let prev=getline(i-1)
+      if len(prev)>0 && len(getline(i))!=len(prev)
+        let symbol = matchstr(getline(i), '\(-\|=\)')
+        let line = matchstr(prev, '^\s*')
+        let line .= repeat(symbol, len(prev)-len(line))
+        call setline(i, line)
+      endif
+    endif
+  endfor
+endf
+
 " ToggleModeless(): Turn Vim into notepad {{{2
 let s:tm_toggle = 0
 fun! ToggleModeless()
