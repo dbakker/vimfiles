@@ -168,10 +168,22 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#rename_command = "<leader>ir"
 let g:jedi#related_names_command = "<leader>in"
 
-" Clear select mode mappings {{{2
+" Clear non-ctrl select mode mappings {{{2
+fun! s:clearsmap()
+  redir => f
+  sil exe 'smap'
+  redir END
+  let b = split(f, "\n")
+  for line in b
+    let m = matchstr(line, '...\zs\S\+')
+    if m[0]!='<'
+      sil! exe 'sunmap '.m
+    endif
+  endfor
+endf
 aug clearSMap
   au!
-  au VimEnter * smapclear
+  au VimEnter * call <SID>clearsmap()
 aug END
 
 " DetectIdent {{{2
