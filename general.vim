@@ -135,6 +135,13 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
 
+" Set most recently changed file to 'R {{{2
+aug recentlyEdited
+  au!
+  au BufEnter * let b:lastedit = changenr()
+  au BufLeave * if exists('b:lastedit') && b:lastedit!=changenr() | exe 'normal! mR'  | endif
+aug END
+
 " Visual options {{{1
 " Standard settings {{{2
 if &t_Co > 2 || has("gui_running")
