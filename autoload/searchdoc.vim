@@ -30,6 +30,7 @@ fun! searchdoc#ctext()
   let s:lastpos = getpos('.')
 
   if &ft=='vim'
+    setl keywordprg=:help
     normal! K
     return
   endif
@@ -40,6 +41,7 @@ endf
 " searchdoc#visual(): search documentation for selected text {{{1
 fun! searchdoc#visual()
   if &ft=='vim'
+    setl keywordprg=:help
     normal! gvK
     return
   endif
