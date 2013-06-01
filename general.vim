@@ -67,13 +67,6 @@ if executable('grep')
   set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
 endif
 
-" Don't allow virtual edit in insert mode
-aug veInsert
-  au!
-  au InsertEnter * :let b:o_ve=&ve | setl ve=block,onemore
-  au InsertLeave * :let &ve=b:o_ve | unlet b:o_ve
-aug END
-
 " Ask to create directories
 fun! s:MkNonExDir(file, buf)
   if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
