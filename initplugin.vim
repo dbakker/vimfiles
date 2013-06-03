@@ -68,6 +68,14 @@ nmap ,Z <Plug>SearchFoldRestore:ResetScroll<cr>
 let g:syntastic_python_flake8_args='--ignore=E501,F401'
 let g:syntastic_puppet_lint_arguments='--error-level error'
 let g:syntastic_warning_symbol='--'
+let g:UltiSnipsSnippetDirectories=["myultisnips"]
+let g:tskelMapInsert = '<c-y>'
+
+aug tSkelSetup
+  au!
+  au BufNewFile */application/classes/*/*.php TSkeletonSetup kohana_extend.php
+  au BufNewFile */plugin/*.vim TSkeletonSetup plugin.vim
+aug END
 
 let g:clang_hl_errors = 0
 let g:clang_close_preview = 1

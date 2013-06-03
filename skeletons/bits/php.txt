@@ -1,0 +1,7 @@
+get $_GET['<+CURSOR+>']
+globals $_GLOBALS['<+CURSOR+>']
+pdd echo '<pre>'; print_r(<+CURSOR+>); echo '</pre>'; die();
+post $_POST['<+CURSOR+>']
+r return <+CURSOR+>;
+request $_REQUEST['<+CURSOR+>']
+server $_SERVER['<+CURSOR+>']
