@@ -118,7 +118,7 @@ fun! mypaste#pasteblackhole()
   if line("'<") == line("'>") && visualmode()==#'v'
     sil! call repeat#set(r.'P', 0)
   elseif visualmode()==#'V'
-    if line("'<") == line("'>")
+    if d == 0
       sil! call repeat#set('VP', 0)
     else
       sil! call repeat#set('V'.d.'P', 0)
