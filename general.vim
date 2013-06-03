@@ -161,7 +161,7 @@ set sidescroll=1                " continuous horizontal scroll rather than jumpy
 set sidescrolloff=7             " columns to keep visible before and after cursor
 set synmaxcol=2048              " don't syntax color long lines (such as minified js)
 set title                       " change the terminal's title
-set virtualedit=all             " allow the cursor to go in to "invalid" places
+set virtualedit=block,onemore   " allow the cursor to go in to "invalid" places
 
 if has("balloon_eval") && has("unix")
     set ballooneval
