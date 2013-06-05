@@ -410,6 +410,57 @@ fun! UpdateUnderlines()
   endfor
 endf
 
+" IGrep(): grep in a more clever way {{{2
+fun! IGrep(args, bang)
+  redraw
+  echo "Searching ..."
+  sil! exe 'grep! '.a:args
+  if len(getqflist()) == 0
+    echo "IGrep: no matches"
+    cclose
+  else
+    call SortQuickFix()
+    copen
+    if a:bang!='!'
+      cfirst
+    endif
+  endif
+endf
+
+com! -nargs=* -bang IGrep call IGrep(<q-args>, <q-bang>)
+com! -nargs=* -bang FGrep call IGrep(' -F '.shellescape(<q-args>), <q-bang>)
+
+" SortQuickFix(): order quickfix list by filename {{{2
+fun! SortQuickFix()
+  let qflist = getqflist()
+  let qfs = [[],[],[],[],[]]
+  for item in qflist
+    let score = s:getquickfixscore(item['bufnr'])
+    call add(qfs[score], item)
+  endfor
+  call setqflist([])
+  for qf in qfs
+    call setqflist(qf, 'a')
+  endfor
+endf
+
+fun! s:getquickfixscore(bufnr)
+  if len(a:bufnr) == 0 || a:bufnr == 0
+    return 3
+  endif
+  let bn=bufname(a:bufnr)
+  if bn ==# bufname('')
+    return 0
+  endif
+  if stridx(bn, '/') == -1 && stridx(bn, '\') == -1
+    return 1
+  endif
+  if bn[0]!='/' && bn[0]!='\'
+    return 2
+  endif
+  return 3
+endf
+
 " ToggleModeless(): Turn Vim into notepad {{{2
 let s:tm_toggle = 0
 fun! ToggleModeless()

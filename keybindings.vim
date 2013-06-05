@@ -436,7 +436,9 @@ map <C-W>" <C-W>s
 if has('gui_running')
   map <C-Z> <C-W>
 endif
-nnoremap <leader>at :sil! grep! -e TODO -e XXX -e FIXME -e HACK<cr>:c<C-R>=len(getqflist())>0 ? 'open' : 'close'<cr><cr>
+nnoremap <leader>at :IGrep -e TODO -e XXX -e FIXME -e HACK<cr>
+nnoremap <leader>af :FGrep<space>
+nnoremap <leader>ai :IGrep<space>
 inoremap <C-X><C-K> <C-K>
 
 " Ack motions {{{1
