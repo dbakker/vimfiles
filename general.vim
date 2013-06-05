@@ -64,7 +64,7 @@ set viewoptions=cursor,folds,slash,unix
 
 " Program to use for :grep
 if executable('grep')
-  set grepprg=grep\ -rnH\ --exclude='.*.swp'\ --exclude='.git'\ --exclude=tags
+  set grepprg=grep\ -rnH\ --exclude='*.swp'\ --exclude-dir='.git'\ --exclude=tags
 endif
 
 " Ask to create directories
@@ -191,7 +191,7 @@ set foldtext=MyFoldText()
 " Font and GUI options {{{2
 if has("gui_running")
     " Remove all menus, scollbars, etc.
-    set guioptions=git
+    set guioptions=cgit
 
     " Set font depending on system (tpope)
     if exists("&guifont")
