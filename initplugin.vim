@@ -74,7 +74,7 @@ let g:tskelMapInsert = '<c-y>'
 aug tSkelSetup
   au!
   au BufNewFile */application/classes/*/*.php TSkeletonSetup kohana_extend.php
-  au BufNewFile */plugin/*.vim TSkeletonSetup plugin.vim
+  au BufNewFile *.vim if VimLoadedGuard()!='' | TSkeletonSetup plugin.vim | endif
 aug END
 
 let g:clang_hl_errors = 0

@@ -410,6 +410,27 @@ fun! UpdateUnderlines()
   endfor
 endf
 
+" VimLoadedGuard() {{{2
+fun! VimLoadedGuard()
+  let f = matchstr(expand('%:p'),'.*\ze\.vim')
+  if f=~'autoload'
+    let type='autoload'
+    let guard='autoloaded'
+  elseif f=~'plugin'
+    let type='plugin'
+    let guard='loaded'
+  else
+    return ''
+  endif
+
+  let b=matchstr(f,'.*[\\/]'.type.'[\\/]\zs.*')
+  if b==''
+    return b
+  endif
+
+  return guard.'_'.substitute(b,'[\\/]','_','g')
+endf
+
 " IGrep(): grep in a more clever way {{{2
 fun! IGrep(args, bang)
   redraw
