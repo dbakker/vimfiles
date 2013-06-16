@@ -135,6 +135,12 @@ aug recentlyEdited
   au BufLeave * if exists('b:lastedit') && b:lastedit!=changenr() && expand('%:p')!~'.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*' | exe 'normal! mR'  | endif
 aug END
 
+" Quit extra buffers with `q` {{{2
+aug quitQ
+  au!
+  au FileType help,qf :noremap <buffer> q :<C-U>quit<cr>
+aug END
+
 " Visual options {{{1
 " Standard settings {{{2
 if &t_Co > 2 || has("gui_running")
@@ -143,7 +149,7 @@ endif
 
 set cmdheight=2                 " use a status bar that is 2 rows high
 set diffopt+=iwhite             " add ignorance of whitespace to diff
-set display+=lastline           " display as much of the last line as possibl
+set display+=lastline           " display as much of the last line as possible
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
 set laststatus=2                " tell VIM to always put a status line in
