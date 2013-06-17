@@ -457,6 +457,7 @@ map <C-W>" <C-W>s
 if has('gui_running')
   map <C-Z> <C-W>
 endif
+nnoremap <leader>av :lv //g %<left><left><left><left>
 nnoremap <leader>at :IGrep -e TODO -e XXX -e FIXME -e HACK<cr>
 nnoremap <leader>af :FGrep<space>
 nnoremap <leader>ai :IGrep<space>
