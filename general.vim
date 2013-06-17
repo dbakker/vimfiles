@@ -162,7 +162,7 @@ set scrolloff=1                 " keep 1 line distance from the edges of the scr
 set showbreak=>\ 
 set showcmd                     " show (partial) command in the last line of the screen
 set showmode                    " always show what mode we're currently editing in
-set showtabline=0               " never show the list of open tabs
+set showtabline=1               " show a list of tabs only if there are at least two tab pages
 set sidescroll=1                " continuous horizontal scroll rather than jumpy
 set sidescrolloff=7             " columns to keep visible before and after cursor
 set synmaxcol=2048              " don't syntax color long lines (such as minified js)

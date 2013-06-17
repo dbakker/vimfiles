@@ -40,6 +40,7 @@ nnoremap <silent> <leader>wx :wa<cr>:bufdo BD<cr>
 nnoremap <silent> <leader>qa :bufdo BD<cr>
 nnoremap <silent> <leader>qf :BD!<cr>
 nnoremap <silent> <leader>qj :BD<cr>
+nnoremap <silent> <leader>qt :tabclose<cr>
 
 " Create repeatable mappings similar to ci' and ca" for other symbols {{{1
 fun! s:MapSymbolPair(c, m1, m2)
@@ -424,9 +425,9 @@ for i in split('zr zm <C-O> <C-I> <C-W>o <C-U> <C-D> <PageUp> <PageDown>')
 endfor
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
-map ,; :
-map ,: :
-map ,o <C-W>w,
+nmap <leader>; :
+nmap <leader>: :
+nnoremap <leader>o :tabnew <C-R>=filereadable(expand('%')) ? '%':''<CR><CR>
 inoremap <S-Home> <C-O>v<Home><C-G>
 inoremap <S-End> <C-O>v<End><C-G>
 inoremap <S-Right> <C-O>vw<C-G>
