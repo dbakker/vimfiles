@@ -224,11 +224,15 @@ if has("gui_running")
     sil! colorscheme solarized
   endif
 else
-  set bg=dark
+  let &bg = len($BGCOLOR)>0 ? $BGCOLOR : 'dark'
   if &t_Co == 256
-    let g:jellybeans_background_color_256="none"
     let g:solarized_termcolors=256
-    sil! colorscheme jellybeans
+    let g:jellybeans_background_color_256="none"
+    if &bg == 'dark'
+      sil! colorscheme jellybeans
+    else
+      sil! colorscheme solarized
+    endif
   else
     sil! colorscheme ron
   endif
