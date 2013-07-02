@@ -12,6 +12,7 @@ set clipboard-=autoselect       " do not automatically copy visually selected th
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
+set directory=~/.vim/local/swap// " directory to use for swapfiles
 set fileformat=unix
 set fileformats=unix,dos,mac
 set fillchars=""                " get rid of the silly chars in separators
