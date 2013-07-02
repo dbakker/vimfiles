@@ -142,6 +142,7 @@ nnoremap <silent> <leader>ep :SwitchMain<cr>:exe 'CtrlP' ProjectRootGuess()<cr>
 nnoremap <silent> <leader>es :SwitchMain<cr>:CtrlPBufTag<cr>
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
 nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
+nnoremap <silent> <leader>ew :SwitchMain<cr>:CtrlP ~/vimwiki<cr>
 
 nnoremap <silent> [b :SwitchMain<cr>:exe 'b' GetNextBuffer(-1)<cr>
 nnoremap <silent> ]b :SwitchMain<cr>:exe 'b' GetNextBuffer(1)<cr>
