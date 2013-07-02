@@ -116,43 +116,6 @@ fun! s:UpdateFileStatus()
   if &ff != 'unix'
     let b:file_status .= '['.&ff.']'
   endif
-  let b:cvs_status = s:GetCVSStatus(expand('%:p'))
-endf
-
-fun! s:GetCVSStatus(f)
-  try
-    if executable('git')
-      let git_dir = finddir('.git', a:f.';')
-      if git_dir==''
-        return ''
-      endif
-      let git_arg = '--git-dir="'.git_dir.'" --work-tree="'.fnamemodify(git_dir, ':h').'" '
-
-      let stat = system('git '.git_arg.' diff-files --numstat "'.a:f.'"')
-      if !v:shell_error && stat!=''
-        let s = matchlist(stat, '\v(\S+)\s*(\S+)')
-        if len(s)
-          let lines_added = str2nr(s[1])
-          let lines_removed = str2nr(s[2])
-          if lines_added!=0 || lines_removed!=0
-            let result = lines_added ? '+'.lines_added : ''
-            if lines_removed
-              let result .= len(result) ? ',' : ''
-              let result .= '-'.lines_removed
-            endif
-            return '[@ '.result.']'
-          endif
-        endif
-      endif
-      call system('git '.git_arg.' ls-files "'.a:f.'" --error-unmatch')
-      if !v:shell_error
-        return '[@]'
-      endif
-    endif
-    return ''
-  catch
-    return '[@error]'
-  endtry
 endf
 
 aug updateFileStatus
