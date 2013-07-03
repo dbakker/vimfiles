@@ -67,6 +67,7 @@ nmap ,z <Plug>SearchFoldNormal:ResetScroll<cr>
 nmap ,Z <Plug>SearchFoldRestore:ResetScroll<cr>
 let g:syntastic_python_flake8_args='--ignore=E501,F401'
 let g:syntastic_puppet_lint_arguments='--error-level error'
+let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
 let g:syntastic_warning_symbol='--'
 let g:UltiSnipsSnippetDirectories=["myultisnips"]
 let g:tskelMapInsert = '<c-y>'
