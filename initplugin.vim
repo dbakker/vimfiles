@@ -166,6 +166,12 @@ aug detectIndentRead
   autocmd BufReadPost * if exists(":DetectIndent") | DetectIndent | endif
 aug END
 
+" Sunset {{{2
+" Amsterdam/The Netherlands
+let g:sunset_latitude = 52.37
+let g:sunset_longitude = 4.89
+let g:sunset_utc_offset = 1
+
 " RST Tables {{{2
 aug realignRST
   au!
