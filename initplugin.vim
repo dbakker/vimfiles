@@ -158,19 +158,16 @@ aug clearSMap
   au VimEnter * call <SID>clearsmap()
 aug END
 
-" DetectIdent {{{2
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_max_lines_to_analyse = 1024
-aug detectIndentRead
-  au!
-  autocmd BufReadPost * if exists(":DetectIndent") | DetectIndent | endif
-aug END
-
 " Sunset {{{2
 " Amsterdam/The Netherlands
 let g:sunset_latitude = 52.37
 let g:sunset_longitude = 4.89
 let g:sunset_utc_offset = 1
+
+" Default indent {{{2
+let default_indent_xml = 'setl et sw=2 sts=2'
+let default_indent_vim = 'setl et sw=2 sts=2'
+let default_indent_html = 'setl et sw=2 sts=2'
 
 " RST Tables {{{2
 aug realignRST

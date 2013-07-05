@@ -157,7 +157,7 @@ set laststatus=2                " tell VIM to always put a status line in
 set lazyredraw                  " don't update the display while executing macros
 set linebreak                   " if we do wrap, wrap whole words, and mark it with '> '
 set list                        " show tabs and trailing spaces by default
-set listchars=tab:>\ ,trail:-,extends:>,precedes:<
+set listchars=tab:\ \ ,trail:-,extends:>,precedes:<
 set nowrap                      " don't wrap lines by default
 set scrolloff=1                 " keep 1 line distance from the edges of the screen
 set showbreak=>\ 

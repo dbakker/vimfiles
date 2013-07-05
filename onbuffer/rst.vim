@@ -10,3 +10,8 @@ endf
 
 nnoremap <buffer> [m :<C-U>call <SID>searchmethod(1)<cr>
 nnoremap <buffer> ]m :<C-U>call <SID>searchmethod(0)<cr>
+
+setl formatoptions+=tnro
+setl formatoptions-=cq
+setl comments=b:*,b:#,b:-
+setl formatlistpat=^\\s*[*#-]\\s*
