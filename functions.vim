@@ -457,7 +457,9 @@ fun! SortQuickFix()
   let qfs = [[],[],[],[],[]]
   for item in qflist
     let score = s:getquickfixscore(item['bufnr'])
-    call add(qfs[score], item)
+    if len(item['text'])<300
+      call add(qfs[score], item)
+    endif
   endfor
   call setqflist([])
   for qf in qfs
