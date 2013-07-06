@@ -125,7 +125,6 @@ fun! EditFromDir(dir)
   endif
   return ':e '
 endf
-nnoremap <leader>dc :cd<space>
 nnoremap <silent> <leader>df :exe 'cd' fnamemodify(GuessMainFile(), ':h')<cr>
 nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
 nnoremap <silent> <leader>dp :exe 'ProjectRootCD' GuessMainFile()<cr>
@@ -230,24 +229,6 @@ endf
 nnoremap <silent> [<space> :<C-U>call <SID>SetBlankLines(1, v:count)<CR>
 nnoremap <silent> ]<space> :<C-U>call <SID>SetBlankLines(0, v:count)<CR>
 
-" Add [e and ]e mappings (from vim-unimpaired) {{{1
-fun! s:Move(cmd, count, map) abort
-  normal! m`
-  exe 'move'.a:cmd.a:count
-  norm! ``
-  silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
-endf
-
-nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-nnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-xnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move--'.v:count1<CR>``
-xnoremap <silent> <Plug>unimpairedMoveDown :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move''>+'.v:count1<CR>``
-
-nmap [e <Plug>unimpairedMoveUp
-nmap ]e <Plug>unimpairedMoveDown
-xmap [e <Plug>unimpairedMoveUp
-xmap ]e <Plug>unimpairedMoveDown
-
 " Add maps for <C-V>$ and friends {{{1
 " Using C, D and Y instead of c$, d$ and y$ is cool. I think v$ would also be
 " useful. Unfortunately V is already taken, so I'll be bold and sacrifice C-K.
@@ -295,21 +276,6 @@ fun! s:Columnwise(d)
 endf
 noremap <expr> <leader>j <SID>Columnwise(1).'j'
 noremap <expr> <leader>k <SID>Columnwise(-1).'k'
-
-" Navigate/create tabpages with g<num> {{{1
-fun! NavTabPage(num)
-  while tabpagenr('$')<a:num
-    tabnew
-  endwhile
-  exe 'tabnext' a:num
-endf
-nnoremap <silent> g1 :call NavTabPage(1)<CR>
-nnoremap <silent> g2 :call NavTabPage(2)<CR>
-nnoremap <silent> g3 :call NavTabPage(3)<CR>
-nnoremap <silent> g4 :call NavTabPage(4)<CR>
-nnoremap <silent> g5 :call NavTabPage(5)<CR>
-nnoremap <silent> g6 :call NavTabPage(6)<CR>
-nnoremap <silent> g7 :call NavTabPage(7)<CR>
 
 " Tabularize {{{1
 let s:tabularize_map = {'=': '^[^=]*\zs=>\?', ':': ':\zs/l0r1'}
@@ -370,11 +336,6 @@ noremap <silent> <F10> :<C-U>call ToggleQuickFix()<cr>
 noremap <silent> <F11> :<C-U>call ToggleFullscreen()<cr>
 noremap <silent> <F12> :<C-U>TagbarToggle<cr>
 
-noremap <silent> <C-F9>  :vertical resize -10<cr>
-noremap <silent> <C-F10> :resize +10<cr>
-noremap <silent> <C-F11> :resize -10<cr>
-noremap <silent> <C-F12> :vertical resize +10<cr>
-
 " Window management {{{1
 " Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
 " Alt is somewhat unreliable, as it only works in the Vim GUI version,
@@ -429,10 +390,6 @@ nnoremap gI `.
 nmap <leader>; :
 nmap <leader>: :
 nnoremap <leader>o :tabnew <C-R>=filereadable(expand('%')) ? '%':''<CR><CR>
-inoremap <S-Home> <C-O>v<Home><C-G>
-inoremap <S-End> <C-O>v<End><C-G>
-inoremap <S-Right> <C-O>vw<C-G>
-inoremap <S-Left> <C-O>vb<C-G>
 " Reselect last pasted/edited text
 nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
 xmap gV <ESC>gV
