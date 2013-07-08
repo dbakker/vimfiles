@@ -8,7 +8,6 @@
 set autoindent                  " always set autoindenting on
 set autoread                    " lets assume the original file is in version control
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
-set clipboard-=autoselect       " do not automatically copy visually selected things to the clipboard
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
@@ -46,6 +45,16 @@ set visualbell                  " flash the screen on error
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe,*.o,tags
 set wildmenu                    " make tab completion for files/buffers act like bash
 set wildmode=list:full          " show a list when pressing tab and complete first full match
+
+" Clipboard
+set clipboard-=autoselect       " do not automatically copy visually selected things to the clipboard
+if len($DISPLAY)>0
+  set clipboard-=exclude:cons\\\|linux
+  set clipboard+=unnamed
+  if has('unnamedplus')
+    set clipboard+=unnamedplus
+  endif
+endif
 
 " Set settings for tabs
 set expandtab                   " expand tabs by default (overloadable per file type later)
