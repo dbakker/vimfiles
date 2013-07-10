@@ -167,14 +167,14 @@ noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
 " Paste mappings {{{1
-nmap <leader>y "+y
-xmap <leader>y "+y
-nmap <leader>Y "+Y
-xmap <leader>Y "+Y
-nmap <leader>p "+p
-xmap <leader>p "+p
-nmap <leader>P "+p
-xmap <leader>P "+p
+nmap <leader>y "fy
+xmap <leader>y "fy
+nmap <leader>Y "fY
+xmap <leader>Y "fY
+nmap <leader>p "fp
+xmap <leader>p "fp
+nmap <leader>P "fp
+xmap <leader>P "fp
 nnoremap <silent> p :<C-U>call mypaste#normal('p')<cr>
 nnoremap <silent> P :<C-U>call mypaste#normal('P')<cr>
 xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
