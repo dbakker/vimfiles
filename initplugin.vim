@@ -60,7 +60,6 @@ endif
 
 " Misc {{{2
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
-let g:solarized_contrast = "high"
 let g:searchfold_foldlevel = 2
 let g:searchfold_do_maps = 0
 nmap ,z <Plug>SearchFoldNormal:ResetScroll<cr>
@@ -158,11 +157,42 @@ aug clearSMap
   au VimEnter * call <SID>clearsmap()
 aug END
 
-" Sunset {{{2
+" Select colorscheme {{{2
 " Amsterdam/The Netherlands
 let g:sunset_latitude = 52.37
 let g:sunset_longitude = 4.89
 let g:sunset_utc_offset = 1
+fun! g:sunset_daytime_callback()
+  call s:select_colorscheme('light')
+endf
+
+fun! g:sunset_nighttime_callback()
+  call s:select_colorscheme('dark')
+endf
+
+fun! s:select_colorscheme(color)
+  let color = a:color
+  if has("gui_running")
+    if color == 'light'
+      sil! colorscheme eclipse
+    else
+      sil! colorscheme jellybeans
+    endif
+  else
+    if &t_Co == 256
+      if color == 'dark'
+        let g:jellybeans_background_color_256="none"
+        sil! colorscheme jellybeans
+      else
+        let g:solarized_termcolors=256
+        let g:solarized_contrast = "high"
+        sil! colorscheme solarized
+      endif
+    else
+      sil! colorscheme ron
+    endif
+  endif
+endf
 
 " Default indent {{{2
 let default_indent_xml = 'setl et sw=2 sts=2'

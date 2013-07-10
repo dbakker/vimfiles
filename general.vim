@@ -224,26 +224,3 @@ if has("gui_running")
 
     set guicursor+=n-v:blinkon0
 endif
-
-" Select theme {{{2
-if has("gui_running")
-  set bg=light
-  if expand('%:p')=~'/tmp' || expand('%:p')=~'.cache'
-    sil! colorscheme eclipse
-  else
-    sil! colorscheme solarized
-  endif
-else
-  let &bg = len($BGCOLOR)>0 ? $BGCOLOR : 'dark'
-  if &t_Co == 256
-    let g:solarized_termcolors=256
-    let g:jellybeans_background_color_256="none"
-    if &bg == 'dark'
-      sil! colorscheme jellybeans
-    else
-      sil! colorscheme solarized
-    endif
-  else
-    sil! colorscheme ron
-  endif
-endif
