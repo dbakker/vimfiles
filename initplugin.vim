@@ -189,6 +189,7 @@ fun! s:select_colorscheme(color)
         sil! colorscheme solarized
       endif
     else
+      let &bg = color
       sil! colorscheme ron
     endif
   endif
