@@ -11,6 +11,7 @@ set backspace=indent,eol,start  " allow backspacing over everything in insert mo
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
+set cms=#%s
 set directory=~/.vim/local/swap// " directory to use for swapfiles
 set fileformat=unix
 set fileformats=unix,dos,mac
