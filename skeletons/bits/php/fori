@@ -1,3 +1,0 @@
-foreach (<+dictionary+> as $<+key+> => $<+value+>) {
-	<++>
-}

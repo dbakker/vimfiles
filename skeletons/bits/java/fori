@@ -1,4 +1,0 @@
-for (Map.Entry<<+KeyType+>, <+ValueType+>> <+entry+> : <+map+>.entrySet()) {
-	<+KeyType+> <+key+> = <+entry+>.getKey();
-	<+ValueType+> <+value+> = <+entry+>.getValue();
-}

@@ -1,2 +1,0 @@
-for <+variable+> in range(<+start+>, <+end+>):
-    <++>

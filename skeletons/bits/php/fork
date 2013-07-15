@@ -1,3 +1,0 @@
-foreach (array_keys(<+dictionary+>) as $<+key+>) {
-	<++>
-}

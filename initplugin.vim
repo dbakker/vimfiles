@@ -69,13 +69,6 @@ let g:syntastic_puppet_lint_arguments='--error-level error'
 let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
 let g:syntastic_warning_symbol='--'
 let g:UltiSnipsSnippetDirectories=["myultisnips"]
-let g:tskelMapInsert = '<c-y>'
-
-aug tSkelSetup
-  au!
-  au BufNewFile */application/classes/*/*.php TSkeletonSetup kohana_extend.php
-  au BufNewFile *.vim if VimLoadedGuard()!='' | TSkeletonSetup plugin.vim | endif
-aug END
 
 let g:clang_hl_errors = 0
 let g:clang_close_preview = 1
