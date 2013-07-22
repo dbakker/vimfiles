@@ -96,11 +96,12 @@ fun! StatusDir()
   if len(&bt)>0
     return ''
   endif
-  let d = expand('%:h')
-  if isdirectory(d) && d!='.'
-    return ' (' . substitute(d, expand('~'), '~', '') . ')'
+  let d = substitute(getcwd(), expand('~'), '~', '')
+  let s = substitute(expand('%:p:h'), expand('~'), '~', '')
+  if stridx(s, d) == 0
+    return ' (' . d . '#' . strpart(s, len(d)) . ')'
   else
-    return ''
+    return ' (' . d . ')'
   endif
 endf
 
