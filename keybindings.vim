@@ -408,6 +408,7 @@ nmap yY Y
 nnoremap z<CR> :<C-U>echoerr "BOO: Use zt"<CR>
 nnoremap z- :<C-U>echoerr "BOO: Use zb"<CR>
 nnoremap z. :<C-U>echoerr "BOO: You're thinking of zb (or zz)"<CR>
+nnoremap z= :<C-U>setl spell<CR>z=
 xmap <PageUp> <ESC><PageUp>
 xmap <PageDown> <ESC><PageDown>
 imap <PageUp> <ESC><PageUp>
