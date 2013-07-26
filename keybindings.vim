@@ -167,14 +167,14 @@ noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
 " Paste mappings {{{1
-nmap <leader>y "fy
-xmap <leader>y "fy
-nmap <leader>Y "fY
-xmap <leader>Y "fY
-nmap <leader>p "fp
-xmap <leader>p "fp
-nmap <leader>P "fp
-xmap <leader>P "fp
+nmap <leader>y :<C-U>echoerr 'temporarily disabled'<CR>
+xmap <leader>y :<C-U>echoerr 'temporarily disabled'<CR>
+nmap <leader>Y :<C-U>echoerr 'temporarily disabled'<CR>
+xmap <leader>Y :<C-U>echoerr 'temporarily disabled'<CR>
+nmap <leader>p :<C-U>echoerr 'temporarily disabled'<CR>
+xmap <leader>p :<C-U>echoerr 'temporarily disabled'<CR>
+nmap <leader>P :<C-U>echoerr 'temporarily disabled'<CR>
+xmap <leader>P :<C-U>echoerr 'temporarily disabled'<CR>
 nnoremap <silent> p :<C-U>call mypaste#normal('p')<cr>
 nnoremap <silent> P :<C-U>call mypaste#normal('P')<cr>
 xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
@@ -198,36 +198,15 @@ endf
 nmap <expr> cw <SID>PrepareCW('w')
 nmap <expr> cW <SID>PrepareCW('W')
 
-" Add []<space> mappings for toggling empty lines {{{1
-fun! s:SetBlankLines(before, count)
-  normal! m`
-  let deleted = 0
-  if a:before
-    let end = line('.')-1
-    let start = prevnonblank(end)
-    if start!=0 && start<end
-      sil! exe (start+1).','.end.'d _'
-      let deleted = end-start
-    endif
-  else
-    let start=line('.')+1
-    let end = nextnonblank(start)
-    if end!=0 && start<end
-      sil! exe start.','.(end-1).'d _'
-      let deleted = end-start
-    endif
-  endif
-  normal! ``
-
-  let cnt = (a:count>0) ? a:count : 1
-  if cnt!=deleted
-    call append(line('.')-a:before, repeat([''], cnt))
-  endif
-  silent! call repeat#set((a:before ? '[ ' : '] '), cnt)
+" Add []<space> mappings for adding empty lines {{{1
+fun! s:AddLines(before)
+  let cnt = (v:count>0) ? v:count : 1
+  call append(line('.')-a:before, repeat([''], cnt))
+  silent! call repeat#set(a:before ? '[ ' : '] ', cnt)
 endf
 
-nnoremap <silent> [<space> :<C-U>call <SID>SetBlankLines(1, v:count)<CR>
-nnoremap <silent> ]<space> :<C-U>call <SID>SetBlankLines(0, v:count)<CR>
+nnoremap <silent> [<space> :<C-U>call <SID>AddLines(1)<CR>
+nnoremap <silent> ]<space> :<C-U>call <SID>AddLines(0)<CR>
 
 " Add maps for <C-V>$ and friends {{{1
 " Using C, D and Y instead of c$, d$ and y$ is cool. I think v$ would also be
