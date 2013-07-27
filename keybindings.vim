@@ -362,7 +362,7 @@ nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
 xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
 for i in split('zr zm <C-O> <C-I> <C-W>o <C-U> <C-D> <PageUp> <PageDown>')
-  exe 'nnoremap '.i.' '.i.':ResetScroll<cr>'
+  exe 'nnoremap <silent> '.i.' '.i.':ResetScroll<cr>'
 endfor
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
