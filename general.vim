@@ -36,7 +36,7 @@ set shortmess+=IfilmnrxoOtT     " show short messages and don't show welcome
 set smartcase                   " lowercase search matches any case
 set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
 set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
-set tags=./tags;                " search for tags in the file directory and upper directories
+set tags=./.git/tags;,./tags;     " search for tags in the file directory and upper directories
 set timeoutlen=20000            " wait a long time before timeout
 set ttimeout
 set ttimeoutlen=50
