@@ -8,10 +8,10 @@
 set autoindent                  " always set autoindenting on
 set autoread                    " lets assume the original file is in version control
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set cms=#%s
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
-set cms=#%s
 set directory=~/.vim/local/swap// " directory to use for swapfiles
 set fileformat=unix
 set fileformats=unix,dos,mac
@@ -30,6 +30,7 @@ set nobackup                    " do not keep backup files
 set noerrorbells                " don't beep
 set nofoldenable                " do not fold by default (use zM/zR)
 set nojoinspaces                " only insert 1 space after . ? and !
+set nostartofline               " keep the cursor in its current column
 set noswapfile                  " do not write annoying intermediate swap files
 set nrformats-=octal            " don't consider numbers starting with 0 to be octal
 set shortmess+=IfilmnrxoOtT     " show short messages and don't show welcome
