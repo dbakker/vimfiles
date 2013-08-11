@@ -283,13 +283,6 @@ xmap <leader>g <ESC>,g
 nnoremap <leader>aa :Ack<space>
 nnoremap <expr> <leader>aj ':Ack'.(len(&ft)?' --'.&ft:'').' -Q -i '
 
-" <F1-12> mappings {{{1
-for i in range(1,12)
-  let c='<F'.i.'>'
-  if maparg(c, 'i') ==# ''
-    exe 'imap '.c.' <ESC>'.c
-  endif
-endfor
 fun! s:PasteToggle()
   aug pasteToggle
     au!
@@ -301,19 +294,17 @@ fun! s:PasteToggle()
   endif
   return ''
 endf
-noremap <F1> <Nop>
-noremap <silent> <expr> <F2> <SID>PasteToggle()
-inoremap <silent> <expr> <F2> <SID>PasteToggle()
-set pastetoggle=<F2>
-noremap <silent> <F3> :<C-U>call ToggleModeless()<cr>
-noremap <F4> :<C-U>set invlist list?<cr>
-noremap <silent> <F5> :<C-U>call CompileAndRun()<cr>
-noremap <silent> <F7> :<C-U>call OpenPrompt()<cr>
-noremap <silent> <S-F7> :<C-U>cd %:h<cr>:call OpenPrompt()<cr>
-noremap <silent> <F9> :<C-U>call NERDTreeSmartToggle()<cr>
-noremap <silent> <F10> :<C-U>call ToggleQuickFix()<cr>
-noremap <silent> <F11> :<C-U>call ToggleFullscreen()<cr>
-noremap <silent> <F12> :<C-U>TagbarToggle<cr>
+set pastetoggle=<F1>
+noremap <silent> <expr> <F1> <SID>PasteToggle()
+inoremap <silent> <expr> <F1> <SID>PasteToggle()
+
+noremap <silent> <leader>oh :<C-U>call NERDTreeSmartToggle()<cr>
+noremap <silent> <leader>oj :<C-U>call ToggleQuickFix()<cr>
+noremap <silent> <leader>ok :<C-U>call ToggleFullscreen()<cr>
+noremap <silent> <leader>ol :<C-U>TagbarToggle<cr>
+noremap <silent> <leader>or :<C-U>call CompileAndRun()<cr>
+noremap <silent> <leader>ot :<C-U>tabnew <C-R>=filereadable(expand('%')) ? '%':''<CR><CR>
+noremap <silent> <leader>os :<C-U>set spell!<CR>:set spell?<CR>
 
 " Window management {{{1
 " Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
@@ -355,6 +346,10 @@ function! s:htmlDis()
 endfunction
 inoremap <silent> <C-X>/ <C-R>=<SID>htmlEn()<CR><C-X><C-O><C-R>=<SID>htmlDis()<CR>
 
+" Search fold {{{1
+nmap <Leader>oz   <Plug>SearchFoldNormal
+nmap <Leader>oZ   <Plug>SearchFoldRestore
+
 " Various other mappings {{{1
 nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>
 xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>
@@ -368,7 +363,6 @@ endfor
 nnoremap gI `.
 nmap <leader>; :
 nmap <leader>: :
-nnoremap <leader>o :tabnew <C-R>=filereadable(expand('%')) ? '%':''<CR><CR>
 " Reselect last pasted/edited text
 nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
 xmap gV <ESC>gV
@@ -403,6 +397,7 @@ nnoremap <leader>at :IGrep -e TODO -e XXX -e FIXME -e HACK<cr>
 nnoremap <leader>af :FGrep<space>
 nnoremap <leader>ai :IGrep<space>
 inoremap <C-X><C-K> <C-K>
+noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 
 " Ack motions {{{1
 " https://github.com/sjl/dotfiles/blob/master/vim/vimrc

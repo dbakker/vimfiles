@@ -73,6 +73,15 @@ fun! IsExtraBuffer(...)
   return bt=='help' || bt=='quickfix' || bt=='nofile'
 endf
 
+" CloseExtraBuffers() {{{1
+fun! CloseExtraBuffers()
+  for b in tabpagebuflist()
+    if IsExtraBuffer(b)
+      exe 'bd '.b
+    endif
+  endfor
+endf
+
 " BufDelete([bang]) {{{2
 " Simplified/personalized version of the BufKill plugin...
 fun! BufDelete(...)
