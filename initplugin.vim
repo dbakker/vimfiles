@@ -1,9 +1,63 @@
 filetype off                   " required!
 
 " Setup plugin loader {{{1
-execute pathogen#infect()
+if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Load plugins {{{1
+NeoBundle 'Rip-Rip/clang_complete'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'amdt/sunset'
+NeoBundle 'bronson/vim-visual-star-search'
+NeoBundle 'chrisbra/Recover.vim'
+NeoBundle 'ciaranm/detectindent'
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'dbakker/vim-indent'
+NeoBundle 'dbakker/vim-md-noerror'
+NeoBundle 'dbakker/vim-paragraph-motion'
+NeoBundle 'dbakker/vim-projectroot'
+NeoBundle 'dbakker/vim-puppet'
+NeoBundle 'dbakker/vim-sparkup'
+NeoBundle 'endel/vim-github-colorscheme'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'glts/vim-textobj-comment'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'michaeljsmith/vim-indent-object'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'nelstrom/vim-markdown-folding'
+NeoBundle 'noahfrederick/Hemisu'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'shawncplus/phpcomplete.vim'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-characterize'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'tpope/vim-eunuch'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-vividchalk'
+NeoBundle 'vim-scripts/argtextobj.vim'
+NeoBundle 'vim-scripts/bufexplorer.zip'
+NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'vim-scripts/javacomplete'
+NeoBundle 'vim-scripts/md5.vim'
+NeoBundle 'vim-scripts/mediawiki.vim'
+NeoBundle 'vim-scripts/nginx.vim'
+NeoBundle 'vim-scripts/searchfold.vim'
+NeoBundle 'vimwiki/vimwiki'
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
