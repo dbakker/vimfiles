@@ -304,7 +304,10 @@ noremap <silent> <leader>ok :<C-U>call ToggleFullscreen()<cr>
 noremap <silent> <leader>ol :<C-U>TagbarToggle<cr>
 noremap <silent> <leader>or :<C-U>call CompileAndRun()<cr>
 noremap <silent> <leader>ot :<C-U>tabnew <C-R>=filereadable(expand('%')) ? '%':''<CR><CR>
-noremap <silent> <leader>os :<C-U>set spell!<CR>:set spell?<CR>
+noremap <silent> <leader>os :<C-U>SwitchMain<CR>:botright wincmd s<CR>
+noremap <silent> <leader>oS :<C-U>SwitchMain<CR>:topleft wincmd s<CR>
+noremap <silent> <leader>ov :<C-U>SwitchMain<CR>:botright wincmd v<CR>
+noremap <silent> <leader>oV :<C-U>SwitchMain<CR>:topleft wincmd v<CR>
 
 " Window management {{{1
 " Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
