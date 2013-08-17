@@ -124,6 +124,7 @@ let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
 let g:syntastic_warning_symbol='--'
 let g:UltiSnipsSnippetDirectories=["myultisnips"]
 let g:searchfold_do_maps = 0
+let g:SuperTabDefaultCompletionType = "context"
 
 let g:clang_hl_errors = 0
 let g:clang_close_preview = 1
