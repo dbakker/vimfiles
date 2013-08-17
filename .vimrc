@@ -7,6 +7,12 @@ let mapleader=","               " Change the mapleader from \ to ,
 " use ~/.vim/ as runtime path on every OS, including Windows
 if has("win32")
   let &runtimepath=substitute(&runtimepath,'\(Documents and Settings\|Users\)[\\/][^\\/,]*[\\/]\zsvimfiles\>','.vim','g')
+elseif $USER == 'root' && $HOME!=#'/root' && filereadable('/root/.vimrc')
+  set rtp-=~/.vim rtp-=~/.vim/after
+  let $HOME='/root'
+  set rtp+=~/.vim rtp+=~/.vim/after
+  sil! source ~/.vimrc
+  finish
 endif
 
 " Loads the given script file if it exists.
