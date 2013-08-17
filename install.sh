@@ -8,11 +8,12 @@ if [ ! -d ~/.vim ]; then
   git clone --recursive https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim || exit 1
   pushd ~/.vim>/dev/null
     git remote set-url origin git@github.com:dbakker/vimfiles.git
+    git remote add https https://github.com/dbakker/vimfiles.git
   popd>/dev/null
   vim -c "silent! NeoBundleInstall" -c quit
 else
   pushd ~/.vim>/dev/null
-  git pull origin master
+  git pull https master
   popd>/dev/null
   vim -c "silent! NeoBundleUpdate" -c quit
 fi
