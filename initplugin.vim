@@ -231,7 +231,6 @@ fun! s:select_colorscheme(color)
   else
     if &t_Co == 256
       if color == 'dark'
-        let g:jellybeans_background_color_256="none"
         sil! colorscheme jellybeans
       else
         let g:solarized_termcolors=256
