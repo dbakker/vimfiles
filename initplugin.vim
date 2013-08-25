@@ -184,12 +184,12 @@ let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*'
 
 " Vim-Jedi {{{2
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#goto_command = "<leader>ig"
-let g:jedi#get_definition_command = "<leader>id"
-let g:jedi#pydoc = "<leader>iK"
+let g:jedi#goto_assignments_command = "<leader>ig"
+let g:jedi#goto_definitions_command = "<leader>id"
+let g:jedi#documentation_command = "<leader>iK"
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#rename_command = "<leader>ir"
-let g:jedi#related_names_command = "<leader>in"
+let g:jedi#usages_command = "<leader>in"
 
 " Clear non-ctrl select mode mappings {{{2
 fun! s:clearsmap()
