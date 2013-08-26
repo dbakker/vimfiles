@@ -71,11 +71,6 @@ if isdirectory(expand('~/.vim/bundle/tcomment_vim'))
   call tcomment#DefineType('markdown', g:tcommentInlineXML)
 endif
 
-" Settings for Session plugin {{{2
-let g:session_directory = '~/.vim/local/session'
-let g:session_autoload = 'no'
-let g:session_autosave = 'no'
-
 " Settings for Ack plugin {{{2
 if executable('ack-grep')
   let g:ackprg="ack-grep -H --nocolor --nogroup --column"
@@ -85,7 +80,7 @@ endif
 
 " NERDTree {{{2
 let NERDTreeHijackNetrw=1
-let NERDTreeBookmarksFile=expand('~/.vim/local/NERDTreeBookmarks.txt')
+let NERDTreeBookmarksFile=expand(localdir.'/NERDTreeBookmarks.txt')
 let NERDTreeMouseMode=2
 let NERDTreeIgnore=['\.o$', '\.pyc$', '\.exe$','\.class$', 'tags$', '\~$']
 fun! NERDTreeSmartToggle()
@@ -177,7 +172,7 @@ aug updateFileStatus
 aug END
 
 " CtrlP {{{2
-let g:ctrlp_cache_dir = $HOME.'/.vim/local/ctrlp'
+let g:ctrlp_cache_dir = localdir.'/ctrlp'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*'

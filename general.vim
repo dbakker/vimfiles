@@ -12,7 +12,6 @@ set cms=#%s
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
-set directory=~/.vim/local/swap// " directory to use for swapfiles
 set fileformat=unix
 set fileformats=unix,dos,mac
 set fillchars=""                " get rid of the silly chars in separators
@@ -41,6 +40,7 @@ set tags=./.git/tags;,./tags;     " search for tags in the file directory and up
 set timeoutlen=20000            " wait a long time before timeout
 set ttimeout
 set ttimeoutlen=50
+set undofile
 set undolevels=1000             " use many muchos levels of undo
 set viminfo^=!,h
 set visualbell                  " flash the screen on error
@@ -71,13 +71,7 @@ set termencoding=utf-8
 
 " Set options for views and sessions
 set sessionoptions=blank,buffers,folds,help,resize,slash,unix,winsize
-set viewdir=~/.vim/local/views
 set viewoptions=cursor,folds,slash,unix
-
-" Program to use for :grep
-if executable('grep')
-  set grepprg=grep\ -rnH\ --exclude='*.swp'\ --exclude-dir='.git'\ --exclude=tags
-endif
 
 " Ask to create directories
 fun! s:MkNonExDir(file, buf)
@@ -126,12 +120,6 @@ if has("gui_running")
     au!
     au BufWinEnter * call <SID>WorkDirRead()
   aug END
-endif
-
-" Undo {{{2
-if exists('+undofile')
-  set undodir=~/.vim/local/undo
-  set undofile
 endif
 
 " Matchit {{{2

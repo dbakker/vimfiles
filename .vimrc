@@ -15,6 +15,18 @@ elseif $USER == 'root' && $HOME!=#'/root' && filereadable('/root/.vimrc')
   finish
 endif
 
+" Create local directories for vim to use
+let g:localdir=expand("~/.local/share/vim")
+let &directory=localdir."/swap//"
+let &viewdir=localdir."/views"
+let &undodir=localdir."/undo"
+
+for dir in [localdir, localdir."/swap", &viewdir, &undodir]
+  if !isdirectory(dir) && exists('*mkdir')
+    sil! call mkdir(dir, 'p', 0700)
+  endif
+endfor
+
 " Loads the given script file if it exists.
 fun! TrySource(script)
   if filereadable(expand(a:script))
@@ -24,7 +36,7 @@ endf
 
 " initialize global methods and variables for use in scripts/plugins
 call TrySource('~/.vim/functions.vim')
-call TrySource('~/.vim/local/functions.vim')
+call TrySource('~/.vim.local/functions.vim')
 " initialize plugin stuff (Vundle/Pathogen)
 call TrySource('~/.vim/initplugin.vim')
 
@@ -33,9 +45,8 @@ filetype plugin indent on
 
 " Load general vim scripts
 call TrySource('~/.vim/general.vim')
-call TrySource('~/.vim/local/general.vim')
+call TrySource('~/.vim.local/general.vim')
 call TrySource('~/.vim/keybindings.vim')
-call TrySource('~/.vimrc.local')
 
 " GetFileScript([filename]) {{{1
 " Returns the name of the script file directly associated
@@ -48,7 +59,7 @@ fun! GetFileScript(...)
   endif
   let scriptname=substitute(scriptname, '\v[\\/]+$', '', 'g')
   let scriptname=substitute(scriptname, '\v[^a-zA-Z0-9. ]', '_', 'g')
-  return expand('~/.vim/local/filescripts/').scriptname.'.vim'
+  return expand('~/.vim.local/filescripts/').scriptname.'.vim'
 endf
 
 command! -nargs=? -complete=file EditScript exe ':e '.GetFileScript('<args>')
@@ -81,8 +92,8 @@ fun! LoadBufScripts()
     endif
     call TrySource('~/.vim/onbuffer/general.vim')
     call TrySource('~/.vim/onbuffer/'.ftname.'.vim')
-    call TrySource('~/.vim/local/onbuffer/general.vim')
-    call TrySource('~/.vim/local/onbuffer/'.ftname.'.vim')
+    call TrySource('~/.vim.local/onbuffer/general.vim')
+    call TrySource('~/.vim.local/onbuffer/'.ftname.'.vim')
     call SourceFileScripts(expand('%:p'))
   endif
 endf
@@ -92,7 +103,7 @@ aug ftChangeHook
   au FileType * if exists('b:ftnone')
   au FileType * unlet b:ftnone
   au FileType * call TrySource('~/.vim/onbuffer/'.&ft.'.vim')
-  au FileType * call TrySource('~/.vim/local/onbuffer/'.&ft.'.vim')
+  au FileType * call TrySource('~/.vim.local/onbuffer/'.&ft.'.vim')
   au FileType * endif
 aug END
 
