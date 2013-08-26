@@ -403,25 +403,9 @@ inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 
 " Ack motions {{{1
-" https://github.com/sjl/dotfiles/blob/master/vim/vimrc
-
-nnoremap <silent> <leader>am :set opfunc=<SID>AckMotion<CR>g@
-xnoremap <silent> <leader>am :<C-U>call <SID>AckMotion(visualmode())<CR>
-
-nnoremap <silent> <leader>aw :ProjectRootExe Ack! '\b<c-r><c-w>\b'<cr>
-xnoremap <silent> <leader>aw :<C-U>ProjectRootExe call <SID>AckMotion(visualmode())<CR>
-
-fun! s:CopyMotionForType(type)
-  if a:type ==# 'v'
-    sil exe "normal! `<" . a:type . "`>y"
-  elseif a:type ==# 'char'
-    sil exe "normal! `[v`]y"
-  endif
-endf
-
-fun! s:AckMotion(type) abort
-  let reg_save = @@
-  call s:CopyMotionForType(a:type)
-  exe "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
-  let @@ = reg_save
-endf
+nmap <leader>am <Plug>(holmes-motion)
+xmap <leader>am <Plug>(holmes-motion)
+nmap <leader>aw <Plug>(holmes-inner-word)
+xmap <leader>aw <Plug>(holmes-inner-word)
+nmap <leader>as :Holmes<space>
+nmap <leader>al :HolmesL<space>
