@@ -279,10 +279,6 @@ nnoremap <leader>gv :Gitv<cr>
 nnoremap <leader>gw :Gwrite<cr>
 xmap <leader>g <ESC>,g
 
-" File/text search {{{1
-nnoremap <leader>aa :Ack<space>
-nnoremap <expr> <leader>aj ':Ack'.(len(&ft)?' --'.&ft:'').' -Q -i '
-
 fun! s:PasteToggle()
   aug pasteToggle
     au!
@@ -395,17 +391,16 @@ map <C-W>" <C-W>s
 if has('gui_running')
   map <C-Z> <C-W>
 endif
-nnoremap <leader>av :lv //g %<left><left><left><left>
-nnoremap <leader>at :IGrep -e TODO -e XXX -e FIXME -e HACK<cr>
-nnoremap <leader>af :FGrep<space>
-nnoremap <leader>ai :IGrep<space>
 inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 
-" Ack motions {{{1
+" File/text search {{{1
+nnoremap <leader>aa :Holmes<space>
+
 nmap <leader>am <Plug>(holmes-motion)
 xmap <leader>am <Plug>(holmes-motion)
 nmap <leader>aw <Plug>(holmes-inner-word)
 xmap <leader>aw <Plug>(holmes-inner-word)
-nmap <leader>as :Holmes<space>
-nmap <leader>al :HolmesL<space>
+nnoremap <leader>as :Holmes<space>
+nnoremap <leader>al :HolmesL<space>
+nnoremap <leader>av :lv //g %<left><left><left><left>
