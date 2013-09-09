@@ -1,8 +1,8 @@
-" Extreme customizable vim config by Daan O. Bakker
+" Check out `:help setting` to find more information about any command
 
 " Init {{{1
 set nocompatible                " forget being compatible with good ol' vi
-let mapleader=","               " Change the mapleader from \ to ,
+let mapleader="\<space>"
 
 " use ~/.vim/ as runtime path on every OS, including Windows
 if has("win32")

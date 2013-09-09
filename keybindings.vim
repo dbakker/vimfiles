@@ -1,9 +1,4 @@
 
-" I still mostly use `:` because it is annoying when you are used to `;` and
-" then have to work on a system that doesn't have this map. But I won't use it
-" for its original purpose anyway.
-map ; :
-
 " Swap meaning of 0 and ^ {{{1
 nnoremap 0 ^
 xnoremap 0 ^
@@ -27,8 +22,8 @@ xnoremap <silent> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
 " Clear search highlighting or refresh screen {{{1
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 xnoremap <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
-nnoremap <silent> ,/ :nohlsearch<CR>
-nnoremap <silent> ,\ :nohlsearch<CR>
+nnoremap <silent> <leader>/ :nohlsearch<CR>
+nnoremap <silent> <leader>\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
