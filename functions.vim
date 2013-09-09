@@ -211,6 +211,16 @@ fun! GetNextFileInDir(count)
   return files[(((i+a:count) % s)+s) % s]
 endf
 
+" GetSheBang() {{{2
+fun! GetSheBang()
+  if index(['sh', 'zsh', 'csh', 'tcsh'], &ft) >= 0
+    return '#!/bin/'.&ft
+  elseif index(['perl', 'python', 'ruby'], &ft) >= 0
+    return '#!/usr/bin/env '.&ft
+  endif
+  return ''
+endf
+
 " OpenPrompt() {{{2
 fun! OpenPrompt()
   if has('win32')

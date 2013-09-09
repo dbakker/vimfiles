@@ -388,6 +388,7 @@ if has('gui_running')
 endif
 inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
+inoremap <expr> <C-X>! GetSheBang()
 
 " File/text search {{{1
 nnoremap <leader>aa :Holmes<space>
