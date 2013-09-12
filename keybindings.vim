@@ -166,15 +166,11 @@ nmap <leader>y :<C-U>echoerr 'temporarily disabled'<CR>
 xmap <leader>y :<C-U>echoerr 'temporarily disabled'<CR>
 nmap <leader>Y :<C-U>echoerr 'temporarily disabled'<CR>
 xmap <leader>Y :<C-U>echoerr 'temporarily disabled'<CR>
-nmap <leader>p :<C-U>echoerr 'temporarily disabled'<CR>
-xmap <leader>p :<C-U>echoerr 'temporarily disabled'<CR>
-nmap <leader>P :<C-U>echoerr 'temporarily disabled'<CR>
-xmap <leader>P :<C-U>echoerr 'temporarily disabled'<CR>
-nnoremap <silent> p :<C-U>call mypaste#normal('p')<cr>
-nnoremap <silent> P :<C-U>call mypaste#normal('P')<cr>
+nmap <leader>p :<C-U>call mypaste#special('p')<CR>
+xmap <leader>p :<C-U>call mypaste#special('p')<CR>
+nmap <leader>P :<C-U>call mypaste#special('P')<CR>
+xmap <leader>P :<C-U>call mypaste#special('P')<CR>
 xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
-nnoremap gp p
-nnoremap gP P
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap Y y$
@@ -272,7 +268,7 @@ nnoremap <leader>gp :Git push<space>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gv :Gitv<cr>
 nnoremap <leader>gw :Gwrite<cr>
-xmap <leader>g <ESC>,g
+xmap <leader>g <ESC><space>g
 
 fun! s:PasteToggle()
   aug pasteToggle

@@ -1,7 +1,7 @@
 " Personalized pasting plugin
 "
-" Inspired by https://github.com/AndrewRadev/whitespaste.vim, check it out its
-" pretty cool.
+" Inspired by https://github.com/AndrewRadev/whitespaste.vim, check that one
+" out it's pretty cool.
 
 if exists('g:loaded_mypaste')
   finish
@@ -24,6 +24,19 @@ fun! mypaste#normal(command)
     exe 'normal! '.v:count1.'"'.v:register.a:command
   endif
   sil! call repeat#set(r, v:count1)
+endf
+
+fun! mypaste#special(command)
+  " Force stuff with multiple lines to ALWAYS be pasted linewise
+  let contents = getreg(v:register)
+  if contents =~ "\n"
+    if contents !~ "\n$"
+      let contents .= "\n"
+    endif
+    call setreg(v:register, contents, "l")
+  endif
+
+  call mypaste#normal(a:command)
 endf
 
 fun! s:normal_linewise(start, contents)
