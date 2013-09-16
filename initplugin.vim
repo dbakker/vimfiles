@@ -11,7 +11,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Load plugins {{{1
 NeoBundle 'Rip-Rip/clang_complete'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'amdt/sunset'
 NeoBundle 'bronson/vim-visual-star-search'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'ciaranm/detectindent'
@@ -206,18 +205,6 @@ aug clearSMap
 aug END
 
 " Select colorscheme {{{2
-" Amsterdam/The Netherlands
-let g:sunset_latitude = 52.37
-let g:sunset_longitude = 4.89
-let g:sunset_utc_offset = 1
-fun! g:sunset_daytime_callback()
-  call s:select_colorscheme('light')
-endf
-
-fun! g:sunset_nighttime_callback()
-  call s:select_colorscheme('dark')
-endf
-
 fun! s:select_colorscheme(color)
   let color = a:color
   if has("gui_running")
@@ -241,6 +228,8 @@ fun! s:select_colorscheme(color)
     endif
   endif
 endf
+
+call s:select_colorscheme(len($BGCOLOR) == 0 ? 'light' : tolower($BGCOLOR))
 
 " Default indent {{{2
 let default_indent_xml = 'setl et sw=2 sts=2'
