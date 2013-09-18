@@ -248,12 +248,13 @@ noremap <expr> <leader>j <SID>Columnwise(1).'j'
 noremap <expr> <leader>k <SID>Columnwise(-1).'k'
 
 " Tabularize {{{1
-let s:tabularize_map = {'=': '^[^=]*\zs=>\?', ':': ':\zs/l0r1'}
+let s:tabularize_map = {':': ':\zs/l0r1'}
 fun! s:Tabularize()
   let c = nr2char(getchar())
   return ":Tabularize /".get(s:tabularize_map, c, c)."\<CR>"
 endf
 noremap <expr> <leader>t <SID>Tabularize()
+noremap <expr> <leader>t= ':Tabularize /^[^=]*\zs' . (getline('.')=~'=>' ? '=>' : '=\ze[^>]') . "\<CR>"
 sunmap <leader>t
 
 " Fugitive plugin {{{1
