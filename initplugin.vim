@@ -9,6 +9,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Load plugins {{{1
+NeoBundle 'mattboehm/vim-unstack'
 NeoBundle 'Rip-Rip/clang_complete'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bronson/vim-visual-star-search'

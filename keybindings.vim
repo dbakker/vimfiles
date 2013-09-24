@@ -27,7 +27,7 @@ nnoremap <silent> <leader>\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
-nnoremap <silent> <leader>we :<C-U>wa<cr>:call setloclist(0,[])<cr>:w<cr>:Errors<cr>:lrewind<cr>:ResetScroll<cr>
+nnoremap <silent> <leader>we :<C-U>call setloclist(0,[])<cr>:wa<cr>:Errors<cr>:lrewind<cr>:ResetScroll<cr>
 nnoremap <silent> <leader>wf :w!<cr>:redraw<cr>
 nnoremap <silent> <leader>wj :w<cr>:redraw<cr>
 nnoremap <silent> <leader>wq :w<cr>:BD<cr>
@@ -342,8 +342,8 @@ nmap <Leader>oz   <Plug>SearchFoldNormal
 nmap <Leader>oZ   <Plug>SearchFoldRestore
 
 " Various other mappings {{{1
-nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>
-xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>
+nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>:redraw!<CR>
+xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>:redraw!<CR>
 nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
 xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
@@ -386,6 +386,7 @@ endif
 inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 inoremap <expr> <C-X>! GetSheBang()
+let g:unstack_mapkey="<space>oe"
 
 " File/text search {{{1
 nnoremap <leader>aa :Holmes<space>
