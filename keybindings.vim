@@ -27,7 +27,7 @@ nnoremap <silent> <leader>\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
-nnoremap <silent> <leader>we :<C-U>call setloclist(0,[])<cr>:wa<cr>:Errors<cr>:lrewind<cr>:ResetScroll<cr>
+nnoremap <silent> <leader>we :<C-U>call setloclist(0,[])<cr>:wa<cr>:Errors<cr>:lrewind<cr>:AdjustScroll<cr>
 nnoremap <silent> <leader>wf :w!<cr>:redraw<cr>
 nnoremap <silent> <leader>wj :w<cr>:redraw<cr>
 nnoremap <silent> <leader>wq :w<cr>:BD<cr>
@@ -146,14 +146,14 @@ nnoremap <silent> [p :SwitchMain<cr>:ProjectBufPrev<cr>
 nnoremap <silent> ]p :SwitchMain<cr>:ProjectBufNext<cr>
 nnoremap <silent> [f :SwitchMain<cr>:ProjectBufPrev 'F<cr>
 nnoremap <silent> ]f :SwitchMain<cr>:ProjectBufNext 'F<cr>
-nnoremap <silent> [q :cprev<cr>:ResetScroll<cr>
-nnoremap <silent> ]q :cnext<cr>:ResetScroll<cr>
+nnoremap <silent> [q :cprev<cr>:AdjustScroll<cr>
+nnoremap <silent> ]q :cnext<cr>:AdjustScroll<cr>
 nnoremap <silent> [t :tprev<cr>
 nnoremap <silent> ]t :tnext<cr>
-nnoremap <silent> [l :lprev<cr>:ResetScroll<cr>
-nnoremap <silent> ]l :lnext<cr>:ResetScroll<cr>
-nnoremap <silent> [L :lfirst<cr>:ResetScroll<cr>
-nnoremap <silent> ]L :llast<cr>:ResetScroll<cr>
+nnoremap <silent> [l :lprev<cr>:AdjustScroll<cr>
+nnoremap <silent> ]l :lnext<cr>:AdjustScroll<cr>
+nnoremap <silent> [L :lfirst<cr>:AdjustScroll<cr>
+nnoremap <silent> ]L :llast<cr>:AdjustScroll<cr>
 
 " Increase/decrease font-size {{{1
 command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+','\=submatch(0)+1','g')
@@ -347,9 +347,6 @@ xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>:redraw!<CR>
 nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
 xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
-for i in split('zr zm <C-O> <C-I> <C-W>o <C-U> <C-D> <PageUp> <PageDown>')
-  exe 'nnoremap <silent> '.i.' '.i.':ResetScroll<cr>'
-endfor
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 nmap <leader>; :

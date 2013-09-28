@@ -16,6 +16,7 @@ NeoBundle 'bronson/vim-visual-star-search'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'ciaranm/detectindent'
 NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'dbakker/vim-adjustscroll'
 NeoBundle 'dbakker/vim-holmes'
 NeoBundle 'dbakker/vim-indent'
 NeoBundle 'dbakker/vim-lint'
@@ -114,8 +115,8 @@ endif
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 let g:searchfold_foldlevel = 2
 let g:searchfold_do_maps = 0
-nmap <leader>z <Plug>SearchFoldNormal:ResetScroll<cr>
-nmap <leader>Z <Plug>SearchFoldRestore:ResetScroll<cr>
+nmap <leader>z <Plug>SearchFoldNormal:AdjustScroll<cr>
+nmap <leader>Z <Plug>SearchFoldRestore:AdjustScroll<cr>
 let g:syntastic_python_flake8_args='--ignore=E501,F401'
 let g:syntastic_puppet_lint_arguments='--error-level error'
 let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'

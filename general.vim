@@ -91,7 +91,7 @@ aug END
 augroup resCur
   autocmd!
   autocmd BufReadPost * call setpos(".", getpos("'\""))
-  autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif | sil! ResetScroll
+  autocmd BufWinEnter * if &fen && foldlevel('.')>0 | exe 'normal! zO' | endif | sil! AdjustScroll
 augroup END
 
 " Resize windows upon Vim resize {{{2
