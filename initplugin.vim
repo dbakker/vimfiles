@@ -10,6 +10,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Load plugins {{{1
 NeoBundle 'Rip-Rip/clang_complete'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bronson/vim-visual-star-search'
 NeoBundle 'chrisbra/Recover.vim'
@@ -52,6 +54,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-vividchalk'
+NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'vim-scripts/AutoTag'
 NeoBundle 'vim-scripts/argtextobj.vim'
 NeoBundle 'vim-scripts/bufexplorer.zip'
@@ -63,6 +66,17 @@ NeoBundle 'vim-scripts/mediawiki.vim'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/searchfold.vim'
 NeoBundle 'vimwiki/vimwiki'
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <silent> <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <silent> <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <silent> <buffer> <esc>   <esc>:bd<cr>
+endfunction
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!

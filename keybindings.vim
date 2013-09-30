@@ -126,26 +126,15 @@ nnoremap <silent> <leader>dp :exe 'ProjectRootCD' GuessMainFile()<cr>
 nnoremap <silent> <leader>du :cd ..<cr>
 
 " CtrlP mappings
-nnoremap <silent> <leader>l :SwitchMain<cr>:CtrlPLine<cr>
-nnoremap <silent> <leader>r :SwitchMain<cr>:CtrlPMRU<cr>
-nnoremap <silent> <leader>ea :SwitchMain<cr>:CtrlPMixed<cr>
-nnoremap <silent> <leader>eb :SwitchMain<cr>:CtrlPBuffer<cr>
-nnoremap <silent> <leader>ed :SwitchMain<cr>:CtrlPCurWD<cr>
-nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'CtrlP' ProjectRootGuess("'F")<cr>
-nnoremap <silent> <leader>ep :SwitchMain<cr>:exe 'CtrlP' ProjectRootGuess()<cr>
-nnoremap <silent> <leader>es :SwitchMain<cr>:CtrlPBufTag<cr>
+nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
+nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -buffer-name=mru file_mru<cr>
+nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'Unite file_rec/async:'.ProjectRootGuess("'F")<cr>
+nnoremap <silent> <leader>ep :SwitchMain<cr>:Unite file_rec/async:!<cr>
+nnoremap <silent> <leader>es :SwitchMain<cr>:Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
-nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
-nnoremap <silent> <leader>ew :SwitchMain<cr>:CtrlP ~/vimwiki<cr>
+nnoremap <silent> <leader>ev :SwitchMain<cr>:Unite file_rec/async:~/.vim<cr>
+nnoremap <silent> <leader>ew :SwitchMain<cr>:Unite file_rec/async:~/vimwiki<cr>
 
-nnoremap <silent> [b :SwitchMain<cr>:exe 'b' GetNextBuffer(-1)<cr>
-nnoremap <silent> ]b :SwitchMain<cr>:exe 'b' GetNextBuffer(1)<cr>
-nnoremap <silent> [o :SwitchMain<cr>:exe 'e' GetNextFileInDir(-1)<cr>
-nnoremap <silent> ]o :SwitchMain<cr>:exe 'e' GetNextFileInDir(1)<cr>
-nnoremap <silent> [p :SwitchMain<cr>:ProjectBufPrev<cr>
-nnoremap <silent> ]p :SwitchMain<cr>:ProjectBufNext<cr>
-nnoremap <silent> [f :SwitchMain<cr>:ProjectBufPrev 'F<cr>
-nnoremap <silent> ]f :SwitchMain<cr>:ProjectBufNext 'F<cr>
 nnoremap <silent> [q :cprev<cr>:AdjustScroll<cr>
 nnoremap <silent> ]q :cnext<cr>:AdjustScroll<cr>
 nnoremap <silent> [t :tprev<cr>
@@ -162,10 +151,6 @@ noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
 " Paste mappings {{{1
-nmap <leader>y :<C-U>echoerr 'temporarily disabled'<CR>
-xmap <leader>y :<C-U>echoerr 'temporarily disabled'<CR>
-nmap <leader>Y :<C-U>echoerr 'temporarily disabled'<CR>
-xmap <leader>Y :<C-U>echoerr 'temporarily disabled'<CR>
 nmap <leader>p :<C-U>call mypaste#special('p')<CR>
 xmap <leader>p :<C-U>call mypaste#special('p')<CR>
 nmap <leader>P :<C-U>call mypaste#special('P')<CR>
@@ -384,6 +369,22 @@ inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 inoremap <expr> <C-X>! GetSheBang()
 let g:unstack_mapkey="<space>oe"
+
+" Tag jump {{{1
+fun! TagJump()
+  try
+    let sc=&smartcase
+    let ic=&ignorecase
+    set noignorecase
+    set nosmartcase
+    exe 'tj '.expand('<cword>')
+  finally
+    let &smartcase=sc
+    let &ignorecase=ic
+  endtry
+endf
+
+nnoremap <C-]> :<C-u>call TagJump()<CR>
 
 " File/text search {{{1
 nnoremap <leader>aa :Holmes<space>
