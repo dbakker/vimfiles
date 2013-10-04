@@ -12,6 +12,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Rip-Rip/clang_complete'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bronson/vim-visual-star-search'
 NeoBundle 'chrisbra/Recover.vim'
@@ -66,6 +67,15 @@ NeoBundle 'vim-scripts/mediawiki.vim'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/searchfold.vim'
 NeoBundle 'vimwiki/vimwiki'
+
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
