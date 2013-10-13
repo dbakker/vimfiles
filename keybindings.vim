@@ -128,12 +128,12 @@ nnoremap <silent> <leader>du :cd ..<cr>
 " CtrlP mappings
 nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
 nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -buffer-name=mru file_mru<cr>
-nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'Unite file_rec/async:'.ProjectRootGuess("'F")<cr>
-nnoremap <silent> <leader>ep :SwitchMain<cr>:Unite file_rec/async:!<cr>
+nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'Unite -start-insert file_rec/async:'.ProjectRootGuess("'F")<cr>
+nnoremap <silent> <leader>ep :SwitchMain<cr>:Unite -start-insert file_rec/async:!<cr>
 nnoremap <silent> <leader>es :SwitchMain<cr>:Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
-nnoremap <silent> <leader>ev :SwitchMain<cr>:Unite file_rec/async:~/.vim<cr>
-nnoremap <silent> <leader>ew :SwitchMain<cr>:Unite file_rec/async:~/vimwiki<cr>
+nnoremap <silent> <leader>ev :SwitchMain<cr>:Unite -start-insert file_rec/async:~/.vim<cr>
+nnoremap <silent> <leader>ew :SwitchMain<cr>:Unite -start-insert file_rec/async:~/vimwiki<cr>
 
 nnoremap <silent> [q :cprev<cr>:AdjustScroll<cr>
 nnoremap <silent> ]q :cnext<cr>:AdjustScroll<cr>
