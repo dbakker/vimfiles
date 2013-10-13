@@ -18,4 +18,4 @@ else
   vim -c "silent! NeoBundleUpdate" -c quit
 fi
 
-[ -f ~/.vimrc ] || ln -s ~/.vim/.vimrc ~/.vimrc
+[ -f ~/.vimrc ] || ln -s ~/.vim/vimrc.vim ~/.vimrc

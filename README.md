@@ -38,7 +38,7 @@ Then download the settings:
 
     cd %UserProfile%
     git clone https://github.com/dbakker/vimfiles.git .vim
-    echo source ~/.vim/.vimrc > .vimrc
+    echo source ~/.vim/vimrc.vim > .vimrc
 
 then manually add the plugins.
 
