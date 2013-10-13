@@ -172,16 +172,27 @@ aug fileNew
   au BufWritePost * unlet! b:statusnew
 aug END
 
+let b:laststatusdir = ''
+let b:laststatuscwd = ''
 fun! StatusDir()
-  if len(&bt)>0
-    return ''
+  if exists('b:laststatuscwd') && getcwd()==b:laststatuscwd
+    return b:laststatusdir
   endif
-  let d = substitute(getcwd(), expand('~'), '~', '')
-  let s = substitute(expand('%:p:h'), expand('~'), '~', '')
-  if stridx(s, d) == 0
-    return ' (' . d . '#' . strpart(s, len(d)) . ')'
+  let b:laststatuscwd = getcwd()
+  if len(&bt)>0
+    let b:laststatusdir = ''
   else
-    return ' (' . d . ')'
+    let d = PrettyPath(getcwd())
+    let s = PrettyPath(expand('%:p:h'))
+    if stridx(s, d) == 0
+      if ProjectRootGuess(s) ==# expand(d)
+        let b:laststatusdir = ' {' . s . '}'
+      else
+        let b:laststatusdir = ' (' . s . ')'
+      endif
+    else
+      let b:laststatusdir = ' <' . s . '>'
+    endif
   endif
 endf
 

@@ -63,6 +63,27 @@ fun! SwapRegisters(reg1, reg2)
   exe 'let @'.a:reg2.'=tmp'
 endf
 
+" ChangeCwd(path) {{{2
+" Change path with informative message
+fun! CDMessage(path)
+  let curpath = getcwd()
+  exe 'cd' a:path
+  redraw!
+  let prettypath = PrettyPath(getcwd())
+  if getcwd() ==# curpath
+    echo 'CWD is now '.prettypath.' (unchanged)'
+  else
+    echo 'CWD is now '.prettypath
+  endif
+endf
+command! -nargs=1 CDMessage call CDMessage(<q-args>)
+
+" PrettyPath(path) {{{2
+" Use ~ instead of /home/johndoe
+fun! PrettyPath(path)
+  return substitute(expand(a:path), expand('~'), '~', '')
+endf
+
 " IsExtraBuffer(buffer) {{{2
 fun! IsExtraBuffer(...)
   if a:0==1

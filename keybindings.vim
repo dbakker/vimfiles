@@ -116,14 +116,15 @@ xnoremap X <esc>`.``gvP``P
 " File management mappings {{{1
 fun! EditFromDir(dir)
   if isdirectory(a:dir) && a:dir!='.'
-    return ':e '.a:dir.'/'
+    return ':e '.PrettyPath(a:dir).'/'
   endif
   return ':e '
 endf
-nnoremap <silent> <leader>df :exe 'cd' fnamemodify(GuessMainFile(), ':h')<cr>
+nnoremap <silent> <leader>df :<C-u>call CDMessage(fnamemodify(GuessMainFile(), ':h'))<cr>
 nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
-nnoremap <silent> <leader>dp :exe 'ProjectRootCD' GuessMainFile()<cr>
-nnoremap <silent> <leader>du :cd ..<cr>
+nnoremap <silent> <leader>dp :<C-u>call CDMessage(ProjectRootGuess(GuessMainFile()))<cr>
+nnoremap <silent> <leader>du :<C-u>CDMessage ..<cr>
+nnoremap <silent> <leader>de :<C-u>CDMessage .<cr>
 
 " CtrlP mappings
 nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
