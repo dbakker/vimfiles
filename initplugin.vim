@@ -13,6 +13,7 @@ NeoBundle 'Rip-Rip/clang_complete'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'SirVer/ultisnips'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bronson/vim-visual-star-search'
 NeoBundle 'chrisbra/Recover.vim'
@@ -146,7 +147,11 @@ let g:syntastic_python_flake8_args='--ignore=E501,F401'
 let g:syntastic_puppet_lint_arguments='--error-level error'
 let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
 let g:syntastic_warning_symbol='--'
-let g:UltiSnipsSnippetDirectories=["myultisnips"]
+
+let g:UltiSnipsNoPythonWarning = 1
+let g:UltiSnipsSnippetsDir=expand("~/.vim/myultisnips")
+let g:UltiSnipsSnippetDirectories=['myultisnips']
+
 let g:searchfold_do_maps = 0
 let g:SuperTabDefaultCompletionType = "context"
 

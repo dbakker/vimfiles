@@ -1,0 +1,72 @@
+# General snippets
+snippet #!
+#!/usr/bin/env php
+endsnippet
+snippet fei "For each item (key, value)"
+foreach (${1:$collection} as $${2:key} => $${3:value}) {
+	${4}
+}${5}
+endsnippet
+snippet fen "For each number in range"
+foreach (range(${1:start}, ${2:end}) as $${3:value}) {
+	${4}
+}${5}
+endsnippet
+snippet fev "For each value"
+foreach ($${1:collection} as $${2:value}) {
+	${3}
+}${4}
+endsnippet
+snippet eif
+elseif (${1:/* condition */}) {
+	${2}
+}${3}
+endsnippet
+snippet if
+if (${1:/* condition */}) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet ife
+if (${1:/* condition */}) {
+	${VISUAL}${2}
+}
+else {
+	${3}
+}${4}
+endsnippet
+snippet r
+return ${VISUAL}${1};
+endsnippet
+snippet wh
+while (${1:/* condition */}) {
+	${2}
+}${3}
+endsnippet
+
+snippet 2i "Convert to integer"
+intval(${VISUAL}${1})
+endsnippet
+snippet 2d "Convert to unix date"
+strtotime(${VISUAL}${1})
+endsnippet
+snippet 2s "Convert to string"
+(string) (${VISUAL}${1})
+endsnippet
+
+# Specific snippets
+snippet fn "Function"
+function ${1:function_name}(${2}) {
+	${3}
+}${4}
+endsnippet
+snippet pdd
+echo '<pre>'; print_r(${VISUAL}${1}); echo '</pre>'; die(${2});
+endsnippet
+snippet class
+class ${1} {
+
+	${VISUAL}${3}
+
+}
+endsnippet

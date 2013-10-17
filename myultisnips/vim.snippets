@@ -1,0 +1,35 @@
+# General snippets
+snippet fen
+for ${1:value} in range(${2:start}, ${3:last})
+	${4}
+endfor${5}
+endsnippet
+snippet fev "For each value"
+for ${1:value} in ${2:collection}
+	${3}
+endfor
+endsnippet
+snippet eif
+elseif ${1:condition}
+	${2}
+endsnippet
+snippet if
+if ${1:condition}
+	${2}
+endif
+endsnippet
+snippet ife
+if ${1:condition}
+	${2}
+else
+	${3}
+endif${4}
+endsnippet
+snippet r
+return ${1:condition}
+endsnippet
+snippet wh
+while ${1:condition}
+	${2}
+endw${3}
+endsnippet
