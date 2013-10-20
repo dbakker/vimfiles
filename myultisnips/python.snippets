@@ -2,6 +2,10 @@
 snippet #!
 #!/usr/bin/env python
 endsnippet
+snippet eif
+elif ${1:condition}:
+	${VISUAL}${2}
+endsnippet
 snippet fei "For each item (key, value)"
 for ${1:key}, ${2:value} in ${3:collection}.items():
 	${VISUAL}${4}
@@ -10,9 +14,8 @@ snippet fev "For each value"
 for ${1:value} in ${2:collection}:
 	${VISUAL}${2}
 endsnippet
-snippet eif
-elif ${1:condition}:
-	${VISUAL}${2}
+snippet gd "Get from dictionary with default"
+${VISUAL}${1:dictionary}.get(${2:key}, ${3:default})
 endsnippet
 snippet if
 if ${1:True}:
@@ -28,6 +31,10 @@ snippet fen "For each number in range"
 for ${1:value} in range(${2:start}, ${3:stop}):
 	${VISUAL}${4}
 endsnippet
+snippet fn
+def ${1:name}:
+	${VISUAL}${2}
+endsnippet
 snippet r
 return ${VISUAL}${1}
 endsnippet
@@ -42,9 +49,6 @@ endsnippet
 
 snippet 2i "Convert to integer"
 int(${VISUAL}${1})
-endsnippet
-snippet 2d "Convert to unix date"
-float(${VISUAL}${1})
 endsnippet
 snippet 2s "Convert to string"
 str(${VISUAL}${1})
