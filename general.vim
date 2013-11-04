@@ -131,8 +131,8 @@ endif
 " Set most recently changed file to 'R {{{2
 aug recentlyEdited
   au!
-  au BufEnter * if len(&bt)==0 | let b:lastedit = changenr() | endif
-  au BufLeave * if exists('b:lastedit') && b:lastedit!=changenr() && expand('%:p')!~'.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*' | exe 'normal! mR'  | endif
+  au BufWinEnter * if len(&bt)==0 | let b:lastedit = changenr() | endif
+  au BufWinLeave * if exists('b:lastedit') && b:lastedit!=changenr() && expand('%:p')!~'.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*' && len(&bt) == 0 | exe 'normal! mR'  | endif
 aug END
 
 " Quit extra buffers with `q` {{{2
