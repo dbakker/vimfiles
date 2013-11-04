@@ -150,6 +150,10 @@ let g:syntastic_warning_symbol='--'
 let g:UltiSnipsNoPythonWarning = 1
 let g:UltiSnipsSnippetsDir=expand("~/.vim/myultisnips")
 let g:UltiSnipsSnippetDirectories=['myultisnips']
+aug visualSnip
+  au!
+  au VimEnter * exe 'xnoremap <tab> :RemoveSharedIndent<CR>gv'.maparg('<tab>', 'x')
+aug END
 
 let g:searchfold_do_maps = 0
 let g:SuperTabDefaultCompletionType = "context"

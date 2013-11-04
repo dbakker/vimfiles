@@ -63,6 +63,19 @@ fun! SwapRegisters(reg1, reg2)
   exe 'let @'.a:reg2.'=tmp'
 endf
 
+" RemoveSharedIndent(start, last) {{{2
+fun! RemoveSharedIndent(start, last)
+  let minimum_indent = indent(a:start)
+  for linenr in range(a:start, a:last)
+    let minimum_indent = min([minimum_indent, indent(linenr)])
+  endfor
+  let indent_to_remove = minimum_indent / &sw
+  for _ in range(0, indent_to_remove)
+    exe ':'.a:start.','.a:last.'normal <<'
+  endfor
+endf
+command! -range RemoveSharedIndent call RemoveSharedIndent(<line1>, <line2>)
+
 " ChangeCwd(path) {{{2
 " Change path with informative message
 fun! CDMessage(path)

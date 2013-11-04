@@ -329,6 +329,7 @@ nmap <Leader>oZ   <Plug>SearchFoldRestore
 
 " Various other mappings {{{1
 xnoremap . :norm.<cr>
+nnoremap _ "_
 nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>:redraw!<CR>
 xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>:redraw!<CR>
 nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
