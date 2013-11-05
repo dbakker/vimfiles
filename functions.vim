@@ -70,7 +70,7 @@ fun! RemoveSharedIndent(start, last)
     let minimum_indent = min([minimum_indent, indent(linenr)])
   endfor
   let indent_to_remove = minimum_indent / &sw
-  for _ in range(0, indent_to_remove)
+  for _ in range(0, indent_to_remove - 1)
     exe ':'.a:start.','.a:last.'normal <<'
   endfor
 endf
