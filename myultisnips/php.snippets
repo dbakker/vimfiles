@@ -1,51 +1,276 @@
-# General snippets
-extends cgeneral
+# This is an experiment to see how it is to make a vim-like "snippet language"
+# of sorts. If it turns out to be useful I'll probably turn it into a separate
+# plugin that does not require all the permutations.
 
-snippet #!
-#!/usr/bin/env php
+# If
+snippet ie "If equals"
+if (${1:/* left */} === ${2:/* right */}) {
+	${VISUAL}${3}
+}${4}
 endsnippet
-snippet fei "For each item (key, value)"
+snippet if "If not true"
+if (!(${1:/* condition */})) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet ii "If instanceof"
+if (${1:/* object */} instanceof ${2:/* type */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet ine "If not equals"
+if (${1:/* left */} !== ${2:/* right */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet ini "If not instanceof"
+if (!(${1:/* object */} instanceof ${2:/* type */})) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet inz "If not null"
+if (${1:/* left */} !== null) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet it "If true"
+if (${1:/* condition */}) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet iz "If null"
+if (${1:/* left */} === null) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+
+# Else if
+snippet ee "Else if equals"
+else if (${1:/* left */} === ${2:/* right */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet ef "Else if not true"
+else if (!(${1:/* condition */})) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet ei "Else if instanceof"
+else if (${1:/* object */} instanceof ${2:/* type */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet ene "Else if not equals"
+else if (${1:/* left */} !== ${2:/* right */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet eni "Else if not instanceof"
+else if (!(${1:/* object */} instanceof ${2:/* type */})) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet enz "Else if not null"
+else if (${1:/* left */} !== null) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet et "Else if true"
+else if (${1:/* condition */}) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet ez "Else if null"
+else if (${1:/* left */} === null) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+
+# while
+snippet we "while equals"
+while (${1:/* left */} === ${2:/* right */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet wf "while not true"
+while (!(${1:/* condition */})) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet wi "while instanceof"
+while (${1:/* object */} instanceof ${2:/* type */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet wne "while not equals"
+while (${1:/* left */} !== ${2:/* right */}) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet wni "while not instanceof"
+while (!(${1:/* object */} instanceof ${2:/* type */})) {
+	${VISUAL}${3}
+}${4}
+endsnippet
+snippet wnz "while not null"
+while (${1:/* left */} !== null) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet wt "while true"
+while (${1:/* condition */}) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+snippet wz "while null"
+while (${1:/* left */} === null) {
+	${VISUAL}${2}
+}${3}
+endsnippet
+
+# Dictionaries
+snippet da
+${VISUAL}${1:$array}[${2:$key}] = ${3:$value};
+endsnippet
+snippet dc
+array(${VISUAL}${1})${2}
+endsnippet
+snippet dd
+isset(${1:$array}[${2:$key}]) ? $1[$2] : ${3:$default}
+endsnippet
+snippet de
 foreach (${1:/* collection */} as $${2:key} => $${3:value}) {
 	${4}
 }${5}
 endsnippet
-snippet fen "For each number in range"
-foreach (range(${1:/* start */}, ${2:/* end */}) as $${3:value}) {
-	${4}
+snippet dg
+${1:$array}[${2:$key}]${3}
+endsnippet
+snippet dh
+isset(${1:$array}[${2:$key}])${3}
+endsnippet
+snippet di
+array_walk($${1:array}, function(&$${2:value}, $${3:key}) {
+	${VISUAL}${4}
 }${5}
 endsnippet
-snippet fev "For each value"
-foreach (${1:/* collection */} as $${2:value}) {
+snippet dl
+count(${VISUAL}${1})${2}
+endsnippet
+snippet dr
+unset($${1:dictionary}[${2:$key}]);
+endsnippet
+snippet du
+array_merge(${VISUAL}${1}, ${2})${3}
+endsnippet
+snippet dz
+empty(${VISUAL}${1})${2}
+endsnippet
+
+# Sets
+snippet sa
+${VISUAL}${1:$array}[${2:$key}] = null;
+endsnippet
+snippet sc
+array(${VISUAL}${1})${2}
+endsnippet
+snippet sd
+isset(${1:$array}[${2:$key}]) ? $2 : ${3:$default}
+endsnippet
+snippet se
+foreach (array_keys(${1:/* set */}) as $${2:value}) {
 	${3}
 }${4}
 endsnippet
-snippet fn "Function"
-function ${1:/* function_name */}(${2}) {
+snippet sg
+isset(${1:$array}[${2:$key}])${3}
+endsnippet
+snippet sh
+isset(${1:$array}[${2:$key}])${3}
+endsnippet
+snippet sl
+count(${VISUAL}${1})${2}
+endsnippet
+snippet sr
+unset($${1:set}[${2:$key}]);
+endsnippet
+snippet su
+array_merge(${VISUAL}${1}, ${2})${3}
+endsnippet
+snippet sz
+empty(${VISUAL}${1})${2}
+endsnippet
+
+# Lists
+snippet la
+${VISUAL}${1:$array}[] = ${2:$value};
+endsnippet
+snippet lc
+array(${VISUAL}${1})${2}
+endsnippet
+snippet ld
+isset(${1:$array}[${2:$index}]) ? $1[$2] : ${3:$default}
+endsnippet
+snippet le
+foreach (${1:/* list */} as $${3:value}) {
+	${4}
+}${5}
+endsnippet
+snippet lg
+${1:$array}[${2:$index}]${3}
+endsnippet
+snippet lh
+count(${1:$array}) > ${2:$index}${3}
+endsnippet
+snippet li
+array_walk($${1:array}, function(&$${2:value}) {
 	${VISUAL}${3}
 }${4}
 endsnippet
-snippet gd "Get from array with default (Kohana)"
-Arr::get(${VISUAL}${1:/* array */}, ${2:/* key */}, ${3:/* default */})
+snippet ll
+count(${VISUAL}${1})${2}
+endsnippet
+snippet lr
+unset($${1:list}[${2:$index}]);
+endsnippet
+snippet lu
+array_merge(${VISUAL}${1}, ${2})${3}
+endsnippet
+snippet lz
+empty(${VISUAL}${1})${2}
 endsnippet
 
-snippet 2i "Convert to integer"
-intval(${VISUAL}${1})
+snippet hb
+throw new OutOfBoundsException('${1}');
 endsnippet
-snippet 2d "Convert to unix date"
-strtotime(${VISUAL}${1})
-endsnippet
-snippet 2s "Convert to string"
-(string) (${VISUAL}${1})
-endsnippet
-
-# Specific snippets
-snippet pdd
-echo '<pre>'; print_r(${VISUAL}${1}); echo '</pre>'; die(${2});
-endsnippet
-snippet class
-class ${1} {
-
+snippet hc
+catch (${1:Exception} ${2:$e}) {
 	${VISUAL}${3}
+}${4}
+endsnippet
+snippet hf
+finally {
+	${VISUAL}${1}
+}${2}
+endsnippet
+snippet hi
+throw new BadMethodCallException('${1:Not implemented.}');
+endsnippet
+snippet hk
+throw new InvalidArgumentException('Invalid type for parameter "${1:name}": ' . get_class($${2:parameter}));
+endsnippet
+snippet ht
+try {
+	${VISUAL}${1}
+}${2}
+endsnippet
+snippet hv
+throw new InvalidArgumentException('Invalid value for parameter "${1:name}": ' . $${2:parameter});
+endsnippet
+snippet hz
+throw new InvalidArgumentException('Parameter "${1:name}" cannot be null');
+endsnippet
 
-}
+snippet r
+return ${VISUAL}${1};
 endsnippet
