@@ -340,8 +340,9 @@ nnoremap gI `.
 nmap <leader>; :
 nmap <leader>: :
 " Reselect last pasted/edited text
-nnoremap <expr> gV line("']")==line("'[") ? "`[v`]" : "'[V']"
-xmap gV <ESC>gV
+nnoremap <expr> gs line("']")==line("'[") ? "`[v`]" : "'[V']"
+xmap gs <ESC>gs
+nnoremap gV :echoerr 'use gs!'<CR>
 " Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
 " Add an extra undo point after using <C-U>
