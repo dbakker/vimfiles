@@ -67,6 +67,7 @@ NeoBundle 'vim-scripts/mediawiki.vim'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/searchfold.vim'
 NeoBundle 'vimwiki/vimwiki'
+NeoBundle 'yuku-t/unite-git'
 
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
@@ -77,7 +78,7 @@ NeoBundle 'Shougo/vimproc', {
       \    },
       \ }
 
-" Custom mappings for the unite buffer
+" Custom settings for the Unite
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   " Play nice with supertab
@@ -87,6 +88,8 @@ function! s:unite_settings()
   imap <silent> <buffer> <C-k>   <Plug>(unite_select_previous_line)
   imap <silent> <buffer> <esc>   <esc>:bd<cr>
 endfunction
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
