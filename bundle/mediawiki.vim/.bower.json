@@ -1,0 +1,14 @@
+{
+  "name": "mediawiki.vim",
+  "homepage": "https://github.com/vim-scripts/mediawiki.vim",
+  "_release": "226840a0a6",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "226840a0a687b5c3518988fb18dcdfee7278f823"
+  },
+  "_source": "git://github.com/vim-scripts/mediawiki.vim.git",
+  "_target": "*",
+  "_originalSource": "vim-scripts/mediawiki.vim",
+  "_direct": true
+}

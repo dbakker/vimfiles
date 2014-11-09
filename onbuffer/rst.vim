@@ -5,11 +5,18 @@ fun! s:searchmethod(dir)
     echohl warningmsg
     echo (a:dir?'Top' : 'Bottom') . ' reached'
     echohl none
+  else
+    norm k
   endif
 endf
 
-nnoremap <buffer> [m :<C-U>call <SID>searchmethod(1)<cr>
-nnoremap <buffer> ]m :<C-U>call <SID>searchmethod(0)<cr>
+nnoremap <silent> <buffer> [m :<C-U>call <SID>searchmethod(1)<cr>
+nnoremap <silent> <buffer> ]m j:<C-U>call <SID>searchmethod(0)<cr>
 
 setl formatoptions+=tnro
 setl formatoptions-=cq
+setl tw=79
+
+Abolish -buffer teh the
+Abolish -buffer awlays always
+Abolish -buffer peopel people

@@ -1,0 +1,14 @@
+{
+  "name": "Hemisu",
+  "homepage": "https://github.com/noahfrederick/Hemisu",
+  "_release": "37ea6aace1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "37ea6aace110e1e70acb32a3ec6dc9b7ae9009bf"
+  },
+  "_source": "git://github.com/noahfrederick/Hemisu.git",
+  "_target": "*",
+  "_originalSource": "noahfrederick/Hemisu",
+  "_direct": true
+}

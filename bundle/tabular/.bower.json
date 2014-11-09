@@ -1,0 +1,14 @@
+{
+  "name": "tabular",
+  "homepage": "https://github.com/godlygeek/tabular",
+  "_release": "60f2564881",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "60f25648814f0695eeb6c1040d97adca93c4e0bb"
+  },
+  "_source": "git://github.com/godlygeek/tabular.git",
+  "_target": "*",
+  "_originalSource": "godlygeek/tabular",
+  "_direct": true
+}

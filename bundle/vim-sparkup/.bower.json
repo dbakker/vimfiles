@@ -1,0 +1,14 @@
+{
+  "name": "vim-sparkup",
+  "homepage": "https://github.com/dbakker/vim-sparkup",
+  "_release": "005e56061b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "005e56061b2dc6c1df7a69a5f203fc7341ab5c6f"
+  },
+  "_source": "git://github.com/dbakker/vim-sparkup.git",
+  "_target": "*",
+  "_originalSource": "dbakker/vim-sparkup",
+  "_direct": true
+}

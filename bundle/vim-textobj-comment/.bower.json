@@ -1,0 +1,15 @@
+{
+  "name": "vim-textobj-comment",
+  "homepage": "https://github.com/glts/vim-textobj-comment",
+  "version": "1.0.0",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "c55147316d722dd35f51dbed39a645d141e5e8b5"
+  },
+  "_source": "git://github.com/glts/vim-textobj-comment.git",
+  "_target": "~1.0.0",
+  "_originalSource": "glts/vim-textobj-comment",
+  "_direct": true
+}

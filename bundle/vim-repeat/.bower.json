@@ -1,0 +1,14 @@
+{
+  "name": "vim-repeat",
+  "homepage": "https://github.com/tpope/vim-repeat",
+  "_release": "2a3c5f8e3c",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "2a3c5f8e3c26a57b8eb4cfc4be79615a1c508ef6"
+  },
+  "_source": "git://github.com/tpope/vim-repeat.git",
+  "_target": "*",
+  "_originalSource": "tpope/vim-repeat",
+  "_direct": true
+}

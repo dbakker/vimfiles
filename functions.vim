@@ -8,7 +8,6 @@ let loaded_functions = 1
 
 " Global functions {{{1
 " These are functions that are useful for custom scripts
-" Note: remember that functions can be placed *inside* if statements
 
 " FindVar(varname[, default]) {{{2
 fun! FindVar(varname, ...)
@@ -80,7 +79,7 @@ command! -range RemoveSharedIndent call RemoveSharedIndent(<line1>, <line2>)
 " Change path with informative message
 fun! CDMessage(path)
   let curpath = getcwd()
-  exe 'cd' a:path
+  exe 'cd' fnameescape(a:path)
   redraw!
   let prettypath = PrettyPath(getcwd())
   if getcwd() ==# curpath
@@ -132,7 +131,7 @@ fun! BufDelete(...)
     return
   endif
 
-  exe 'b' (bufloaded(bufnr('#')) ? '#' : GetNextBuffer(-1))
+  exe 'b' (bufloaded(bufnr('#')) && !IsExtraBuffer(bufnr('#')) ? '#' : GetNextBuffer(-1))
   if winbufnr(curwindow) == bufferToKill
     enew
     if winbufnr(curwindow) == bufferToKill
@@ -178,7 +177,7 @@ fun! GetListedBuffers()
   let all = range(1, bufnr('$'))
   let res = []
   for b in all
-    if buflisted(b)
+    if buflisted(b) && !IsExtraBuffer(b)
       call add(res, b)
     endif
   endfor
@@ -247,12 +246,7 @@ endf
 
 " GetSheBang() {{{2
 fun! GetSheBang()
-  if index(['sh', 'zsh', 'csh', 'tcsh'], &ft) >= 0
-    return '#!/bin/'.&ft
-  elseif index(['perl', 'python', 'ruby'], &ft) >= 0
-    return '#!/usr/bin/env '.&ft
-  endif
-  return ''
+  return '#!/usr/bin/env '.&ft
 endf
 
 " OpenPrompt() {{{2
@@ -366,50 +360,6 @@ fun! SwitchMain()
 endf
 com! -nargs=0 SwitchMain call SwitchMain()
 
-" Tags {{{2
-if !exists('g:ctagsoptions')
-  let g:ctagsoptions='--file-scope=no --fields=-f --java-kinds=-p --python-kinds=-i --languages=-JavaScript --fields=+S --exclude=.git'
-endif
-fun! s:TagsExe(tagdir, tagfile)
-  if !exists('g:ctagsprg')
-    let g:ctagsprg='ctags'
-    if executable('ctags-exuberant')
-      let g:ctagsprg='ctags-exuberant'
-    endif
-  endif
-
-  let tf = fnamemodify(a:tagfile, ':p')
-  let tmpfile = tf.'.tmp'
-  " Return if the temporary file was changed less than 10 secs ago
-  if filereadable(tmpfile)
-    if localtime()-getftime(tmpfile) > 10
-      call delete(tmpfile)
-    else
-      return
-    endif
-  endif
-
-  if has('unix')
-    sil! exe '!('.g:ctagsprg g:ctagsoptions '-f' tmpfile '-R' a:tagdir '&& rm' tf '&& mv' tmpfile tf ') &'
-  else
-    sil! exe '!'.g:ctagsprg g:ctagsoptions '-f' tf '-R' a:tagdir
-  endif
-endf
-fun! TagRegenerate()
-  let f = findfile('tags', '.;')
-  if !filereadable(f)
-    throw "Can't find tags file"
-  endif
-  let f = fnamemodify(f, ':p')
-  call s:TagsExe(fnamemodify(f, ':h'), f)
-endf
-fun! TagInit()
-  let dir = getcwd()
-  call s:TagsExe(dir, dir.'/tags')
-endf
-com! -nargs=0 TagRegenerate call TagRegenerate()
-com! -nargs=0 TagInit call TagInit()
-
 " ToggleQuickFix() {{{2
 fun! ToggleQuickFix()
   for b in tabpagebuflist()
@@ -510,49 +460,6 @@ fun! s:getquickfixscore(bufnr)
   return 3
 endf
 
-" ToggleModeless(): Turn Vim into notepad {{{2
-let s:tm_toggle = 0
-fun! ToggleModeless()
-  if s:tm_toggle == 0
-    let s:tm_toggle = 1
-    let s:tm_insertmode=&insertmode
-    let s:tm_fdc=&fdc
-    let s:tm_mapcvi=maparg('<C-V>', 'i')
-    let s:tm_mapcvv=maparg('<C-V>', 'v')
-    let s:tm_mapcc=maparg('<C-C>', 'v')
-    let s:tm_slm=&slm
-    let s:tm_ve=&ve
-    inoremap <C-V> <C-R>+
-    vnoremap <C-V> "+p
-    vnoremap <C-C> "+y
-    if has("gui_running")
-      let s:tm_guioptions=&guioptions
-      set guioptions=bgmrLtT
-    endif
-    if &fdc<2
-      set fdc=3
-    endif
-    sil! exe "normal \<C-W>o"
-    set selectmode^=mouse,key,cmd
-    set ve=block
-    set insertmode
-  else
-    let s:tm_toggle = 0
-    let &insertmode=s:tm_insertmode
-    let &slm=s:tm_slm
-    sil! exe 'iunmap <C-V>'
-    sil! exe 'vunmap <C-V>'
-    sil! exe 'vunmap <C-C>'
-    sil! exe 'inoremap <silent> <C-V>' s:tm_mapcvi
-    sil! exe 'vnoremap <silent> <C-V>' s:tm_mapcvv
-    sil! exe 'vnoremap <silent> <C-C>' s:tm_mapcc
-    let &guioptions=s:tm_guioptions
-    let &ve=s:tm_ve
-    let &fdc=s:tm_fdc
-  endif
-endf
-command! -nargs=0 ToggleModeless call ToggleModeless()
-
 " CompileAndRun() {{{2
 let cnr_browserlangs=['xhtml', 'html', 'xml', 'css']
 let cnr_defhandlers={'py': 'python', 'sh': 'sh', 'php': 'php', 'pl': 'perl', 'jar': 'java -jar'}
@@ -615,12 +522,12 @@ fun! CompileAndRun()
       unlet! g:loaded_{expand('%:t:r')}
       so %
     elseif &ft=='markdown' && executable('markdown')
-      let tmp=expand('~/.vim/local/preview.html')
+      let tmp=g:localdir.'/preview.html'
       call writefile(['<title>Markdown preview</title>','<link href="file:///'.expand('~/.vim/assets/markdown.css').'" rel="stylesheet"></link>'], tmp)
       exe 'silent !markdown %>>'.tmp
       call OpenURL(tmp)
     elseif &ft=='rst' && (executable('rst2html') || executable('rst2html.py'))
-      let tmp=expand('~/.vim/local/preview.html')
+      let tmp=g:localdir.'/preview.html'
       call writefile(['<!DOCTYPE html>', '<base href="file:///'.expand('%:p:h').'/" />'], tmp)
       exe 'silent !'.(executable('rst2html')?'rst2html' : 'rst2html.py') '%' '--no-xml-declaration' '>>'.tmp
       call OpenURL(tmp)
@@ -645,4 +552,3 @@ fun! CompileAndRun()
     redraw!
   endtry
 endf
-

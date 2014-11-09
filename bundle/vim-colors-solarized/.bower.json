@@ -1,0 +1,14 @@
+{
+  "name": "vim-colors-solarized",
+  "homepage": "https://github.com/altercation/vim-colors-solarized",
+  "_release": "528a59f26d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "528a59f26d12278698bb946f8fb82a63711eec21"
+  },
+  "_source": "git://github.com/altercation/vim-colors-solarized.git",
+  "_target": "*",
+  "_originalSource": "altercation/vim-colors-solarized",
+  "_direct": true
+}

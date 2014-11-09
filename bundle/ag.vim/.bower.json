@@ -1,0 +1,14 @@
+{
+  "name": "ag.vim",
+  "homepage": "https://github.com/rking/ag.vim",
+  "_release": "d3a00f8aff",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d3a00f8affb091e7a14eb34f1beb9db9bb57a4bf"
+  },
+  "_source": "git://github.com/rking/ag.vim.git",
+  "_target": "*",
+  "_originalSource": "rking/ag.vim",
+  "_direct": true
+}

@@ -1,0 +1,14 @@
+{
+  "name": "pytest.vim",
+  "homepage": "https://github.com/alfredodeza/pytest.vim",
+  "_release": "37fe251dd8",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "37fe251dd8d7652e782bb91c246d3f047336a9a7"
+  },
+  "_source": "git://github.com/alfredodeza/pytest.vim.git",
+  "_target": "*",
+  "_originalSource": "alfredodeza/pytest.vim",
+  "_direct": true
+}

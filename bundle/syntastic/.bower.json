@@ -1,0 +1,15 @@
+{
+  "name": "syntastic",
+  "homepage": "https://github.com/scrooloose/syntastic",
+  "version": "3.5.0",
+  "_release": "3.5.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.5.0",
+    "commit": "f88b5c74c9c8c67b1cdb287dc34b52539c7e4854"
+  },
+  "_source": "git://github.com/scrooloose/syntastic.git",
+  "_target": "~3.5.0",
+  "_originalSource": "scrooloose/syntastic",
+  "_direct": true
+}

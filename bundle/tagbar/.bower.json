@@ -1,0 +1,15 @@
+{
+  "name": "tagbar",
+  "homepage": "https://github.com/majutsushi/tagbar",
+  "version": "2.6.1",
+  "_release": "2.6.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.6.1",
+    "commit": "e872e67641e602fb197c00f3dc5236753d5ba1fc"
+  },
+  "_source": "git://github.com/majutsushi/tagbar.git",
+  "_target": "~2.6.1",
+  "_originalSource": "majutsushi/tagbar",
+  "_direct": true
+}

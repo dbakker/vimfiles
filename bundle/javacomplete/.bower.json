@@ -1,0 +1,15 @@
+{
+  "name": "javacomplete",
+  "homepage": "https://github.com/vim-scripts/javacomplete",
+  "version": "0.77.1",
+  "_release": "0.77.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.77.1",
+    "commit": "e89cfbbdfa36d2cb5c9e9243fb57f9870d6ed52d"
+  },
+  "_source": "git://github.com/vim-scripts/javacomplete.git",
+  "_target": "~0.77.1",
+  "_originalSource": "vim-scripts/javacomplete",
+  "_direct": true
+}

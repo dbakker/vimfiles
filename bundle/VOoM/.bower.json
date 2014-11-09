@@ -1,0 +1,14 @@
+{
+  "name": "VOoM",
+  "homepage": "https://github.com/vim-voom/VOoM",
+  "_release": "4a26ad12d4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4a26ad12d4c4030bd6a1bffaed980e60e348251a"
+  },
+  "_source": "git://github.com/vim-voom/VOoM.git",
+  "_target": "*",
+  "_originalSource": "vim-voom/VOoM",
+  "_direct": true
+}

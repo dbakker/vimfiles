@@ -1,0 +1,15 @@
+{
+  "name": "nginx.vim",
+  "homepage": "https://github.com/vim-scripts/nginx.vim",
+  "version": "0.3.2",
+  "_release": "0.3.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.2",
+    "commit": "12245075933043d41f9284873b736b151f0169d3"
+  },
+  "_source": "git://github.com/vim-scripts/nginx.vim.git",
+  "_target": "~0.3.2",
+  "_originalSource": "vim-scripts/nginx.vim",
+  "_direct": true
+}

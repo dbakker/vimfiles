@@ -1,0 +1,14 @@
+{
+  "name": "unite.vim",
+  "homepage": "https://github.com/Shougo/unite.vim",
+  "_release": "bc48c2b00d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "bc48c2b00d457437585bc1d12f006bdeef7f9a3d"
+  },
+  "_source": "git://github.com/Shougo/unite.vim.git",
+  "_target": "*",
+  "_originalSource": "Shougo/unite.vim",
+  "_direct": true
+}

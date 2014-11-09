@@ -1,0 +1,14 @@
+{
+  "name": "vim-visual-star-search",
+  "homepage": "https://github.com/bronson/vim-visual-star-search",
+  "_release": "280b4c635d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "280b4c635d2043558c1257540a128b7c8f818a88"
+  },
+  "_source": "git://github.com/bronson/vim-visual-star-search.git",
+  "_target": "*",
+  "_originalSource": "bronson/vim-visual-star-search",
+  "_direct": true
+}

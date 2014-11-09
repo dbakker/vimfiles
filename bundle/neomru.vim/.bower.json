@@ -1,0 +1,14 @@
+{
+  "name": "neomru.vim",
+  "homepage": "https://github.com/Shougo/neomru.vim",
+  "_release": "e562f15756",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e562f157565a2190f487088b5fdd95a4663adf03"
+  },
+  "_source": "git://github.com/Shougo/neomru.vim.git",
+  "_target": "*",
+  "_originalSource": "Shougo/neomru.vim",
+  "_direct": true
+}

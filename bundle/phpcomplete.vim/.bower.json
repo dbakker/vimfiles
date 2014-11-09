@@ -1,0 +1,14 @@
+{
+  "name": "phpcomplete.vim",
+  "homepage": "https://github.com/shawncplus/phpcomplete.vim",
+  "_release": "1f949342aa",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1f949342aae7103281a65ee84b53181bfd5ad8d1"
+  },
+  "_source": "git://github.com/shawncplus/phpcomplete.vim.git",
+  "_target": "*",
+  "_originalSource": "shawncplus/phpcomplete.vim",
+  "_direct": true
+}

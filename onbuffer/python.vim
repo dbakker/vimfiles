@@ -1,5 +1,5 @@
 " Make sure for python we always use the recommended indenting
-setl et ts=4 sw=4
+setl et ts=4 sw=4 cc=80
 
 " Automatically put `pass` after def: if: else: etc. statements and select
 " them with select mode. This means its easy to just keep typing but you can

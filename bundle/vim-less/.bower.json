@@ -1,0 +1,14 @@
+{
+  "name": "vim-less",
+  "homepage": "https://github.com/groenewege/vim-less",
+  "_release": "940a8defa0",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "940a8defa0576385dee1ad177bab0b34738540aa"
+  },
+  "_source": "git://github.com/groenewege/vim-less.git",
+  "_target": "*",
+  "_originalSource": "groenewege/vim-less",
+  "_direct": true
+}

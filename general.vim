@@ -12,7 +12,6 @@ set cms=#%s
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
-set fileformat=unix
 set fileformats=unix,dos,mac
 set fillchars=""                " get rid of the silly chars in separators
 set formatoptions+=1clqr
@@ -44,7 +43,7 @@ set undofile
 set undolevels=1000             " use many muchos levels of undo
 set viminfo^=!,h
 set visualbell                  " flash the screen on error
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.gif,*.png,*.jpg,*.exe,*.o,tags
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.exe,*.o,tags
 set wildmenu                    " make tab completion for files/buffers act like bash
 set wildmode=list:full          " show a list when pressing tab and complete first full match
 
@@ -54,7 +53,8 @@ if len($DISPLAY)>0
   set clipboard-=exclude:cons\\\|linux
   set clipboard+=unnamed
   if has('unnamedplus')
-    set clipboard+=unnamedplus
+    set clipboard-=unnamed
+    set clipboard+=unnamedplus,autoselect
   endif
 endif
 
@@ -186,31 +186,36 @@ aug END
 
 " Set a nice default foldtext {{{2
 function! MyFoldText()
-    " Trim unwanted symbols from the text
-    let sub = substitute(getline(v:foldstart), '\v[^a-zA-Z)}>\]]+$', '', '')
-    let sub = substitute(sub, '\v^[^a-zA-Z({<\[]+', '', '')
-    return printf('+%s[%3d] %s' , v:folddashes, v:foldend-v:foldstart+1, sub)
+  " Trim unwanted symbols from the text
+  let sub = substitute(getline(v:foldstart), '\v[^a-zA-Z)}>\]]+$', '', '')
+  let sub = substitute(sub, '\v^[^a-zA-Z({<\[]+', '', '')
+  return printf('+%s[%3d] %s' , v:folddashes, v:foldend-v:foldstart+1, sub)
 endfunction
 
 set foldtext=MyFoldText()
 
 " Font and GUI options {{{2
 if has("gui_running")
-    " Remove all menus, scollbars, etc.
-    set guioptions=cgit
+  " Remove all menus, scollbars, etc.
+  set guioptions=cgit
 
-    " Set font depending on system (tpope)
-    if exists("&guifont")
-        if has("mac")
-            set guifont=Monaco:h12
-        elseif has("unix")
-            if &guifont == ""
-                set guifont=Ubuntu\ Mono\ 12,Inconsolata\ 11,bitstream\ vera\ sans\ mono\ 11
-            endif
-        elseif has("win32")
-            set guifont=Consolas:h11,Courier\ New:h10
-        endif
+  " Set font depending on system (tpope)
+  if exists("&guifont")
+    if has("mac")
+      set guifont=Monaco:h12
+    elseif has("unix")
+      if &guifont == ""
+        set guifont=Ubuntu\ Mono\ 12,Inconsolata\ 11,bitstream\ vera\ sans\ mono\ 11
+      endif
+    elseif has("win32")
+      set guifont=Consolas:h11,Courier\ New:h10
     endif
+  endif
 
-    set guicursor+=n-v:blinkon0
+  set guicursor+=n-v:blinkon0
+else
+  if &term == "screen-256color"
+    let &t_SI = "\<Esc>[3 q"
+    let &t_EI = "\<Esc>[0 q"
+  endif
 endif

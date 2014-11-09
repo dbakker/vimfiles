@@ -1,0 +1,14 @@
+{
+  "name": "vim-puppet",
+  "homepage": "https://github.com/dbakker/vim-puppet",
+  "_release": "301282c4d2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "301282c4d29b02eecaf2eef5a8ecbbbc68ee5172"
+  },
+  "_source": "git://github.com/dbakker/vim-puppet.git",
+  "_target": "*",
+  "_originalSource": "dbakker/vim-puppet",
+  "_direct": true
+}

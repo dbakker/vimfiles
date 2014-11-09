@@ -1,0 +1,14 @@
+{
+  "name": "vim-fugitive",
+  "homepage": "https://github.com/tpope/vim-fugitive",
+  "_release": "d3b98d9886",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d3b98d988602b94dc705ca99b171bb9f5b6c8a2c"
+  },
+  "_source": "git://github.com/tpope/vim-fugitive.git",
+  "_target": "*",
+  "_originalSource": "tpope/vim-fugitive",
+  "_direct": true
+}

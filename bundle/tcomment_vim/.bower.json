@@ -1,0 +1,14 @@
+{
+  "name": "tcomment_vim",
+  "homepage": "https://github.com/tomtom/tcomment_vim",
+  "_release": "1916655a7c",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1916655a7c1a511fa50af8aea91cad54f32e57e5"
+  },
+  "_source": "git://github.com/tomtom/tcomment_vim.git",
+  "_target": "*",
+  "_originalSource": "tomtom/tcomment_vim",
+  "_direct": true
+}

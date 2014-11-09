@@ -1,0 +1,14 @@
+{
+  "name": "unite-git",
+  "homepage": "https://github.com/yuku-t/unite-git",
+  "_release": "fdf7457e85",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "fdf7457e851ddcc278c7952398ecc904ead16f12"
+  },
+  "_source": "git://github.com/yuku-t/unite-git.git",
+  "_target": "*",
+  "_originalSource": "yuku-t/unite-git",
+  "_direct": true
+}

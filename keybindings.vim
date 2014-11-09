@@ -22,8 +22,6 @@ xnoremap <silent> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
 " Clear search highlighting or refresh screen {{{1
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 xnoremap <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
-nnoremap <silent> <leader>/ :nohlsearch<CR>
-nnoremap <silent> <leader>\ :nohlsearch<CR>
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
@@ -97,11 +95,36 @@ fun! ExecSymbolPair(packed)
   endif
 endf
 
-for c in split('%@#$^!~/\+-=_*,.:;&f', '\zs')
+for c in split('%@#$^!~/\+-=_*,.:;&', '\zs')
   call s:MapSymbolPair(c, c, c)
 endfor
 call s:MapSymbolPair("<tab>","\<tab>","\<tab>")
 call s:MapSymbolPair(">","<",">")
+
+" Remove blank lines linewise or spaces characterwise {{{1
+function! UnblankSelected(motion_wise)
+  let startline = line("'[")
+  let endline = line("']")
+  if startline != endline
+    for i in range(endline, startline, -1)
+      if getline(i) =~ '^\s*$'
+        exe ':' . i . 'd _'
+      endif
+    endfor
+  else
+    let startcol = getpos("'[")[2]
+    let endcol = getpos("']")[2]
+    let line = getline(startline)
+    let text = strpart(line, startcol, endcol-startcol)
+    let text = substitute(text, '\s\+', '', 'g')
+    let result = strpart(line, 0, startcol) . text . strpart(line, endcol)
+    call setline(startline, result)
+  endif
+  silent! call repeat#set('g<space>')
+endfunction
+nmap g<space> <Plug>(operator-unblank)
+xmap g<space> <Plug>(operator-unblank)
+silent! call operator#user#define('unblank', 'UnblankSelected')
 
 " Use Q as alias for @j (execute 'j' recording) {{{1
 " This is great because you can just do something like QnQnnQ to quickly
@@ -110,7 +133,7 @@ nnoremap Q @j
 xnoremap Q @j
 
 " Use (visual) X to eXchange two pieces of text {{{1
-" To use: first delete something, then visual something else
+" To use: first delete something, then visual select something else, then `X`
 xnoremap X <esc>`.``gvP``P
 
 " File management mappings {{{1
@@ -124,19 +147,22 @@ nnoremap <silent> <leader>df :<C-u>call CDMessage(fnamemodify(GuessMainFile(), '
 nnoremap <expr> <leader>di EditFromDir(fnamemodify(GuessMainFile(), ':h'))
 nnoremap <silent> <leader>dp :<C-u>call CDMessage(ProjectRootGuess(GuessMainFile()))<cr>
 nnoremap <silent> <leader>du :<C-u>CDMessage ..<cr>
-nnoremap <silent> <leader>de :<C-u>CDMessage .<cr>
 
 " Unite/CtrlP mappings
 nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
-nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -buffer-name=mru file_mru<cr>
+nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -no-split -buffer-name=mru file_mru<cr>
+nnoremap <silent> <leader>ea :SwitchMain<cr>:Unite -start-insert -no-split file_rec/async:~/ac/<cr>
 nnoremap <silent> <leader>em :SwitchMain<cr>:exe 'Unite -start-insert -no-split git_modified'<cr>
-nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'Unite -start-insert file_rec/async:'.ProjectRootGuess("'F")<cr>
-nnoremap <silent> <leader>ep :SwitchMain<cr>:Unite -start-insert file_rec/async:!<cr>
+nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'Unite -start-insert -no-split file_rec/async:'.ProjectRootGuess("'F")<cr>
+nnoremap <silent> <leader>ep :SwitchMain<cr>:Unite -no-split -start-insert file_rec/async:!<cr>
 nnoremap <silent> <leader>es :SwitchMain<cr>:Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
-nnoremap <silent> <leader>ev :SwitchMain<cr>:Unite -start-insert file_rec/async:~/.vim<cr>
-nnoremap <silent> <leader>ew :SwitchMain<cr>:Unite -start-insert file_rec/async:~/vimwiki<cr>
+nnoremap <silent> <leader>ev :SwitchMain<cr>:Unite -start-insert -no-split file_rec/async:~/.vim<cr>
+nnoremap <silent> <leader>eJ :SwitchMain<cr>:exe 'edit ~/ac/journal/'.strftime("%Y/%m/%d.rst",localtime()-60*60*3)<cr>
+nnoremap <silent> <leader>ei :SwitchMain<cr>:exe 'edit ~/inbox/'.strftime("%T.rst",localtime())<cr>
 
+nnoremap <silent> [a :prev<cr>:AdjustScroll<cr>
+nnoremap <silent> ]a :next<cr>:AdjustScroll<cr>
 nnoremap <silent> [q :cprev<cr>:AdjustScroll<cr>
 nnoremap <silent> ]q :cnext<cr>:AdjustScroll<cr>
 nnoremap <silent> [t :tprev<cr>
@@ -152,12 +178,16 @@ command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+','\=sub
 noremap <C-kPlus> :Bigger<CR>
 noremap <C-kMinus> :Smaller<CR>
 
-" Paste mappings {{{1
-nmap <leader>p :<C-U>call mypaste#special('p')<CR>
-xmap <leader>p :<C-U>call mypaste#special('p')<CR>
-nmap <leader>P :<C-U>call mypaste#special('P')<CR>
-xmap <leader>P :<C-U>call mypaste#special('P')<CR>
+" Clipboard mappings {{{1
+nmap <leader>p :<C-U>call mypaste#special('p', v:register)<CR>
+xmap <leader>p :<C-U>call mypaste#special('p', v:register)<CR>
+nmap <leader>P :<C-U>call mypaste#special('P', v:register)<CR>
+xmap <leader>P :<C-U>call mypaste#special('P', v:register)<CR>
 xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
+" Paste html as rst (when copied from a browser)
+nnoremap <leader>sp :r !xclip -o -t text/html -selection clipboard \\\| pandoc -f html -t rst<cr>
+" Yank as html
+xnoremap <leader>sy :w !pandoc -f <C-r>=&ft ? &ft : "rst"<cr> -t html \| xclip -i -t text/html -selection clipboard<cr>
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap Y y$
@@ -176,7 +206,7 @@ endf
 nmap <expr> cw <SID>PrepareCW('w')
 nmap <expr> cW <SID>PrepareCW('W')
 
-" Add []<space> mappings for adding empty lines {{{1
+" `[]<space>` mappings for adding empty lines {{{1
 fun! s:AddLines(before)
   let cnt = (v:count>0) ? v:count : 1
   call append(line('.')-a:before, repeat([''], cnt))
@@ -210,6 +240,9 @@ inoremap <expr> <C-B> getline('.')=~'^\s*$'&&col('.')>strlen(getline('.'))?"0\<L
 inoremap <expr> <C-D> col('.')>strlen(getline('.'))?"\<Lt>C-D>":"\<Lt>Del>"
 inoremap <expr> <C-E> col('.')>strlen(getline('.'))?"\<Lt>C-E>":"\<Lt>End>"
 inoremap <expr> <C-F> col('.')>strlen(getline('.'))?"\<Lt>C-F>":"\<Lt>Right>"
+
+exe "set <M-.>=\<Esc>."
+inoremap <expr> <M-.> split(getline(line('.')-1))[-1]
 
 cnoremap <C-X><C-A> <C-A>
 cnoremap <C-A> <Home>
@@ -254,7 +287,6 @@ nnoremap <leader>gl :Glog<space>
 nnoremap <leader>gm :Gmove<space>
 nnoremap <leader>gp :Git push<space>
 nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gv :Gitv<cr>
 nnoremap <leader>gw :Gwrite<cr>
 xmap <leader>g <ESC><space>g
 
@@ -284,25 +316,6 @@ noremap <silent> <leader>oS :<C-U>SwitchMain<CR>:topleft wincmd s<CR>
 noremap <silent> <leader>ov :<C-U>SwitchMain<CR>:botright wincmd v<CR>
 noremap <silent> <leader>oV :<C-U>SwitchMain<CR>:topleft wincmd v<CR>
 
-" Window management {{{1
-" Remaps Alt+x to <C-W>x (without overwriting previously defined mappings)
-" Alt is somewhat unreliable, as it only works in the Vim GUI version,
-" but I almost never use windows in the console version anyway.
-for c in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+<>=', '\zs')
-  if maparg('<M-'.c.'>', 'n') ==# ''
-    exe 'nmap <M-'.c.'> <C-W>'.c
-    exe 'xmap <M-'.c.'> <C-W>'.c
-  endif
-endfor
-nmap <M-Left> <C-W>h
-nmap <M-Down> <C-W>j
-nmap <M-Up> <C-W>k
-nmap <M-Right> <C-W>l
-xmap <M-Left> <C-W>h
-xmap <M-Down> <C-W>j
-xmap <M-Up> <C-W>k
-xmap <M-Right> <C-W>l
-
 " Complete HTML tag (idea from ragtag) {{{1
 " Uses the built-in tag completion to let <C-x>/ complete a tag
 function! s:htmlEn()
@@ -325,8 +338,8 @@ endfunction
 inoremap <silent> <C-X>/ <C-R>=<SID>htmlEn()<CR><C-X><C-O><C-R>=<SID>htmlDis()<CR>
 
 " Search fold {{{1
-nmap <Leader>oz   <Plug>SearchFoldNormal
-nmap <Leader>oZ   <Plug>SearchFoldRestore
+nmap <Leader>oz <Plug>SearchFoldNormal
+nmap <Leader>oZ <Plug>SearchFoldRestore
 
 " Various other mappings {{{1
 xnoremap . :norm.<cr>
@@ -335,7 +348,8 @@ nnoremap <silent> gG :call SearchWebMap(expand("<cword>"))<CR>:redraw!<CR>
 xnoremap <silent> gG :call SearchWeb(GetVisualLine())<CR>:redraw!<CR>
 nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
 xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
-nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
+nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
+nnoremap * *:AdjustScroll<CR>
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 nmap <leader>; :
@@ -343,7 +357,6 @@ nmap <leader>: :
 " Reselect last pasted/edited text
 nnoremap <expr> gs line("']")==line("'[") ? "`[v`]" : "'[V']"
 xmap gs <ESC>gs
-nnoremap gV :echoerr 'use gs!'<CR>
 " Make CTRL-^ also go to the correct column of the alternate file
 noremap <C-^> <C-^>`"
 " Add an extra undo point after using <C-U>
@@ -356,9 +369,6 @@ command! -nargs=0 NoWrap let &nu=w:wrapnu<Bar>setl nowrap list&
 nmap dD D
 nmap cC C
 nmap yY Y
-nnoremap z<CR> :<C-U>echoerr "BOO: Use zt"<CR>
-nnoremap z- :<C-U>echoerr "BOO: Use zb"<CR>
-nnoremap z. :<C-U>echoerr "BOO: You're thinking of zb (or zz)"<CR>
 nnoremap z= :<C-U>setl spell<CR>z=
 xmap <PageUp> <ESC><PageUp>
 xmap <PageDown> <ESC><PageDown>
@@ -373,31 +383,56 @@ endif
 inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 inoremap <expr> <C-X>! GetSheBang()
-let g:unstack_mapkey="<space>oe"
 
-" Tag jump {{{1
+" Rstlink {{{1
+nnoremap <silent> <leader>ct :<C-U>call rstlink#set_web_title()<CR>
+nnoremap <silent> <leader>cx :<C-U>call rstlink#toggle_reference()<CR>
+nnoremap <silent> gl :<C-U>call rstlink#browse_link()<CR>
+
+" Pytest {{{1
+nnoremap <silent> <leader>up :<C-U>wall<cr>:Pytest project<cr>
+nnoremap <silent> <leader>uvp :<C-U>wall<cr>:Pytest project verbose<cr>
+nnoremap <silent> <leader>udp :<C-U>wall<cr>:Pytest project --pdb<cr>
+nnoremap <silent> <leader>uf :<C-U>wall<cr>:Pytest function<cr>
+nnoremap <silent> <leader>uvf :<C-U>wall<cr>:Pytest function verbose<cr>
+nnoremap <silent> <leader>udf :<C-U>wall<cr>:Pytest function --pdb<cr>
+nnoremap <silent> <leader>um :<C-U>wall<cr>:Pytest file<cr>
+nnoremap <silent> <leader>uvm :<C-U>wall<cr>:Pytest file verbose<cr>
+nnoremap <silent> <leader>udm :<C-U>wall<cr>:Pytest file --pdb<cr>
+
+" Always jump to tags case sensitively {{{1
 fun! TagJump()
   try
     let sc=&smartcase
     let ic=&ignorecase
     set noignorecase
     set nosmartcase
-    exe 'tj '.expand('<cword>')
+    exe 'tjump '.expand('<cword>')
   finally
     let &smartcase=sc
     let &ignorecase=ic
   endtry
 endf
 
-nnoremap <C-]> :<C-u>call TagJump()<CR>
+nnoremap <silent> <C-]> :<C-u>call TagJump()<CR>
 
 " File/text search {{{1
-nnoremap <leader>aa :Holmes<space>
+fun! FindL(arg, bang)
+  let a=a:arg=~#'^\w\+$' ? a:arg : "'".substitute(a:arg, "'", "'\"'\"'", 'g')."'"
+  if a !~ '^\s*$'
+    if executable('ag')
+      exe 'Ag'.a:bang.' --literal '.a
+    else
+      sil! exe 'grep'.a:bang.' -R --fixed-strings '.a.' .'
+      copen
+      redraw!
+    endif
+  endif
+endf
+command! -bang -nargs=* FindL call FindL(join([<q-args>]), "<bang>")
 
-nmap <leader>am <Plug>(holmes-motion)
-xmap <leader>am <Plug>(holmes-motion)
-nmap <leader>aw <Plug>(holmes-inner-word)
-xmap <leader>aw <Plug>(holmes-inner-word)
-nnoremap <leader>as :Holmes<space>
-nnoremap <leader>al :HolmesL<space>
-nnoremap <leader>av :lv //g %<left><left><left><left>
+nnoremap <leader>av :<C-U>lv //g %<left><left><left><left>
+nnoremap <leader>aw :<C-U>FindL! <cword><CR>
+nnoremap <leader>al :<C-U>FindL!<space>
+xnoremap <leader>al :<C-U>call FindL(GetVisualLine(), '!')<cr>
+xmap <leader>aw <space>al

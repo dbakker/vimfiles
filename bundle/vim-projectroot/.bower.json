@@ -1,0 +1,14 @@
+{
+  "name": "vim-projectroot",
+  "homepage": "https://github.com/dbakker/vim-projectroot",
+  "_release": "9386e340af",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9386e340af03b57a2286cf64967dddf7be20fd43"
+  },
+  "_source": "git://github.com/dbakker/vim-projectroot.git",
+  "_target": "*",
+  "_originalSource": "dbakker/vim-projectroot",
+  "_direct": true
+}

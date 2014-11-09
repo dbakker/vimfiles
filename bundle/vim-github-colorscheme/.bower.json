@@ -1,0 +1,14 @@
+{
+  "name": "vim-github-colorscheme",
+  "homepage": "https://github.com/endel/vim-github-colorscheme",
+  "_release": "37b0ca027f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "37b0ca027f638f3349ed8fb99c54ab65b8e65c04"
+  },
+  "_source": "git://github.com/endel/vim-github-colorscheme.git",
+  "_target": "*",
+  "_originalSource": "endel/vim-github-colorscheme",
+  "_direct": true
+}
