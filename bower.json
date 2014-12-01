@@ -7,7 +7,7 @@
     "ag.vim": "rking/ag.vim",
     "argtextobj.vim": "vim-scripts/argtextobj.vim#~1.1.1",
     "clang_complete": "Rip-Rip/clang_complete",
-    "ctrlp.vim": "kien/ctrlp.vim#~1.7.7",
+    "ctrlp.vim": "ctrlpvim/ctrlp.vim#master",
     "dockerfile.vim": "honza/dockerfile.vim",
     "gundo.vim": "sjl/gundo.vim#~2.5.0",
     "incsearch.vim": "haya14busa/incsearch.vim#~0.9.8",
@@ -66,5 +66,8 @@
   ],
   "license": "MIT",
   "name": "dbakker-vimfiles",
-  "private": true
+  "private": true,
+  "resolutions": {
+    "ctrlp.vim": "master"
+  }
 }

@@ -1,15 +1,14 @@
 {
   "name": "ctrlp.vim",
-  "homepage": "https://github.com/kien/ctrlp.vim",
-  "version": "1.7.7",
-  "_release": "1.7.7",
+  "homepage": "https://github.com/ctrlpvim/ctrlp.vim",
+  "_release": "4277ef87ea",
   "_resolution": {
-    "type": "version",
-    "tag": "1.7.7",
-    "commit": "2826589dc60af4cf54544e5505cbe9f71f70f027"
+    "type": "branch",
+    "branch": "master",
+    "commit": "4277ef87eac2fef5c99b9e5238236f7e9b9dbab3"
   },
-  "_source": "git://github.com/kien/ctrlp.vim.git",
-  "_target": "~1.7.7",
-  "_originalSource": "kien/ctrlp.vim",
+  "_source": "git://github.com/ctrlpvim/ctrlp.vim.git",
+  "_target": "master",
+  "_originalSource": "ctrlpvim/ctrlp.vim",
   "_direct": true
 }

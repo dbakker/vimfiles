@@ -167,6 +167,15 @@ let g:ctrlp_cache_dir = localdir.'/ctrlp'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*'
+let g:ctrlp_mruf_max = 1000
+let g:ctrlp_max_height = 32
+
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ctrlp_use_caching = 0
+  let g:unite_source_rec_async_command =
+          \ 'ag --follow --nocolor --nogroup --hidden -g ""'
+endif
 
 " Vim-Jedi {{{2
 let g:jedi#auto_vim_configuration = 0
