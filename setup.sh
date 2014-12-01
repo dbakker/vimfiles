@@ -4,5 +4,6 @@
 [ -e ~/.ctags ] || ln -s ~/.vim/ctagsrc ~/.ctags
 
 vim +Helptags +qall
+vim +"silent! mkspell! ~/.vim/spell/en.utf-8.add" +qall
 
 wait
