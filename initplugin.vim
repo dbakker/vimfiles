@@ -28,6 +28,7 @@ if isdirectory(expand('~/.vim/bundle/tcomment_vim'))
   let g:tcommentOptions = {'strip_whitespace': 1}
   let g:tcomment_types={'java': '// %s'}
   call tcomment#DefineType('markdown', g:tcommentInlineXML)
+  call tcomment#DefineType('rst', {'col': 1, 'commentstring': '.. %s' })
 endif
 
 " NERDTree {{{2
