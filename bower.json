@@ -53,6 +53,7 @@
     "vim-repeat": "tpope/vim-repeat",
     "vim-rstlink": "dbakker/vim-rstlink",
     "vim-sparkup": "dbakker/vim-sparkup",
+    "vim-speeddating": "tpope/vim-speeddating",
     "vim-surround": "tpope/vim-surround",
     "vim-textobj-comment": "glts/vim-textobj-comment#~1.0.0",
     "vim-textobj-user": "kana/vim-textobj-user#~0.6.4",
