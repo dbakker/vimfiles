@@ -21,6 +21,7 @@ set hidden                      " dont complain about hiding unsaved buffers
 set history=1000                " remember more commands and search history
 set ignorecase                  " case insensitive search
 set infercase                   " adjust keyword completion matches to the case of the typed text
+set isfname-==
 set modeline                    " allow files to define some custom settings like foldmethod
 set modelines=5                 " check 5 lines from the bottom&top for modelines
 set mouse=a                     " always activate mouse for colleagues
