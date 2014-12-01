@@ -1,9 +1,4 @@
 {
-  "name": "dbakker-vimfiles",
-  "license": "MIT",
-  "ignore": [
-    "bundle"
-  ],
   "dependencies": {
     "AutoTag": "vim-scripts/AutoTag#~1.12.2",
     "Hemisu": "noahfrederick/Hemisu",
@@ -15,6 +10,7 @@
     "ctrlp.vim": "kien/ctrlp.vim#~1.7.7",
     "dockerfile.vim": "honza/dockerfile.vim",
     "gundo.vim": "sjl/gundo.vim#~2.5.0",
+    "incsearch.vim": "haya14busa/incsearch.vim#~0.9.8",
     "javacomplete": "vim-scripts/javacomplete#~0.77.1",
     "jellybeans.vim": "nanotech/jellybeans.vim",
     "mediawiki.vim": "vim-scripts/mediawiki.vim",
@@ -65,5 +61,10 @@
     "vimproc": "Shougo/vimproc",
     "writable_search.vim": "AndrewRadev/writable_search.vim#~0.1.0"
   },
+  "ignore": [
+    "bundle"
+  ],
+  "license": "MIT",
+  "name": "dbakker-vimfiles",
   "private": true
 }
