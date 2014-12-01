@@ -9,6 +9,7 @@ t
 Gemfile*
 Rakefile
 *.pyc
+*.add.spl
 
 # General vim stuff
 *.un~
