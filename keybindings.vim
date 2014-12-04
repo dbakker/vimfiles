@@ -20,8 +20,8 @@ nnoremap <silent> <leader><space> :call SwapRegisters('+', '"')<cr>
 xnoremap <silent> <leader><space> <esc>:call SwapRegisters('+', '"')<cr>gv
 
 " Clear search highlighting or refresh screen {{{1
-nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-xnoremap <silent> <C-L> :<C-U>nohlsearch<CR>gv<C-L>
+nnoremap <silent> <C-L> :nohlsearch<bar>redraw!<cr>
+xnoremap <silent> <C-L> :<C-U>nohlsearch<bar>redraw!<cr>gv
 
 " Buffer write/delete mappings {{{1
 nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
