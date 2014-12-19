@@ -24,7 +24,7 @@ nnoremap <silent> <C-L> :nohlsearch<bar>redraw!<cr>
 xnoremap <silent> <C-L> :<C-U>nohlsearch<bar>redraw!<cr>gv
 
 " Buffer write/delete mappings {{{1
-nnoremap <silent> <leader>wa :wa<cr>:redraw<cr>
+nnoremap <silent> <leader>wa :wa<bar>redraw<cr>
 nnoremap <silent> <leader>we :<C-U>call setloclist(0,[])<cr>:wa<cr>:Errors<cr>:lrewind<cr>:AdjustScroll<cr>
 nnoremap <silent> <leader>wf :w!<cr>:redraw<cr>
 nnoremap <silent> <leader>wj :w<cr>:redraw<cr>
@@ -150,14 +150,15 @@ nnoremap <silent> <leader>du :<C-u>CDMessage ..<cr>
 
 " Unite/CtrlP mappings
 nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
-nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -no-split -buffer-name=mru file_mru<cr>
-nnoremap <silent> <leader>ea :SwitchMain<cr>:Unite -start-insert -no-split file_rec/async:~/ac/<cr>
+" nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -no-split -buffer-name=mru file_mru<cr>
+nnoremap <silent> <leader>r :SwitchMain<cr>:CtrlPMRUFiles<cr>
+nnoremap <silent> <leader>ea :SwitchMain<cr>:CtrlP ~/ac<cr>
+nnoremap <silent> <leader>ed :SwitchMain<cr>:CtrlP ~/dev<cr>
 nnoremap <silent> <leader>em :SwitchMain<cr>:exe 'Unite -start-insert -no-split git_modified'<cr>
-nnoremap <silent> <leader>ef :SwitchMain<cr>:exe 'Unite -start-insert -no-split file_rec/async:'.ProjectRootGuess("'F")<cr>
-nnoremap <silent> <leader>ep :SwitchMain<cr>:Unite -no-split -start-insert file_rec/async:!<cr>
+nnoremap <silent> <leader>ep :SwitchMain<cr>:ProjectRootExe CtrlP<cr>
 nnoremap <silent> <leader>es :SwitchMain<cr>:Unite -no-split -buffer-name=outline -start-insert outline<cr>
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
-nnoremap <silent> <leader>ev :SwitchMain<cr>:Unite -start-insert -no-split file_rec/async:~/.vim<cr>
+nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
 nnoremap <silent> <leader>eJ :SwitchMain<cr>:exe 'edit ~/ac/journal/'.strftime("%Y/%m/%d.rst",localtime()-60*60*3)<cr>
 nnoremap <silent> <leader>ei :SwitchMain<cr>:exe 'edit ~/inbox/'.strftime("%T.rst",localtime())<cr>
 
@@ -184,8 +185,8 @@ xmap <leader>p :<C-U>call mypaste#special('p', v:register)<CR>
 nmap <leader>P :<C-U>call mypaste#special('P', v:register)<CR>
 xmap <leader>P :<C-U>call mypaste#special('P', v:register)<CR>
 xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
-" Paste html as rst (when copied from a browser)
-nnoremap <leader>sp :r !xclip -o -t text/html -selection clipboard \\\| pandoc -f html -t rst<cr>
+" Paste html as lightweight markup (e.g. when copied from a browser)
+nnoremap <leader>sp :r !xclip -o -t text/html -selection clipboard \\\| pandoc -f html -t <C-r>=&ft ? &ft : "rst"<cr><cr>
 " Yank as html
 xnoremap <leader>sy :w !pandoc -f <C-r>=&ft ? &ft : "rst"<cr> -t html \| xclip -i -t text/html -selection clipboard<cr>
 
@@ -350,6 +351,7 @@ nnoremap <silent> K :<C-U>call searchdoc#ctext()<CR>
 xnoremap <silent> K :<C-U>call searchdoc#visual()<CR>
 nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<CR>:set hlsearch<CR>cgn
 nnoremap * *:AdjustScroll<CR>
+nnoremap <silent> z<space> :<C-u>AdjustScroll<CR>
 " gI: move to last change without going into insert mode like gi
 nnoremap gI `.
 nmap <leader>; :
