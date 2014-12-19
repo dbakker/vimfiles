@@ -38,31 +38,35 @@ Using a mapping:
 
 Automatically whenever you open a buffer:
 
-    autocmd BufEnter * ProjectRootCD
+```vim
+function! <SID>AutoProjectRootCD()
+  try
+    if &ft != 'help'
+      ProjectRootCD
+    endif
+  catch
+    " Silently ignore invalid buffers
+  endtry
+endfunction
 
-Automatically (advanced version):
-
-    autocmd BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
+autocmd BufEnter * call <SID>AutoProjectRootCD()
+```
 
 ### Grep
 To grep with your project as base directory, you could add something like:
 
-    nnoremap <Leader>g :ProjectRootExe grep<space>
+    nnoremap <leader>g :ProjectRootExe grep<space>
 
 ### Open file relative to the root
 To start the command line with `:e /my/path/to/project/`, you could use this:
 
-    fun! EditProjectDir()
-      return ':e '.ProjectRootGuess().'/'
-    endf
-
-    nnoremap <expr> <leader>ep EditProjectDir()
+    nnoremap <expr> <leader>ep ':edit '.projectroot#guess().'/'
 
 ### NERDTree
 If you would like NERDTree to always open at the root of your project, try
 adding something like this to your vim config:
 
-    nnoremap <silent> <Leader>dt :ProjectRootExe NERDTreeFind<cr>
+    nnoremap <silent> <leader>dt :ProjectRootExe NERDTreeFind<cr>
 
 ### Switching between files
 These mappings might be handy to navigate between your project files.
