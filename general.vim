@@ -35,6 +35,7 @@ set nrformats-=octal            " don't consider numbers starting with 0 to be o
 set shortmess+=IfilmnrxoOtT     " show short messages and don't show welcome
 set smartcase                   " lowercase search matches any case
 set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
+set spelllang+=nl
 set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
 set tags=./.git/tags;,./tags;     " search for tags in the file directory and upper directories
 set timeoutlen=20000            " wait a long time before timeout

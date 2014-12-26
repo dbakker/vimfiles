@@ -371,7 +371,11 @@ command! -nargs=0 NoWrap let &nu=w:wrapnu<Bar>setl nowrap list&
 nmap dD D
 nmap cC C
 nmap yY Y
-nnoremap z= :<C-U>setl spell<CR>z=
+nnoremap <silent> <expr> z= ':<C-U>setl spell<cr>' . (v:count ? v:count : '') . 'z='
+nnoremap [os :<C-U>set spell<cr>
+nnoremap ]os :<C-U>set nospell<cr>
+nnoremap [ow :<C-U>Wrap<cr>
+nnoremap ]ow :<C-U>NoWrap<cr>
 xmap <PageUp> <ESC><PageUp>
 xmap <PageDown> <ESC><PageDown>
 imap <PageUp> <ESC><PageUp>
