@@ -15,8 +15,4 @@ nnoremap <silent> <buffer> ]m j:<C-U>call <SID>searchmethod(0)<cr>
 
 setl formatoptions+=tnro
 setl formatoptions-=cq
-setl tw=79
-
-Abolish -buffer teh the
-Abolish -buffer awlays always
-Abolish -buffer peopel people
+Wrap
