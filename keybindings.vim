@@ -160,7 +160,7 @@ nnoremap <silent> <leader>es :SwitchMain<cr>:Unite -no-split -buffer-name=outlin
 nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
 nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
 nnoremap <silent> <leader>eJ :SwitchMain<cr>:exe 'edit ~/ac/journal/'.strftime("%Y/%m/%d.rst",localtime()-60*60*3)<cr>
-nnoremap <silent> <leader>ei :SwitchMain<cr>:exe 'edit ~/inbox/'.strftime("%T.rst",localtime())<cr>
+nnoremap <silent> <leader>ei :SwitchMain<cr>:exe 'edit ~/inbox/'.strftime("%Y%m%d-%H%M.rst",localtime())<cr>
 
 nnoremap <silent> [a :prev<cr>:AdjustScroll<cr>
 nnoremap <silent> ]a :next<cr>:AdjustScroll<cr>
@@ -186,9 +186,9 @@ nmap <leader>P :<C-U>call mypaste#special('P', v:register)<CR>
 xmap <leader>P :<C-U>call mypaste#special('P', v:register)<CR>
 xnoremap <silent> P :<C-U>call mypaste#pasteblackhole()<cr>
 " Paste html as lightweight markup (e.g. when copied from a browser)
-nnoremap <leader>sp :r !xclip -o -t text/html -selection clipboard \\\| pandoc -f html -t <C-r>=&ft ? &ft : "rst"<cr><cr>
+nnoremap <leader>sp :read !xclip -o -t text/html -selection clipboard \\\| pandoc -f html -t <C-r>=&ft ? &ft : "rst"<cr><cr>
 " Yank as html
-xnoremap <leader>sy :w !pandoc -f <C-r>=&ft ? &ft : "rst"<cr> -t html \| xclip -i -t text/html -selection clipboard<cr>
+xnoremap <leader>sy :write !pandoc -f <C-r>=&ft ? &ft : "rst"<cr> -t html \| xclip -i -t text/html -selection clipboard<cr>
 
 " Give Y a more logical purpose than aliasing yy {{{1
 nnoremap Y y$
@@ -283,7 +283,7 @@ nnoremap <leader>g<space> :Git<space>
 nnoremap <leader>ga :Git<space>
 nnoremap <leader>gb :Gblame<space>
 nnoremap <leader>gc :Gcommit<space>
-nnoremap <leader>gd :Gdiff<space>
+nnoremap <leader>gd :Gvdiff<space>
 nnoremap <leader>gl :Glog<space>
 nnoremap <leader>gm :Gmove<space>
 nnoremap <leader>gp :Git push<space>
@@ -342,6 +342,34 @@ inoremap <silent> <C-X>/ <C-R>=<SID>htmlEn()<CR><C-X><C-O><C-R>=<SID>htmlDis()<C
 nmap <Leader>oz <Plug>SearchFoldNormal
 nmap <Leader>oZ <Plug>SearchFoldRestore
 
+" Open a bullet point {{{1
+function! s:bulletType(above)
+  let top=line('.')-a:above
+  while getline(top)!~#'\s*[+*-]\s*[^+*-]' && top>0
+    if getline(top)=~#'^[=-^]\{2,}'
+      return '* '
+    endif
+    let top=top-1
+  endwhile
+  if top<=0
+    return '* '
+  endif
+  let line=getline(top)
+  let char=substitute(line, '\(\s*.\).*$', '\1', '')
+  return char.' '
+endfunction
+
+function! s:bullet(above)
+  let type=s:bulletType(a:above)
+  let linenr=line('.')-a:above
+  call append(linenr, type)
+  call cursor(line('.') + (a:above ? -1 : 1), len(type))
+  startinsert!
+endfunction
+
+nnoremap <silent> <leader>b :<C-u>call <SID>bullet(0)<cr>
+nnoremap <silent> <leader>B :<C-u>call <SID>bullet(1)<cr>
+
 " Various other mappings {{{1
 xnoremap . :norm.<cr>
 nnoremap _ "_
@@ -372,10 +400,10 @@ nmap dD D
 nmap cC C
 nmap yY Y
 nnoremap <silent> <expr> z= ':<C-U>setl spell<cr>' . (v:count ? v:count : '') . 'z='
-nnoremap [os :<C-U>set spell<cr>
-nnoremap ]os :<C-U>set nospell<cr>
-nnoremap [ow :<C-U>Wrap<cr>
-nnoremap ]ow :<C-U>NoWrap<cr>
+nnoremap <silent> [os :<C-U>set spell<cr>
+nnoremap <silent> ]os :<C-U>set nospell<cr>
+nnoremap <silent> [ow :<C-U>Wrap<cr>
+nnoremap <silent> ]ow :<C-U>NoWrap<cr>
 xmap <PageUp> <ESC><PageUp>
 xmap <PageDown> <ESC><PageDown>
 imap <PageUp> <ESC><PageUp>
