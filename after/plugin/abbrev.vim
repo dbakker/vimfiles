@@ -1,3 +1,4 @@
+iab ALs Als
 iab ANd And
 iab SHould Should
 iab TEh The
@@ -8,6 +9,7 @@ iab THis This
 iab WHen When
 iab YOu You
 
+Abolish alot a lot
 Abolish arguement argument
 Abolish arguements arguments
 Abolish claer{,ed,ly} clear{}
