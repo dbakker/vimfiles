@@ -8,13 +8,13 @@
 set autoindent                  " always set autoindenting on
 set autoread                    " lets assume the original file is in version control
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
-set cms=#%s
+set commentstring=#%s
 set complete-=i                 " do not search in include files for completes
 set completeopt=menuone,longest
 set copyindent                  " copy the previous indentation on autoindenting
 set fileformats=unix,dos,mac
 set fillchars=""                " get rid of the silly chars in separators
-set formatoptions+=1clqr
+set formatoptions+=1clqrj
 set formatoptions-=aow
 set gdefault                    " search/replace "globally" (on a line) by default
 set hidden                      " dont complain about hiding unsaved buffers
@@ -35,6 +35,7 @@ set nrformats-=octal            " don't consider numbers starting with 0 to be o
 set shortmess+=IfilmnrxoOtT     " show short messages and don't show welcome
 set smartcase                   " lowercase search matches any case
 set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
+set spellfile^=~/.vim/spell/en.utf-8.add
 set spelllang+=nl
 set switchbuf=useopen,usetab    " when reopening files use existing tabs/buffers
 set tags=./.git/tags;,./tags;     " search for tags in the file directory and upper directories
@@ -56,7 +57,7 @@ if len($DISPLAY)>0
   set clipboard+=unnamed
   if has('unnamedplus')
     set clipboard-=unnamed
-    set clipboard+=unnamedplus,autoselect
+    set clipboard+=unnamedplus
   endif
 endif
 
