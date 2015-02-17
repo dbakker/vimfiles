@@ -352,7 +352,16 @@ function! s:bulletType(above)
     let top=top-1
   endwhile
   if top<=0
-    return '* '
+    if &filetype == 'yaml'
+      let line=getline(line('.')-a:above)
+      if line=~#'^\s*\w\+:'
+        return matchstr(line, '^\s*') . '  - '
+      else
+        return '- '
+      endif
+    else
+      return '* '
+    endif
   endif
   let line=getline(top)
   let char=substitute(line, '\(\s*.\).*$', '\1', '')
