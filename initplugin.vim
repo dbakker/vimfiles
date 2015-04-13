@@ -1,11 +1,10 @@
 filetype off                   " required!
 
-let $BGCOLOR=system('~/.dotfiles/assets/sunrise.py COLOR')
-
 let g:pymode_rope_enable_shortcuts = 0
 let g:ropevim_enable_shortcuts = 0
 
 execute pathogen#infect()
+execute pathogen#infect(expand('~/.vim.local/bundle/{}'))
 syntax on
 
 " Configuration of options for plugins {{{1
@@ -148,6 +147,7 @@ fun! StatusDir()
       let b:laststatusdir = ' <' . s . '>'
     endif
   endif
+  return b:laststatusdir
 endf
 
 fun! s:UpdateFileStatus()
@@ -170,6 +170,7 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*'
 let g:ctrlp_mruf_max = 1000
 let g:ctrlp_max_height = 32
+let g:ctrlp_mruf_save_on_update = 0
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
@@ -206,7 +207,7 @@ aug clearSMap
 aug END
 
 " Select colorscheme {{{2
-fun! s:select_colorscheme(color)
+fun! s:load_colorscheme(color)
   let color = tolower(a:color)
   if has("gui_running")
     if color =~ '^light'
@@ -230,7 +231,24 @@ fun! s:select_colorscheme(color)
   endif
 endf
 
-call s:select_colorscheme(len($BGCOLOR) == 0 ? 'light' : tolower($BGCOLOR))
+fun! s:select_colorscheme()
+  let s:color_switch_time = localtime() + str2nr(system('~/.dotfiles/assets/sunrise.py countdown'))
+  let color = system('~/.dotfiles/assets/sunrise.py color')
+  call <SID>load_colorscheme(color)
+endf
+
+call s:select_colorscheme()
+
+fun! s:time_colorscheme()
+  if localtime() > s:color_switch_time
+    call s:select_colorscheme()
+  end
+endf
+
+aug updateColor
+  au!
+  au CursorHold * call <SID>time_colorscheme()
+aug END
 
 " Default indent {{{2
 let default_indent_xml = 'setl et sw=2 sts=2'
