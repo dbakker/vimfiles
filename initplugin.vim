@@ -90,7 +90,7 @@ endif
 au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
 au BufNewFile,BufRead *.less setl cms=/*\ %s\ */
 au BufNewFile,BufRead *.do setl ft=sh sw=2 ts=2 sts=2 et " redo file, see https://github.com/mildred/redo
-au BufNewFile */ac/journal/* call setline(1, strftime('%Y-%m-%d')) | call setline(2, '----------') | call setline(3, '') | call cursor(4, 0) | set nomodified
+au BufNewFile */ac/journal/* call setline(1, '==========') | call setline(2, strftime('%Y-%m-%d')) | call setline(3, '==========') | call setline(4, '') | call cursor(5, 0) | set nomodified
 
 let g:searchfold_foldlevel = 2
 let g:searchfold_do_maps = 0
@@ -99,6 +99,7 @@ nmap <leader>Z <Plug>SearchFoldRestore:AdjustScroll<cr>
 let g:syntastic_python_flake8_args='--ignore=E501,F401'
 let g:syntastic_puppet_lint_arguments='--error-level error'
 let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
+let g:syntastic_rst_checkers = ['rstcheck']  " Support for 'ref' role and in-file language checking
 let g:syntastic_warning_symbol='--'
 
 let g:searchfold_do_maps = 0
