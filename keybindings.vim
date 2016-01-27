@@ -426,6 +426,7 @@ endif
 inoremap <C-X><C-K> <C-K>
 noremap <silent> <leader>z :<C-U>call CloseExtraBuffers()<CR>
 inoremap <expr> <C-X>! GetSheBang()
+inoremap <expr> <C-X>d strftime('%Y-%m-%d')
 
 " Rstlink {{{1
 nnoremap <silent> <leader>ct :<C-U>call rstlink#set_web_title()<CR>
@@ -460,11 +461,12 @@ endf
 nnoremap <silent> <C-]> :<C-u>call TagJump()<CR>
 
 " File/text search {{{1
-fun! FindL(arg, bang)
+fun! FindL(arg, bang, match)
   let a=a:arg=~#'^\w\+$' ? a:arg : "'".substitute(a:arg, "'", "'\"'\"'", 'g')."'"
   if a !~ '^\s*$'
     if executable('ag')
-      exe 'Ag'.a:bang.' --literal '.a
+      let pattern=len(a:match) ? ' --file-search-regex "'.a:match.'" ' : ''
+      exe 'Ag'.a:bang.pattern.' --literal '.a
     else
       sil! exe 'grep'.a:bang.' -R --fixed-strings '.a.' .'
       copen
@@ -472,10 +474,12 @@ fun! FindL(arg, bang)
     endif
   endif
 endf
-command! -bang -nargs=* FindL call FindL(join([<q-args>]), "<bang>")
+command! -bang -nargs=* FindL call FindL(join([<q-args>]), "<bang>", '')
+command! -bang -nargs=* FindFL call FindL(join([<q-args>]), "<bang>", '.*\.'.expand('%:e'))
 
 nnoremap <leader>av :<C-U>lv //g %<left><left><left><left>
 nnoremap <leader>aw :<C-U>FindL! <cword><CR>
 nnoremap <leader>al :<C-U>FindL!<space>
+nnoremap <leader>af :<C-U>FindFL!<space>
 xnoremap <leader>al :<C-U>call FindL(GetVisualLine(), '!')<cr>
 xmap <leader>aw <space>al
