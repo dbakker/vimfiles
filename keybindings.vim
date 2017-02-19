@@ -149,6 +149,22 @@ nnoremap <silent> <leader>dp :<C-u>call CDMessage(ProjectRootGuess(GuessMainFile
 nnoremap <silent> <leader>du :<C-u>CDMessage ..<cr>
 
 " Unite/CtrlP mappings
+function! CustomCtrlp(user_command)
+  try
+    let s:temp_ctrlp = g:ctrlp_user_command
+    " let g:ctrlp_user_command = a:user_command
+    let g:ctrlp_user_command = "cd %s; " . a:user_command
+    CtrlP
+  finally
+    let g:ctrlp_user_command = s:temp_ctrlp
+  endtry
+endfunction
+function! CtrlPBranch()
+  call CustomCtrlp("(git status --porcelain|sed 's/...\\(.*\\)/\\1/';" .
+                 \ "git whatchanged --name-only --pretty=\"format:\" origin..HEAD 2>/dev/null)|sort|uniq|sed '/^$/d'")
+endfunction
+nnoremap <silent> <leader>eg :SwitchMain<cr>:call CtrlPBranch()<cr>
+
 nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
 " nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -no-split -buffer-name=mru file_mru<cr>
 nnoremap <silent> <leader>r :SwitchMain<cr>:CtrlPMRUFiles<cr>
@@ -242,7 +258,7 @@ inoremap <expr> <C-D> col('.')>strlen(getline('.'))?"\<Lt>C-D>":"\<Lt>Del>"
 inoremap <expr> <C-E> col('.')>strlen(getline('.'))?"\<Lt>C-E>":"\<Lt>End>"
 inoremap <expr> <C-F> col('.')>strlen(getline('.'))?"\<Lt>C-F>":"\<Lt>Right>"
 
-exe "set <M-.>=\<Esc>."
+execute "set <M-.>=\<Esc>."
 inoremap <expr> <M-.> split(getline(line('.')-1))[-1]
 
 cnoremap <C-X><C-A> <C-A>
@@ -364,8 +380,12 @@ function! s:bulletType(above)
     endif
   endif
   let line=getline(top)
-  let char=substitute(line, '\(\s*.\).*$', '\1', '')
-  return char.' '
+  if line=~#'\s*[+*-]\s*[^+*-]'
+    let char=substitute(line, '\(\s*.\).*$', '\1', '')
+    return char.' '
+  else
+    return '* '
+  endif
 endfunction
 
 function! s:bullet(above)
@@ -466,7 +486,7 @@ fun! FindL(arg, bang, match)
   if a !~ '^\s*$'
     if executable('ag')
       let pattern=len(a:match) ? ' --file-search-regex "'.a:match.'" ' : ''
-      exe 'Ag'.a:bang.pattern.' --literal '.a
+      exe 'Ack'.a:bang.pattern.' --literal '.a
     else
       sil! exe 'grep'.a:bang.' -R --fixed-strings '.a.' .'
       copen
@@ -478,8 +498,10 @@ command! -bang -nargs=* FindL call FindL(join([<q-args>]), "<bang>", '')
 command! -bang -nargs=* FindFL call FindL(join([<q-args>]), "<bang>", '.*\.'.expand('%:e'))
 
 nnoremap <leader>av :<C-U>lv //g %<left><left><left><left>
-nnoremap <leader>aw :<C-U>FindL! <cword><CR>
+nnoremap <leader>awl :<C-U>FindL! <cword><CR>
+nnoremap <leader>awf :<C-U>FindFL! <cword><CR>
 nnoremap <leader>al :<C-U>FindL!<space>
 nnoremap <leader>af :<C-U>FindFL!<space>
 xnoremap <leader>al :<C-U>call FindL(GetVisualLine(), '!')<cr>
+xnoremap <leader>af :<C-U>FindFL! <C-R>=GetVisualLine()<CR><cr>
 xmap <leader>aw <space>al

@@ -15,6 +15,11 @@ Install my settings::
   git clone --depth 1 https://github.com/dbakker/vimfiles ~/.vim
   vim +Helptags +qall
 
+It's also possible to install and run from a different location::
+
+  git clone --depth 1 https://github.com/dbakker/vimfiles ~/.dbakker-vim
+  vim -u ~/.dbakker-vim/vimrc
+
 Install optional linters for Syntastic_::
 
   sudo apt-get install -y devscripts  # for "checkbashims"
@@ -23,19 +28,13 @@ Install optional linters for Syntastic_::
 Plugin architecture
 -------------------
 I commit the contents of plugins under `bundle/` (instead of fetching them
-during install), this has 3 benefits:
+during install), this has 4 benefits:
 
 #. It makes it possible to get all settings using just a simple `git clone`.
-#. It doesn't matter if a source repository is down or deleted.
-#. You always have working versions of plugins.
+#. Plugins are automatically "locked" at a specific revision (similar to git submodules)
+#. It doesn't matter if a source repository is down, rebased or deleted.
 
-New plugins are installed and old ones updated using bower, as described in
-vimbower_::
-
-  cd ~/.vim
-  npm install -g bower
-  bower install --save tpope/vim-sensible  # Add a new plugin
-  bower update  # Update all plugins
+In short, you always have working versions of plugins.
 
 Setting up CTags for standard libraries
 ---------------------------------------
@@ -70,6 +69,10 @@ This feature can be used to override settings, e.g.:
   setl noexpandtab
   Wrap
 
+Note that for indentation related settings,
+`editorconfig <https://github.com/editorconfig/editorconfig-vim>` seems like
+a decent alternative.
+
 For scavengers
 --------------
 Some cool places for more snippets:
@@ -81,4 +84,3 @@ Some cool places for more snippets:
 * `AndrewRadev vimfiles <https://github.com/AndrewRadev/Vimfiles>`_
 
 .. _Syntastic: https://github.com/scrooloose/syntastic
-.. _vimbower: https://github.com/rstacruz/vimbower

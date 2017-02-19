@@ -1,0 +1,10 @@
+*.png
+*.jpg
+
+test
+tests
+test_*
+site
+
+# Vimballs
+*.vmb

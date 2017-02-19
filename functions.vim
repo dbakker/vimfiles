@@ -10,7 +10,7 @@ let loaded_functions = 1
 " These are functions that are useful for custom scripts
 
 " FindVar(varname[, default]) {{{2
-fun! FindVar(varname, ...)
+function! FindVar(varname, ...)
   if exists('b:'.a:varname)
     return b:{a:varname}
   elseif exists('g:'.a:varname)
@@ -22,7 +22,7 @@ fun! FindVar(varname, ...)
 endf
 
 " ExtendDictVar(varname[, default]) {{{2
-fun! ExtendDictVar(dictname, ...)
+function! ExtendDictVar(dictname, ...)
   let result = {}
   if a:0 == 1
     call extend(result, a:1)
@@ -37,7 +37,7 @@ fun! ExtendDictVar(dictname, ...)
 endf
 
 " FindInDict(key, dictname[, default]) {{{2
-fun! FindInDict(key, dictname, ...)
+function! FindInDict(key, dictname, ...)
   if exists('b:'.a:dictname) && has_key(b:{a:dictname}, a:key)
     return b:{a:dictname}[a:key]
   elseif exists('g:'.a:dictname) && has_key(g:{a:dictname}, a:key)
@@ -49,21 +49,21 @@ fun! FindInDict(key, dictname, ...)
 endf
 
 " GetVisualLine() {{{2
-fun! GetVisualLine()
+function! GetVisualLine()
   let col1 = getpos("'<")[2]
   let col2 = getpos("'>")[2]
   return getline('.')[col1-1:col2-1]
 endf
 
 " SwapRegisters(reg1, reg2) {{{2
-fun! SwapRegisters(reg1, reg2)
+function! SwapRegisters(reg1, reg2)
   exe 'let tmp=@'.a:reg1
   exe 'let @'.a:reg1.'=@'.a:reg2
   exe 'let @'.a:reg2.'=tmp'
 endf
 
 " RemoveSharedIndent(start, last) {{{2
-fun! RemoveSharedIndent(start, last)
+function! RemoveSharedIndent(start, last)
   let minimum_indent = indent(a:start)
   for linenr in range(a:start, a:last)
     let minimum_indent = min([minimum_indent, indent(linenr)])
@@ -77,7 +77,7 @@ command! -range RemoveSharedIndent call RemoveSharedIndent(<line1>, <line2>)
 
 " ChangeCwd(path) {{{2
 " Change path with informative message
-fun! CDMessage(path)
+function! CDMessage(path)
   let curpath = getcwd()
   exe 'cd' fnameescape(a:path)
   redraw!
@@ -92,12 +92,12 @@ command! -nargs=1 CDMessage call CDMessage(<q-args>)
 
 " PrettyPath(path) {{{2
 " Use ~ instead of /home/johndoe
-fun! PrettyPath(path)
+function! PrettyPath(path)
   return substitute(expand(a:path), expand('~'), '~', '')
 endf
 
 " IsExtraBuffer(buffer) {{{2
-fun! IsExtraBuffer(...)
+function! IsExtraBuffer(...)
   if a:0==1
     let bt=getbufvar(a:1, '&bt')
   else
@@ -107,7 +107,7 @@ fun! IsExtraBuffer(...)
 endf
 
 " CloseExtraBuffers() {{{1
-fun! CloseExtraBuffers()
+function! CloseExtraBuffers()
   for b in tabpagebuflist()
     if IsExtraBuffer(b)
       exe 'bd '.b
@@ -117,7 +117,7 @@ endf
 
 " BufDelete([bang]) {{{2
 " Simplified/personalized version of the BufKill plugin...
-fun! BufDelete(...)
+function! BufDelete(...)
   let bang = a:0 ? a:1 : ''
   let curwindow = winnr()
   let bufferToKill = winbufnr(curwindow)
@@ -157,7 +157,7 @@ endf
 command! -nargs=0 -bang BD call BufDelete('<bang>')
 
 " GetMarkFile(mark) {{{2
-fun! GetMarkFile(mark)
+function! GetMarkFile(mark)
   try
     let message=''
     redir => message
@@ -173,7 +173,7 @@ fun! GetMarkFile(mark)
 endf
 
 " GetListedBuffers() {{{2
-fun! GetListedBuffers()
+function! GetListedBuffers()
   let all = range(1, bufnr('$'))
   let res = []
   for b in all
@@ -188,7 +188,7 @@ endfunction
 " Creates a list of all open buffers sharing a projectroot with
 " this buffer, and goes to the next buffer on that list.
 
-fun! GetNextProjectBuffer(count, ...)
+function! GetNextProjectBuffer(count, ...)
   let root = a:0 ? fnamemodify(a:1, ':p:h') : ProjectRootGuess()
   let bufs = []
   for b in GetListedBuffers()
@@ -202,7 +202,7 @@ fun! GetNextProjectBuffer(count, ...)
 endf
 
 " GetNextBuffer(count) {{{2
-fun! GetNextBuffer(count)
+function! GetNextBuffer(count)
   let nowinbufs = []
   let thisbuf = bufnr('')
   for b in GetListedBuffers()
@@ -213,7 +213,7 @@ fun! GetNextBuffer(count)
   return s:GetRelativeBuffer(nowinbufs, a:count)
 endf
 
-fun! s:GetRelativeBuffer(buflist, count)
+function! s:GetRelativeBuffer(buflist, count)
   let l=[]
   for b in a:buflist
     call add(l, len(bufname(b))?bufname(b):b)
@@ -231,7 +231,7 @@ fun! s:GetRelativeBuffer(buflist, count)
 endf
 
 " GetNextFileInDir(count) {{{2
-fun! GetNextFileInDir(count)
+function! GetNextFileInDir(count)
   let files = []
   for file in split(glob(expand('%:p:h').'/*'), "\n")
     if !isdirectory(file)
@@ -245,72 +245,8 @@ fun! GetNextFileInDir(count)
 endf
 
 " GetSheBang() {{{2
-fun! GetSheBang()
+function! GetSheBang()
   return '#!/usr/bin/env '.&ft
-endf
-
-" OpenPrompt() {{{2
-fun! OpenPrompt()
-  if has('win32')
-    if executable(expand('$ProgramFiles').'/Git/bin/sh.exe')
-      sil exe '!start '.expand('$ProgramFiles').'/Git/bin/sh.exe --login -i'
-    else
-      exe 'sil !start cmd'
-    endif
-  elseif executable('exo-open')
-    sil exe '!exo-open --launch TerminalEmulator &'
-  else
-    for p in ['rxvt', 'gnome-terminal', 'xterm', &shell]
-      if executable(p)
-        sil exe '!'.p.' &'
-        return
-      endif
-    endfor
-    throw 'Could not find a way to open a prompt'
-  endif
-endf
-
-" ToggleFullscreen() {{{2
-fun! ToggleFullscreen()
-  if executable('wmctrl')
-    call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
-  endif
-endf
-
-" OpenURL(url) {{{2
-function! OpenURL(url) " (tpope)
-  let url = substitute(a:url, '%', '\\%', 'g')
-  let url = substitute(url, '#', '\\#', 'g')
-  if has("win32")
-    exe '!start cmd /cstart /b '.url
-  elseif executable('exo-open')
-    exe 'silent !exo-open "'.url.'" &'
-  elseif $DISPLAY !~ '^\w'
-    exe 'silent !sensible-browser "'.url.'" &'
-  else
-    exe 'silent !sensible-browser -T "'.url.'" &'
-  endif
-  " redraw!
-endfunction
-command! -nargs=1 OpenURL :call OpenURL(<q-args>)
-
-" SearchWeb(terms) {{{2
-fun! SearchWeb(terms)
-  let t = a:terms
-  let t = substitute(t, '^\s\+', '', '')
-  let t = substitute(t, '\s\+$', '', '')
-  let t = substitute(t, '\W\+', '+', 'g')
-  call OpenURL('http://www.google.com/search?q='.t)
-endf
-fun! SearchWebMap(terms)
-  " Same as SearchWeb, unless there is an URL under the cursor
-  let line = getline(".")
-  let url = matchstr(line, '\vhttps?://[^ ,;\t")''\]]*')
-  if len(url)>0
-    return OpenURL(url)
-  else
-    return SearchWeb(a:terms)
-  endif
 endf
 
 " GuessMainBuffer() {{{2
@@ -477,78 +413,4 @@ fun! GetDefaultHandler(filename)
   endif
   let ext = fnamemodify(a:filename, ':e')
   return get(g:cnr_defhandlers, ext, '')
-endf
-
-fun! CompileAndRun()
-  try
-    if exists('b:crcmd')
-      sil exe b:crcmd
-      return
-    endif
-
-    " Try to do project wide compilations/runs
-    let projectRoot = ProjectRootGuess("%")
-    let crscript = glob(projectRoot.'/crscript*')
-    if len(crscript)>0
-      wa
-      let cmd = GetDefaultHandler(crscript)
-      try
-        let pr=getcwd()
-        sil exe ':cd' projectRoot
-        if has("win32")
-          sil exe '!start '.cmd.'"'.crscript.'"'
-        else
-          sil exe '!'.cmd.crscript.' &'
-        endif
-      finally
-        sil exe ':cd' pr
-        redraw
-      endtry
-      return
-    endif
-
-    " Fall back to single file compilations/runs
-    update " Write file if modified
-    let defhandler = GetDefaultHandler(expand('%'))
-    if len(defhandler)>0
-      exe '!'.defhandler '%'
-    elseif index(g:cnr_browserlangs, &ft)>=0
-      if exists('b:url')
-        call OpenURL(b:url)
-      else
-        call OpenURL(expand('%:p'))
-      endif
-    elseif &ft=='vim'
-      unlet! g:loaded_{expand('%:t:r')}
-      so %
-    elseif &ft=='markdown' && executable('markdown')
-      let tmp=g:localdir.'/preview.html'
-      call writefile(['<title>Markdown preview</title>','<link href="file:///'.expand('~/.vim/assets/markdown.css').'" rel="stylesheet"></link>'], tmp)
-      exe 'silent !markdown %>>'.tmp
-      call OpenURL(tmp)
-    elseif &ft=='rst' && (executable('rst2html') || executable('rst2html.py'))
-      let tmp=g:localdir.'/preview.html'
-      call writefile(['<!DOCTYPE html>', '<base href="file:///'.expand('%:p:h').'/" />'], tmp)
-      exe 'silent !'.(executable('rst2html')?'rst2html' : 'rst2html.py') '%' '--no-xml-declaration' '>>'.tmp
-      call OpenURL(tmp)
-    elseif &ft=='java' && executable('java') && executable('javac')
-      let package = search('\s*package\s', 'nw')
-      let qualified = expand('%:t:r')
-      if package!=0
-        let package = matchstr(getline(package), '\v^\s*package\s+\zs[^;]+')
-        let classdir = expand('%:p:h:h'.substitute(substitute(package, '[^.]', '', 'g'), '\.', ':h', 'g'))
-        let qualified = package.'.'.qualified
-      else
-        let classdir = expand('%:p:h')
-      endif
-      let &cmdheight += 1
-      let cmd = '!javac -d "'.classdir.'" "'.expand('%').'" &&'
-      exe cmd.' java -cp "'.classdir.'" '.qualified
-      let &cmdheight -= 1
-    else " If all else fails, use default handler
-      exe '!%'
-    endif
-  finally
-    redraw!
-  endtry
 endf

@@ -5,11 +5,18 @@ iab TEh The
 iab THat That
 iab THe The
 iab THen Then
+iab THere There
+iab THerefore Therefore
 iab THis This
 iab WHen When
 iab YOu You
 
+if !exists(':Abolish')
+  finish
+endif
+
 Abolish alot a lot
+Abolish moer more
 Abolish arguement argument
 Abolish arguements arguments
 Abolish claer{,ed,ly} clear{}
@@ -53,8 +60,13 @@ Abolish tghe the
 Abolish tghis this
 Abolish thigns things
 Abolish thne then
+Abolish hten then
 Abolish thsi this
+Abolish voro voor
 Abolish waht what
+Abolish wehter whether
+Abolish wether whether
+Abolish whehter whether
 Abolish whcih which
 Abolish whihc which
 Abolish wnat want

@@ -16,3 +16,4 @@ nnoremap <silent> <buffer> ]m j:<C-U>call <SID>searchmethod(0)<cr>
 setl formatoptions+=tnro
 setl formatoptions-=cq
 Wrap
+set nonu

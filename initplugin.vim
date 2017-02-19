@@ -1,41 +1,26 @@
 filetype off                   " required!
 
-let g:pymode_rope_enable_shortcuts = 0
-let g:ropevim_enable_shortcuts = 0
-
-execute pathogen#infect()
-execute pathogen#infect(expand('~/.vim.local/bundle/{}'))
+execute pathogen#infect(g:vimdir.'/bundles/general/{}')
+execute pathogen#infect(g:vimdir.'/bundles/navigation/{}')
+execute pathogen#infect(g:vimdir.'/bundles/colorschemes/{}')
+execute pathogen#infect(g:vimdir.'/bundles/syntax/{}')
 syntax on
 
 " Configuration of options for plugins {{{1
 filetype plugin indent on     " required!
 
-" Custom settings for the Unite
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  imap <silent> <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <silent> <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  imap <silent> <buffer> <esc>   <esc>:bd<cr>
-endfunction
-
 " Tcomment {{{2
-if isdirectory(expand('~/.vim/bundle/tcomment_vim'))
-  let g:tcommentOptions = {'strip_whitespace': 1}
-  let g:tcomment_types={'java': '// %s'}
-  call tcomment#DefineType('markdown', g:tcommentInlineXML)
-  call tcomment#DefineType('rst', {'col': 1, 'commentstring': '.. %s' })
-endif
+let g:tcommentOptions = {'strip_whitespace': 1}
+let g:tcomment_types={'java': '// %s'}
+call tcomment#DefineType('markdown', g:tcommentInlineXML)
+call tcomment#DefineType('rst', {'col': 1, 'commentstring': '.. %s' })
 
 " NERDTree {{{2
 let NERDTreeHijackNetrw=1
 let NERDTreeBookmarksFile=expand(localdir.'/NERDTreeBookmarks.txt')
 let NERDTreeMouseMode=2
 let NERDTreeIgnore=['\.o$', '\.pyc$', '\.exe$','\.class$', 'tags$', '\~$']
-fun! NERDTreeSmartToggle()
+function! NERDTreeSmartToggle()
   for buf in tabpagebuflist()
     if bufname(buf) =~ 'NERD_tree'
       NERDTreeClose
@@ -47,14 +32,14 @@ fun! NERDTreeSmartToggle()
   catch
     ProjectRootExe NERDTree
   endtry
-endf
+endfunction
 
 function! RangerChooser()
   try
     let temp = tempname()
     " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
     " with ranger 1.4.2 through 1.5.0 instead.
-    exec 'silent !ranger --choosefiles=' . shellescape(temp)
+    execute 'silent !ranger --choosefiles=' . shellescape(temp)
     if !filereadable(temp)
       " Nothing to read.
       return
@@ -65,10 +50,10 @@ function! RangerChooser()
       return
     endif
     " Edit the first item.
-    exec 'edit ' . fnameescape(names[0])
+    execute 'edit ' . fnameescape(names[0])
     " Add any remaning items to the arg list/buffer list.
     for name in names[1:]
-      exec 'argadd ' . fnameescape(name)
+      execute 'argadd ' . fnameescape(name)
     endfor
   finally
     redraw!
@@ -78,29 +63,41 @@ command! -bar RangerChooser call RangerChooser()
 nnoremap + :<C-U>RangerChooser<CR>
 
 " Filetype detection {{{2
-au BufNewFile,BufRead nginx.conf set filetype=nginx.conf
-au BufNewFile,BufRead *.muttrc set filetype=muttrc
+autocmd BufNewFile,BufRead nginx.conf set filetype=nginx.conf
+autocmd BufNewFile,BufRead *.muttrc set filetype=muttrc
 
 " Java autocomplete {{{2
-if has("autocmd")
-  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-endif
+autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+
+" Syntastic
+
+" Read ignore flags from env for local overrides
+let $FLAKE8_IGNORE='--ignore=E501,F401'
+" Do not warn about already present style issues
+let g:syntastic_python_flake8_exe='bash'
+let g:syntastic_python_flake8_args='-c "' .
+    \ 'if diff=\$(git diff HEAD \"\$0\");' .
+    \ 'then echo \"\$diff\"|flake8 --diff \$FLAKE8_IGNORE;' .
+    \ 'else flake8 \$FLAKE8_IGNORE \"\$0\"; fi' .
+    \ '"'
+
+let g:syntastic_puppet_lint_arguments='--error-level error'
+let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
+let g:syntastic_rst_checkers = ['rstcheck']  " Support for 'ref' role and in-file language checking
+let g:syntastic_rst_rstcheck_args='--report warning'
+let g:syntastic_warning_symbol='--'
+let g:syntastic_stl_format = '[%E{%e ERR}%B{ }%W{%w WRN}]'
 
 " Misc {{{2
-au BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
-au BufNewFile,BufRead *.less setl cms=/*\ %s\ */
-au BufNewFile,BufRead *.do setl ft=sh sw=2 ts=2 sts=2 et " redo file, see https://github.com/mildred/redo
-au BufNewFile */ac/journal/* call setline(1, '==========') | call setline(2, strftime('%Y-%m-%d')) | call setline(3, '==========') | call setline(4, '') | call cursor(5, 0) | set nomodified
+autocmd BufNewFile,BufRead *.fo if len(&ft)==0 | set ft=xml | endif " Apache FOP file
+autocmd BufNewFile,BufRead *.less setl cms=/*\ %s\ */
+autocmd BufNewFile,BufRead *.do setl ft=sh sw=2 ts=2 sts=2 et " redo file, see https://github.com/mildred/redo
+autocmd BufNewFile */ac/journal/* call setline(1, '==========') | call setline(2, strftime('%Y-%m-%d')) | call setline(3, '==========') | call setline(4, '') | call cursor(5, 0) | set nomodified
 
 let g:searchfold_foldlevel = 2
 let g:searchfold_do_maps = 0
 nmap <leader>z <Plug>SearchFoldNormal:AdjustScroll<cr>
 nmap <leader>Z <Plug>SearchFoldRestore:AdjustScroll<cr>
-let g:syntastic_python_flake8_args='--ignore=E501,F401'
-let g:syntastic_puppet_lint_arguments='--error-level error'
-let g:syntastic_php_phpmd_post_args = 'text design,unusedcode'
-let g:syntastic_rst_checkers = ['rstcheck']  " Support for 'ref' role and in-file language checking
-let g:syntastic_warning_symbol='--'
 
 let g:searchfold_do_maps = 0
 let g:SuperTabDefaultCompletionType = "context"
@@ -108,28 +105,31 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:clang_hl_errors = 0
 let g:clang_close_preview = 1
 
+if executable('ag')
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+endif
+
 " Automatically set some file permissions {{{2
 if executable('chmod')
-  aug autoChmod
-    au!
-    au BufWritePost * if getline(1)=~'^#!' && getfperm(expand('%'))=~'^rw-' | call system('chmod u+x '.expand('%:p')) | endif
-    au BufWritePost ~/.netrc,~/.ssh/* call system('chmod go-rwx '.expand('%:p'))
-  aug END
+  augroup autoChmod
+    autocmd!
+    autocmd BufWritePost * if getline(1)=~'^#!' && getfperm(expand('%'))=~'^rw-' | call system('chmod u+x '.expand('%:p')) | endif
+    autocmd BufWritePost ~/.netrc,~/.ssh/* call system('chmod go-rwx '.expand('%:p'))
+  augroup END
 endif
 
 " Statusline {{{2
 set statusline=%t%m%r%{exists('b:statusnew')?'[new]':''}%{&paste?'[paste]':''}%{exists('b:file_status')\ ?b:file_status\ :\ ''}%w%#ErrorMsg#%(\ %{SyntasticStatuslineFlag()}%)%*%{StatusDir()}%=\ %{fugitive#statusline()}\ %l%<
-let g:syntastic_stl_format = '[%E{%e ERR}%B{ }%W{%w WRN}]'
 
-aug fileNew
-  au!
-  au BufNewFile * let b:statusnew = 1
-  au BufWritePost * unlet! b:statusnew
-aug END
+augroup fileNew
+  autocmd!
+  autocmd BufNewFile * let b:statusnew = 1
+  autocmd BufWritePost * unlet! b:statusnew
+augroup END
 
 let b:laststatusdir = ''
 let b:laststatuscwd = ''
-fun! StatusDir()
+function! StatusDir()
   if exists('b:laststatuscwd') && getcwd()==b:laststatuscwd
     return b:laststatusdir
   endif
@@ -150,20 +150,20 @@ fun! StatusDir()
     endif
   endif
   return b:laststatusdir
-endf
+endfunction
 
-fun! s:UpdateFileStatus()
+function! s:UpdateFileStatus()
   let b:file_status = ''
   if &ff != 'unix'
     let b:file_status .= '['.&ff.']'
   endif
-endf
+endfunction
 
-aug updateFileStatus
-  au!
-  au BufReadPost * call s:UpdateFileStatus()
-  au BufWritePost * call s:UpdateFileStatus()
-aug END
+augroup updateFileStatus
+  autocmd!
+  autocmd BufReadPost * call s:UpdateFileStatus()
+  autocmd BufWritePost * call s:UpdateFileStatus()
+augroup END
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = localdir.'/ctrlp'
@@ -191,22 +191,22 @@ let g:jedi#rename_command = "<leader>ir"
 let g:jedi#usages_command = "<leader>in"
 
 " Clear non-ctrl select mode mappings {{{2
-fun! s:clearsmap()
+function! s:clearsmap()
   redir => f
-  sil exe 'smap'
+  silent execute 'smap'
   redir END
   let b = split(f, "\n")
   for line in b
     let m = matchstr(line, '...\zs\S\+')
     if m[0]!='<'
-      sil! exe 'sunmap '.m
+      silent! execute 'sunmap '.m
     endif
   endfor
-endf
-aug clearSMap
-  au!
-  au VimEnter * call <SID>clearsmap()
-aug END
+endfunction
+augroup clearSMap
+  autocmd!
+  autocmd VimEnter * call <SID>clearsmap()
+augroup END
 
 " Select colorscheme {{{2
 fun! s:load_colorscheme(color)
@@ -247,25 +247,16 @@ fun! s:time_colorscheme()
   end
 endf
 
-aug updateColor
-  au!
-  au CursorHold * call <SID>time_colorscheme()
-aug END
-
-" Default indent {{{2
-let default_indent_xml = 'setl et sw=2 sts=2'
-let default_indent_vim = 'setl et sw=2 sts=2'
-let default_indent_html = 'setl et sw=2 sts=2'
-let default_indent_rst = 'setl et sw=2 sts=2'
-let default_indent_markdown = 'setl et sw=2 sts=2'
-let default_indent_sh = 'setl et sw=2 sts=2'
-let default_indent_yaml = 'setl et sw=2 sts=2'
+augroup updateColor
+  autocmd!
+  autocmd CursorHold * call <SID>time_colorscheme()
+augroup END
 
 " RST Tables {{{2
-aug realignRST
-  au!
-  au InsertLeave *.rst call rst_tables#reformat()
-aug END
+augroup realignRST
+  autocmd!
+  autocmd InsertLeave *.rst call rst_tables#reformat()
+augroup END
 
 " Trash {{{2
 " Adapted from tpope/eunuch's 'Remove'
@@ -280,8 +271,8 @@ command! -bar -bang Trash :
 " Read only conversions {{{2
 " `catdoc` {{{3
 if executable('catdoc')
-  au BufReadPre *.doc setl ro ft= wrap nolist
-  au BufReadPost *.doc sil! %!catdoc "%"
+  autocmd BufReadPre *.doc setl ro ft= wrap nolist
+  autocmd BufReadPost *.doc sil! %!catdoc "%"
 endif
 if executable('xls2csv')
   autocmd BufReadPre *.xls setl ro ft=csv
@@ -301,41 +292,17 @@ endif
 
 " `xpdf` {{{3
 if executable('pdftotext')
-  au BufReadPre *.pdf setl ro ft=
-  au BufReadPost *.pdf sil! %!pdftotext -nopgbrk "%" -
+  autocmd BufReadPre *.pdf setl ro ft=
+  autocmd BufReadPost *.pdf sil! %!pdftotext -nopgbrk "%" -
 endif
 
 " `docx2txt` {{{3
 if executable('docx2txt')
-  au BufReadPre *.docx setl ro ft= wrap nolist
-  au BufReadPost *.docx sil! %!docx2txt
+  autocmd BufReadPre *.docx setl ro ft= wrap nolist
+  autocmd BufReadPost *.docx sil! %!docx2txt
 endif
 
 " `xlsx2csv` {{{3
 autocmd BufReadPre *.xlsx setl ro ft=csv
 autocmd BufReadPost *.xlsx sil! %!python ~/.vim/assets/xlsx2csv.py "%"
 autocmd BufReadPost *.xlsx redraw
-
-" `autopep8` {{{3
-if executable('autopep8') && executable('pep8')
-  " This program is especially useful for E127 - Fix visual indentation.
-  " autopep8==0.9.7
-  fun! s:AutoPep8()
-    if exists('b:skip_autopep8')
-      return
-    endif
-
-    sil! write !pep8 --ignore E501 -
-    if v:shell_error
-      let s=winsaveview()
-      sil! %!autopep8 --ignore E501 -
-      if v:shell_error
-        undo
-        let b:skip_autopep8=1
-        echoerr "Unable to autopep8... Added an ignore for this buffer."
-      endif
-      call winrestview(s)
-    endif
-  endf
-  au BufWritePre *.py call <SID>AutoPep8()
-endif
