@@ -160,7 +160,7 @@ function! CustomCtrlp(user_command)
   endtry
 endfunction
 function! CtrlPBranch()
-  call CustomCtrlp("(git status --porcelain|sed 's/...\\(.*\\)/\\1/';" .
+  call CustomCtrlp("(git status --untracked-files=all --porcelain|sed 's/...\\(.*\\)/\\1/';" .
                  \ "git whatchanged --name-only --pretty=\"format:\" origin..HEAD 2>/dev/null)|sort|uniq|sed '/^$/d'")
 endfunction
 nnoremap <silent> <leader>eg :SwitchMain<cr>:call CtrlPBranch()<cr>
