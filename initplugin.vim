@@ -167,7 +167,7 @@ augroup END
 
 " CtrlP {{{2
 let g:ctrlp_cache_dir = localdir.'/ctrlp'
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = ''
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_mruf_exclude = '.*/vim../doc/.*\|.*\.git/.*\|.*/\.cache/.*\|/tmp/.*'
 let g:ctrlp_mruf_max = 1000

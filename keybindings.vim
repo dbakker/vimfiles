@@ -163,10 +163,11 @@ function! CtrlPBranch()
   call CustomCtrlp("(git status --untracked-files=all --porcelain|sed 's/...\\(.*\\)/\\1/';" .
                  \ "git whatchanged --name-only --pretty=\"format:\" origin..HEAD 2>/dev/null)|sort|uniq|sed '/^$/d'")
 endfunction
+command! -bang -nargs=* AgCtrlP call CustomCtrlp('ag . -l --nocolor --hidden '.join([<q-args>]))
+
 nnoremap <silent> <leader>eg :SwitchMain<cr>:call CtrlPBranch()<cr>
 
 nnoremap <silent> <leader>l :SwitchMain<cr>:Unite -start-insert -no-split line<cr>
-" nnoremap <silent> <leader>r :SwitchMain<cr>:Unite -start-insert -no-split -buffer-name=mru file_mru<cr>
 nnoremap <silent> <leader>r :SwitchMain<cr>:CtrlPMRUFiles<cr>
 nnoremap <silent> <leader>ea :SwitchMain<cr>:CtrlP ~/ac<cr>
 nnoremap <silent> <leader>ed :SwitchMain<cr>:CtrlP ~/dev<cr>
@@ -177,6 +178,17 @@ nnoremap <silent> <leader>et :SwitchMain<cr>:CtrlPTag<cr>
 nnoremap <silent> <leader>ev :SwitchMain<cr>:CtrlP ~/.vim<cr>
 nnoremap <silent> <leader>eJ :SwitchMain<cr>:exe 'edit ~/ac/journal/'.strftime("%Y/%m/%d.rst",localtime()-60*60*3)<cr>
 nnoremap <silent> <leader>ei :SwitchMain<cr>:exe 'edit ~/inbox/'.strftime("%Y%m%d-%H%M.rst",localtime())<cr>
+
+" Add mappings for filetype filtered CtrlP searches
+for [left, right] in [
+      \ ['a', '-g ""\|ag -v ".*\.(7z\|\\d+\|\\w*certs\|\\w+ignore\|apk\|bak\|bin\|cfg\|class\|conf\|config\|csr\|csv\|cue\|dat\|deb\|dmg\|doc.?\|gif\|gz\|ini\|iso\|jar\|jpg\|json\|log\|markdown\|md\|mkd\|odt\|pam\|part\|pdf\|png\|properties\|rar\|rst\|so\|sql\|svg\|tif\|tiff\|tmp\|txt\|xml\|xz\|yaml\|yml\|zip)$"'],
+      \ ['c', '-g ".*\.(c\|cpp\|h)$"'],
+      \ ['h', '-g ".*\.(js\|ts\|.?html?)$"'],
+      \ ['p', '-g ".*\.py$"'],
+      \ ['s', '-g ".*\.(less\|sass\|hss\|.?css)$"'],
+      \ ]
+  execute 'nnoremap <silent> <leader>f' . left . ' :SwitchMain<cr>:AgCtrlP --ignore-case ' . right . '<cr>'
+endfor
 
 nnoremap <silent> [a :prev<cr>:AdjustScroll<cr>
 nnoremap <silent> ]a :next<cr>:AdjustScroll<cr>
