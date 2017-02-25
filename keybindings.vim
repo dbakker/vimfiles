@@ -184,6 +184,7 @@ for [left, right] in [
       \ ['a', '-g ""\|ag -v ".*\.(7z\|\\d+\|\\w*certs\|\\w+ignore\|apk\|bak\|bin\|cfg\|class\|conf\|config\|csr\|csv\|cue\|dat\|deb\|dmg\|doc.?\|gif\|gz\|ini\|iso\|jar\|jpg\|json\|log\|markdown\|md\|mkd\|odt\|pam\|part\|pdf\|png\|properties\|rar\|rst\|so\|sql\|svg\|tif\|tiff\|tmp\|txt\|xml\|xz\|yaml\|yml\|zip)$"'],
       \ ['c', '-g ".*\.(c\|cpp\|h)$"'],
       \ ['h', '-g ".*\.(js\|ts\|.?html?)$"'],
+      \ ['j', '-g ".*\.java$"'],
       \ ['p', '-g ".*\.py$"'],
       \ ['s', '-g ".*\.(less\|sass\|hss\|.?css)$"'],
       \ ]
@@ -497,7 +498,7 @@ fun! FindL(arg, bang, match)
   let a=a:arg=~#'^\w\+$' ? a:arg : "'".substitute(a:arg, "'", "'\"'\"'", 'g')."'"
   if a !~ '^\s*$'
     if executable('ag')
-      let pattern=len(a:match) ? ' --file-search-regex "'.a:match.'" ' : ''
+      let pattern=len(a:match) ? ' --ignore-case --file-search-regex "'.a:match.'" ' : ''
       exe 'Ack'.a:bang.pattern.' --literal '.a
     else
       sil! exe 'grep'.a:bang.' -R --fixed-strings '.a.' .'
@@ -508,6 +509,7 @@ fun! FindL(arg, bang, match)
 endf
 command! -bang -nargs=* FindL call FindL(join([<q-args>]), "<bang>", '')
 command! -bang -nargs=* FindFL call FindL(join([<q-args>]), "<bang>", '.*\.'.expand('%:e'))
+command! -bang -nargs=* FindPL call FindL(join([<f-args>][1:]), "<bang>", [<f-args>][0])
 
 nnoremap <leader>av :<C-U>lv //g %<left><left><left><left>
 nnoremap <leader>awl :<C-U>FindL! <cword><CR>
@@ -517,3 +519,9 @@ nnoremap <leader>af :<C-U>FindFL!<space>
 xnoremap <leader>al :<C-U>call FindL(GetVisualLine(), '!')<cr>
 xnoremap <leader>af :<C-U>FindFL! <C-R>=GetVisualLine()<CR><cr>
 xmap <leader>aw <space>al
+
+nnoremap <leader>ac :<C-U>FindPL .*\.(c\|cpp\|h)$<space>
+nnoremap <leader>ah :<C-U>FindPL .*\.(js\|ts\|.?html?)$<space>
+nnoremap <leader>aj :<C-U>FindPL .*\.java$<space>
+nnoremap <leader>ap :<C-U>FindPL .*\.py$<space>
+nnoremap <leader>as :<C-U>FindPL .*\.(le\|sa\|h\|.?c)ss$<space>
