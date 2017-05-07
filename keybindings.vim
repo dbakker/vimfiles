@@ -28,6 +28,7 @@ nnoremap <silent> <leader>wa :wa<bar>redraw<cr>
 nnoremap <silent> <leader>we :<C-U>call setloclist(0,[])<cr>:wa<cr>:Errors<cr>:lrewind<cr>:AdjustScroll<cr>
 nnoremap <silent> <leader>wf :w!<cr>:redraw<cr>
 nnoremap <silent> <leader>wj :w<cr>:redraw<cr>
+nnoremap <silent> <leader>wk :Autoformat<cr>:w<cr>:redraw<cr>
 nnoremap <silent> <leader>wq :w<cr>:BD<cr>
 nnoremap <silent> <leader>wx :wa<cr>:bufdo BD<cr>
 nnoremap <silent> <leader>qa :bufdo BD<cr>
